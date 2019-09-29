@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F384F40232CE23A00CDCA53 /* Vaccination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F3F232CE23A00CDCA53 /* Vaccination.swift */; };
+		6F384F42232CE55400CDCA53 /* VaccineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */; };
+		6F384F44232D1A7200CDCA53 /* VaccineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */; };
+		6F384F4823368D3B00CDCA53 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4723368D3B00CDCA53 /* LoginViewController.swift */; };
+		6F384F4A2337651600CDCA53 /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F492337651600CDCA53 /* Vaccine.swift */; };
+		6F384F4C2337730300CDCA53 /* Protection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4B2337730300CDCA53 /* Protection.swift */; };
+		6F384F4E2337BABF00CDCA53 /* VaccinationTimeLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */; };
+		6F384F50233BF99500CDCA53 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4F233BF99500CDCA53 /* HistoryTableViewController.swift */; };
+		6F384F52233D1F9800CDCA53 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F51233D1F9800CDCA53 /* HistoryTableViewCell.swift */; };
+		6F384F54233D3B7000CDCA53 /* VaccinationTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F53233D3B7000CDCA53 /* VaccinationTabBarController.swift */; };
 		6F5FD6842329912F00D45E20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5FD6832329912F00D45E20 /* AppDelegate.swift */; };
 		6F5FD6862329912F00D45E20 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5FD6852329912F00D45E20 /* FirstViewController.swift */; };
 		6F5FD6882329912F00D45E20 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5FD6872329912F00D45E20 /* SecondViewController.swift */; };
@@ -14,6 +24,7 @@
 		6F5FD68D2329912F00D45E20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F5FD68C2329912F00D45E20 /* Assets.xcassets */; };
 		6F5FD6902329912F00D45E20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5FD68E2329912F00D45E20 /* LaunchScreen.storyboard */; };
 		6F5FD69B2329912F00D45E20 /* VaccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5FD69A2329912F00D45E20 /* VaccessTests.swift */; };
+		6F5FD6A6232996D100D45E20 /* VaccineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5FD6A5232996D100D45E20 /* VaccineViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +38,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F384F3F232CE23A00CDCA53 /* Vaccination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vaccination.swift; sourceTree = "<group>"; };
+		6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineTableViewCell.swift; sourceTree = "<group>"; };
+		6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineTableViewController.swift; sourceTree = "<group>"; };
+		6F384F4723368D3B00CDCA53 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
+		6F384F492337651600CDCA53 /* Vaccine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
+		6F384F4B2337730300CDCA53 /* Protection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protection.swift; sourceTree = "<group>"; };
+		6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccinationTimeLeft.swift; sourceTree = "<group>"; };
+		6F384F4F233BF99500CDCA53 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
+		6F384F51233D1F9800CDCA53 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		6F384F53233D3B7000CDCA53 /* VaccinationTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccinationTabBarController.swift; sourceTree = "<group>"; };
 		6F5FD6802329912F00D45E20 /* Vaccess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vaccess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F5FD6832329912F00D45E20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F5FD6852329912F00D45E20 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +59,7 @@
 		6F5FD6962329912F00D45E20 /* VaccessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VaccessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F5FD69A2329912F00D45E20 /* VaccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccessTests.swift; sourceTree = "<group>"; };
 		6F5FD69C2329912F00D45E20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6F5FD6A5232996D100D45E20 /* VaccineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +105,20 @@
 				6F5FD6852329912F00D45E20 /* FirstViewController.swift */,
 				6F5FD6872329912F00D45E20 /* SecondViewController.swift */,
 				6F5FD6892329912F00D45E20 /* Main.storyboard */,
+				6F384F53233D3B7000CDCA53 /* VaccinationTabBarController.swift */,
+				6F384F51233D1F9800CDCA53 /* HistoryTableViewCell.swift */,
+				6F384F4F233BF99500CDCA53 /* HistoryTableViewController.swift */,
+				6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */,
+				6F384F3F232CE23A00CDCA53 /* Vaccination.swift */,
+				6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */,
+				6F5FD6A5232996D100D45E20 /* VaccineViewController.swift */,
+				6F384F4723368D3B00CDCA53 /* LoginViewController.swift */,
 				6F5FD68C2329912F00D45E20 /* Assets.xcassets */,
 				6F5FD68E2329912F00D45E20 /* LaunchScreen.storyboard */,
 				6F5FD6912329912F00D45E20 /* Info.plist */,
+				6F384F492337651600CDCA53 /* Vaccine.swift */,
+				6F384F4B2337730300CDCA53 /* Protection.swift */,
+				6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */,
 			);
 			path = Vaccess;
 			sourceTree = "<group>";
@@ -204,9 +237,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F384F4A2337651600CDCA53 /* Vaccine.swift in Sources */,
+				6F384F44232D1A7200CDCA53 /* VaccineTableViewController.swift in Sources */,
+				6F384F52233D1F9800CDCA53 /* HistoryTableViewCell.swift in Sources */,
 				6F5FD6882329912F00D45E20 /* SecondViewController.swift in Sources */,
+				6F384F40232CE23A00CDCA53 /* Vaccination.swift in Sources */,
 				6F5FD6842329912F00D45E20 /* AppDelegate.swift in Sources */,
+				6F384F4823368D3B00CDCA53 /* LoginViewController.swift in Sources */,
+				6F384F4E2337BABF00CDCA53 /* VaccinationTimeLeft.swift in Sources */,
+				6F5FD6A6232996D100D45E20 /* VaccineViewController.swift in Sources */,
+				6F384F50233BF99500CDCA53 /* HistoryTableViewController.swift in Sources */,
 				6F5FD6862329912F00D45E20 /* FirstViewController.swift in Sources */,
+				6F384F54233D3B7000CDCA53 /* VaccinationTabBarController.swift in Sources */,
+				6F384F4C2337730300CDCA53 /* Protection.swift in Sources */,
+				6F384F42232CE55400CDCA53 /* VaccineTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +460,7 @@
 				6F5FD6A12329912F00D45E20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6F5FD6A22329912F00D45E20 /* Build configuration list for PBXNativeTarget "VaccessTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +469,7 @@
 				6F5FD6A42329912F00D45E20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
