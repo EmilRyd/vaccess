@@ -37,13 +37,57 @@ enum Vaccine: String {
     Tyfoidfeber = "Tyfoidfeber",
     Vattkoppor = "Vattkoppor"
     
-    
+    static let allValues = [
+    Bältros,
+    Difteri,
+    Gulafebern,
+    Haemophilus_influenzae_typ_b_Hib,
+    Hepatit_A,
+    Hepatit_B,
+    Humant_papillomvirus_HPV,
+    Influensa,
+    Japansk_encefalit,
+    Kikhosta,
+    Kolera,
+    Meningokocker_A_C_Y_W,
+    Meningokocker_B,
+    Meningokocker_C,
+    Mässling,
+    Pneumokocker,
+    Polio,
+    Påssjuka,
+    Rabies,
+    Rotavirus,
+    Röda_hund,
+    Stelkramp,
+    Tick_Borne_Encephalitis_TBE,
+    Tuberkulos_TB,
+    Tyfoidfeber,
+    Vattkoppor]
     
     
     func simpleDescription() -> String {
         return self.rawValue
     }
         
+    func takenOnce() -> Bool {
+        switch self {
+        case .Bältros,
+            .Difteri,
+            .Gulafebern,
+            .Influensa,
+            .Meningokocker_A_C_Y_W,
+            .Meningokocker_B,
+            .Meningokocker_C,
+            .Pneumokocker,
+            .Tuberkulos_TB:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    
     func numberOfShots() -> Int {
         switch self {
         default:

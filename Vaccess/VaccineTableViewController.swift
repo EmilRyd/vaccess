@@ -136,7 +136,7 @@ class VaccineTableViewController: UITableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
             // Delete the row from the data source
@@ -180,7 +180,7 @@ class VaccineTableViewController: UITableViewController {
             }
             
             guard let selectedMealCell = sender as? VaccineTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
+                fatalError("Unexpected sender: \(String(describing: sender))")
             }
             
             guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
@@ -190,15 +190,14 @@ class VaccineTableViewController: UITableViewController {
             let selectedVaccination = vaccinations[indexPath.row]
             vaccineDetailViewController.vaccination = selectedVaccination
         default:
-            fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
 
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        vaccinationTabBarController.vaccinations = vaccinations
+        
         
     }
  
@@ -221,6 +220,9 @@ class VaccineTableViewController: UITableViewController {
                 vaccinations.append(vaccination)
                 
                 tableView.insertRows(at: [indexPath], with: .automatic)
+                
+                let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+                vaccinationTabBarController.vaccinations = vaccinations
             }
         }
     }

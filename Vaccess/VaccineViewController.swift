@@ -28,45 +28,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     var endDateWasManuallyChosen = false
     var vaccination: Vaccination?
     var valdRad: Int!
-    let vacciner = [
-        "Bältros",
-        "Difteri",
-        "Gula febern",
-        "Haemophilus influenzae typ b (Hib)",
-        "Hepatit A",
-        "Hepatit B",
-        "Humant papillomvirus (HPV), 2-valent",
-        "Influensa",
-        "Expandera",
-        "Japansk encefalit",
-        "Kikhosta",
-        "Kolera",
-        "Meningokocker A, C, Y, W",
-        "Meningokocker B",
-        "Meningokocker C",
-        "Mässling",
-        "Pneumokocker",
-        "Polio",
-        "Påssjuka",
-        "Rabies",
-        "Rotavirus",
-        "Röda hund",
-        "Stelkramp",
-        "Tick Borne Encephalitis (TBE)",
-        "Tuberkulos (TB)",
-        "Tyfoidfeber",
-        "Vattkoppor"]
-    
-    let vaccinManTarEnGång = ["Bältros",
-                               "Difteri",
-                               "Gula febern",
-                               "Influensa",
-                               "Meningokocker A, C, Y, W",
-                               "Meningokocker B",
-                               "Meningokocker C",
-                               "Pneumokocker",
-                               "Tuberkulos (TB)"]
-    
+    let vacciner = Vaccine.allValues
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,18 +130,17 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     
     }
     
-    func tapped(gestureRecognizer: UITapGestureRecognizer) {
+    @objc func tapped(gestureRecognizer: UITapGestureRecognizer) {
         
         view.endEditing(true)
         if valdRad != nil {
-        switch vacciner[valdRad] {
-        case let x where vaccinManTarEnGång.contains(x):
-            slutdatumEtikett.isHidden = false
-            slutdatumTextruta.isHidden = false
-        default:
-            dosEtikett.isHidden = true
-            dosTextruta.isHidden = true
-        }
+            if vacciner[valdRad].takenOnce() {
+                slutdatumEtikett.isHidden = false
+                slutdatumTextruta.isHidden = false
+            } else {
+                dosEtikett.isHidden = true
+                dosTextruta.isHidden = true
+            }
         }
         
        
@@ -200,14 +161,15 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return vacciner[row]
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String {
+        
+        return vacciner[row].simpleDescription()
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         valdRad = row
-        navigationItem.title = vacciner[row]
-        vaccintypTextruta.text = vacciner[row]
+        navigationItem.title = vacciner[row].simpleDescription()
+        vaccintypTextruta.text = vacciner[row].simpleDescription()
         startdatumTextruta.text = nil
         slutdatumTextruta.text = nil
         

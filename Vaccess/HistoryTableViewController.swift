@@ -17,8 +17,7 @@ class HistoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
-        vaccinations = vaccinationTabBarController.vaccinations
+      
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -40,7 +39,7 @@ class HistoryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
+            
             return vaccinations.count
         
         
@@ -113,10 +112,11 @@ class HistoryTableViewController: UITableViewController {
     }
     */
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
         vaccinations = vaccinationTabBarController.vaccinations
-        
+        tableView.reloadData()
     }
 
 }
