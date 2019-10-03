@@ -8,14 +8,13 @@
 
 import Foundation
 
-class Vaccination {
+class Vaccination: Equatable, Comparable {
     
     //MARK: Properties
     
     var vaccine: Vaccine
     var startDate: Date
     var manualEndDate: Date?
-    
     //MARK: Initialization
     
     init?(vaccine: Vaccine, startDate: Date) {
@@ -84,4 +83,58 @@ class Vaccination {
         return endDate
         
     }
+    
+    //MARK: Equatable Protocol functions
+    
+    static func == (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
+        let firstBool = (vaccination1.startDate == vaccination2.startDate)
+        if firstBool {
+            let secondBool = (vaccination1.vaccine == vaccination2.vaccine)
+            if secondBool {
+                let thirdBool = (vaccination1.getEndDate() == vaccination2.getEndDate())
+                if thirdBool {
+                    return true
+                }
+                else {
+                    return false
+                }
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return false
+        }
+    }
+    
+    static func != (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
+        let firstBool = (vaccination1.startDate == vaccination2.startDate)
+        if firstBool {
+            let secondBool = (vaccination1.vaccine == vaccination2.vaccine)
+            if secondBool {
+                let thirdBool = (vaccination1.getEndDate() == vaccination2.getEndDate())
+                if thirdBool {
+                    return false
+                }
+                else {
+                    return true
+                }
+            }
+            else {
+                return true
+            }
+        }
+        else {
+            return true
+        }
+    
+    }
+    
+    //MARK: Comparable Protocol functions
+    static func < (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
+            return (vaccination1.startDate < vaccination2.startDate)
+    }
+    
+    
 }

@@ -28,7 +28,7 @@ class VaccineTableViewController: UITableViewController {
         
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
         vaccinationTabBarController.vaccinations = vaccinations
-        
+        vaccinationTabBarController.allVaccinations = vaccinations
         
     }
 
@@ -136,11 +136,19 @@ class VaccineTableViewController: UITableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
             // Delete the row from the data source
             vaccinations.remove(at: indexPath.row)
+            
+            // Make sure the general vaccinations array is updated and informed after this change
+            let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+            vaccinationTabBarController.vaccinations = vaccinations
+            
+            let indexOfVaccineOfThatType = vaccinationTabBarController.allVaccinations.index(of: vaccinations[indexPath.row])
+            vaccinationTabBarController.allVaccinations.remove(at: indexOfVaccineOfThatType!)
+
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -223,6 +231,7 @@ class VaccineTableViewController: UITableViewController {
                 
                 let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
                 vaccinationTabBarController.vaccinations = vaccinations
+                vaccinationTabBarController.allVaccinations.append(vaccinations[indexPath.row])
             }
         }
     }

@@ -1,19 +1,15 @@
 //
-//  VaccinationTabBarController.swift
+//  HistoryViewController.swift
 //  Vaccess
 //
-//  Created by Gustav Ryd on 2019-09-26.
+//  Created by Gustav Ryd on 2019-10-02.
 //  Copyright © 2019 Ryd Corporation. All rights reserved.
 //
 
 import UIKit
 
-class VaccinationTabBarController: UITabBarController {
+class HistoryViewController: UIViewController {
 
-    //MARK: Properties
-    var vaccinations = [Vaccination]()
-    var allVaccinations = [Vaccination]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

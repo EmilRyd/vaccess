@@ -14,7 +14,7 @@ class HistoryTableViewController: UITableViewController {
     //MARK: Properties
     var vaccinations = [Vaccination]()
 
-    override func viewDidLoad() {
+   override func viewDidLoad() {
         super.viewDidLoad()
         
       
@@ -118,5 +118,32 @@ class HistoryTableViewController: UITableViewController {
         vaccinations = vaccinationTabBarController.vaccinations
         tableView.reloadData()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowHistory" {
+            let destinationNavigationController = segue.destination as! UINavigationController
+            let destinationViewController = destinationNavigationController.viewControllers[0] as! VaccineHistoryTableViewController
+            
+            destinationViewController.sourceViewController = self
 
+        
+        guard let selectedCell = sender as? HistoryTableViewCell else {
+            fatalError("Unexpected sender: \(sender)")
+        }
+        
+        guard let indexPath = tableView.indexPath(for: selectedCell) else {
+            fatalError("The selected cell is not being displayed by the table")
+        }
+        
+        let selectedVaccine = vaccinations[indexPath.row].vaccine
+        destinationViewController.vaccine = selectedVaccine
+        }
+    }
+    
+    //MARK: Private Methods
+    @IBAction func unwindToHistoryTable(sender: UIStoryboardSegue){
+        if let sourceViewController = sender.source as? VaccineHistoryTableViewController {
+            
+        }
+    }
 }

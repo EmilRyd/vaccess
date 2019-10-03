@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="40" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="38B-Ic-KHF" id="YRk-FK-q5E">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Vaccin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gz-ui-Xjr">
@@ -220,10 +220,10 @@
                     <navigationItem key="navigationItem" title="Vaccin" id="DT9-X3-yeN">
                         <barButtonItem key="leftBarButtonItem" title="Avsluta" id="jBc-ZK-aeb">
                             <connections>
-                                <action selector="cancel:" destination="eW7-N6-sCI" id="J3h-fz-lez"/>
+                                <action selector="cancel:" destination="eW7-N6-sCI" id="8Mg-UG-jw9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Spara" id="0Jo-dH-2pd">
+                        <barButtonItem key="rightBarButtonItem" title="Spara" style="done" id="0Jo-dH-2pd">
                             <connections>
                                 <segue destination="FsG-3f-vIJ" kind="unwind" unwindAction="unwindToVaccineListWithSender:" id="DvD-pF-Hy8"/>
                             </connections>
@@ -288,7 +288,6 @@
         <!--Second-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
                 <viewController title="Second" id="8rJ-Kc-sve" customClass="SecondViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
@@ -327,6 +326,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="W3e-dA-Wa8"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1652" y="365"/>
         </scene>
@@ -386,7 +386,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mcs-17-gCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2650" y="-631"/>
+            <point key="canvasLocation" x="2609" y="-1379"/>
         </scene>
         <!--Second-->
         <scene sceneID="fiV-p2-Ofy">
@@ -420,7 +420,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iWv-xq-z8Q" id="g7p-G1-7Hk">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgA-df-6Yr">
@@ -445,6 +445,7 @@
                                 <connections>
                                     <outlet property="VaccineImage" destination="IgA-df-6Yr" id="7Zj-X1-TTr"/>
                                     <outlet property="VaccineLabel" destination="83i-FJ-fhE" id="57j-XS-i4T"/>
+                                    <segue destination="0aR-nf-UNd" kind="show" identifier="ShowHistory" id="Pbp-6j-9AQ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -453,7 +454,7 @@
                             <outlet property="delegate" destination="lUQ-bn-6Xf" id="Tg6-ry-fBZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="DRe-FX-A6b"/>
+                    <navigationItem key="navigationItem" title="Historik" id="DRe-FX-A6b"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tI-jn-rrU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -477,6 +478,93 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pYx-lD-8Mq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="-335"/>
+        </scene>
+        <!--VaccineHistoryViewController-->
+        <scene sceneID="GQj-jp-3Fk">
+            <objects>
+                <viewController storyboardIdentifier="HistoryViewController" title="VaccineHistoryViewController" id="xiI-P0-Oeq" customClass="VaccineHistoryTableViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="cE3-uo-i4k">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="VaccineHistoryTableViewcell" selectionStyle="default" indentationWidth="10" reuseIdentifier="VaccineHistoryTableViewCell" id="fbl-dd-o3X" customClass="VaccineHistoryTableViewCell" customModule="Vaccess" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fbl-dd-o3X" id="j7H-d5-G4P">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Taget:" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kX4-8p-17h">
+                                            <rect key="frame" x="8" y="8" width="180" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Går/gick ut:" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O8O-w3-BLp">
+                                            <rect key="frame" x="187" y="8" width="180" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zuS-rs-ueK">
+                                            <rect key="frame" x="8" y="46" width="180" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="un8-Hs-6lu">
+                                            <rect key="frame" x="187" y="46" width="180" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="enddateLabel" destination="un8-Hs-6lu" id="u2H-vr-eEr"/>
+                                    <outlet property="startdateLabel" destination="zuS-rs-ueK" id="Pao-MM-DVg"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Historik" id="sOD-ru-bVJ">
+                        <barButtonItem key="leftBarButtonItem" title="Tillbaka" id="Gj0-hN-XBr">
+                            <connections>
+                                <segue destination="qfZ-yV-Q5F" kind="unwind" unwindAction="unwindToHistoryTableWithSender:" id="8ld-HB-wMO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="backButton" destination="Gj0-hN-XBr" id="KCC-Wh-lQG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gAO-aO-2v1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="qfZ-yV-Q5F" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3629.5999999999999" y="-335.08245877061472"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="A5T-ch-G3L">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0aR-nf-UNd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e0j-Hv-qhd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="xiI-P0-Oeq" kind="relationship" relationship="rootViewController" id="Ubt-ut-uii"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y3w-8m-jsR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2609" y="-335"/>
         </scene>
     </scenes>
     <resources>

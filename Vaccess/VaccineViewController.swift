@@ -161,7 +161,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         return vacciner[row].simpleDescription()
     }
@@ -201,8 +201,9 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     }
     
 
-    
     // MARK: - Navigation
+
+    
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
         let isPresentingInAddVaccinationMode = presentingViewController is UINavigationController
@@ -216,7 +217,10 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         else {
             fatalError("The VaccineViewController is not inside a navigation controller.")
         }
+
+    
     }
+    
     
     @IBAction func addNewDose(_ sender: UIButton) {
         
