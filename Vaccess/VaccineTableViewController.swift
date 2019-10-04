@@ -14,7 +14,7 @@ class VaccineTableViewController: UITableViewController {
     //MARK: Properties
     
     var vaccinations = [Vaccination]()
-
+    var vaccinationTabBarController: VaccinationTabBarController?
     
     let titlar = ["Vaccin du tagit:", "Vaccin du håller på att ta", "Vaccin du inte tagit:"]
     
@@ -145,7 +145,7 @@ class VaccineTableViewController: UITableViewController {
             // Make sure the general vaccinations array is updated and informed after this change
             let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
             vaccinationTabBarController.vaccinations = vaccinations
-            
+            //FIXA DETTA!
             let indexOfVaccineOfThatType = vaccinationTabBarController.allVaccinations.index(of: vaccinations[indexPath.row])
             vaccinationTabBarController.allVaccinations.remove(at: indexOfVaccineOfThatType!)
 
@@ -224,18 +224,33 @@ class VaccineTableViewController: UITableViewController {
             
             }
             else {
+                
                 let indexPath = IndexPath(item: vaccinations.count, section: 0)
+                var x = 0
+     outerLoop: for i in vaccinations {
+                    if vaccination.vaccine == i.vaccine {
+                        vaccinations.remove(at: x)
+                        let newIndexPath = IndexPath(row: x, section: 0)
+                        tableView.deleteRows(at: [newIndexPath], with: .fade)
+
+                        break outerLoop
+                    }
+                    else {
+                        x += 1
+                    }
+                }
+                
                 vaccinations.append(vaccination)
                 
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 
-                let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-                vaccinationTabBarController.vaccinations = vaccinations
-                vaccinationTabBarController.allVaccinations.append(vaccinations[indexPath.row])
-            }
+                vaccinationTabBarController = tabBarController as? VaccinationTabBarController
+                vaccinationTabBarController!.vaccinations = vaccinations
+                vaccinationTabBarController!.allVaccinations.append(vaccinations[indexPath.row])
+                
         }
     }
-    
+    }
     // Private Methods
     
     private func loadSampleVaccines() {
