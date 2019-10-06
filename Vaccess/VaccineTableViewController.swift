@@ -14,7 +14,7 @@ class VaccineTableViewController: UITableViewController {
     //MARK: Properties
     
     var vaccinations = [Vaccination]()
-    var vaccinationTabBarController: VaccinationTabBarController?
+    var vaccinationTabBarController: VaccinationTabBarController!
     
     let titlar = ["Vaccin du tagit:", "Vaccin du håller på att ta", "Vaccin du inte tagit:"]
     
@@ -118,7 +118,7 @@ class VaccineTableViewController: UITableViewController {
             cell.tidsEtikett.text = "Livslångt"
 
     }
-    
+        
         return cell
     }
     
@@ -139,8 +139,7 @@ class VaccineTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            // Delete the row from the data source
-            vaccinations.remove(at: indexPath.row)
+            
             
             // Make sure the general vaccinations array is updated and informed after this change
             let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
@@ -149,7 +148,8 @@ class VaccineTableViewController: UITableViewController {
             let indexOfVaccineOfThatType = vaccinationTabBarController.allVaccinations.index(of: vaccinations[indexPath.row])
             vaccinationTabBarController.allVaccinations.remove(at: indexOfVaccineOfThatType!)
 
-            
+            // Delete the row from the data source
+            vaccinations.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -203,9 +203,8 @@ class VaccineTableViewController: UITableViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        
+    override func viewWillAppear(_ animated: Bool) {
+        vaccinationTabBarController = tabBarController as? VaccinationTabBarController
         
     }
  
@@ -219,18 +218,25 @@ class VaccineTableViewController: UITableViewController {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
                 // Update an existing meal.
+                let indexOfVaccineOfThatType = vaccinationTabBarController.allVaccinations.index(of: vaccinations[selectedIndexPath.row])
+                vaccinationTabBarController.allVaccinations.remove(at: indexOfVaccineOfThatType!)
+                vaccinationTabBarController.allVaccinations.append(vaccination)
+                
                 vaccinations[selectedIndexPath.row] = vaccination
+                vaccinationTabBarController.vaccinations = vaccinations
+                
+
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             
             }
             else {
                 
-                let indexPath = IndexPath(item: vaccinations.count, section: 0)
                 var x = 0
+                let newIndexPath: IndexPath
      outerLoop: for i in vaccinations {
                     if vaccination.vaccine == i.vaccine {
                         vaccinations.remove(at: x)
-                        let newIndexPath = IndexPath(row: x, section: 0)
+                        newIndexPath = IndexPath(row: x, section: 0)
                         tableView.deleteRows(at: [newIndexPath], with: .fade)
 
                         break outerLoop
@@ -239,15 +245,14 @@ class VaccineTableViewController: UITableViewController {
                         x += 1
                     }
                 }
-                
+
                 vaccinations.append(vaccination)
+
                 
-                tableView.insertRows(at: [indexPath], with: .automatic)
                 
-                vaccinationTabBarController = tabBarController as? VaccinationTabBarController
-                vaccinationTabBarController!.vaccinations = vaccinations
-                vaccinationTabBarController!.allVaccinations.append(vaccinations[indexPath.row])
-                
+                vaccinationTabBarController.vaccinations = vaccinations
+                vaccinationTabBarController.allVaccinations.append(vaccination)
+                tableView.reloadData()
         }
     }
     }

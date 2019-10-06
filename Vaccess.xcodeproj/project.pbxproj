@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E82802F23465AB4006CBE4E /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E82802E23465AB4006CBE4E /* HistoryViewController.swift */; };
+		1E82803323465AF9006CBE4E /* VaccineHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E82803023465AF9006CBE4E /* VaccineHistoryTableViewCell.swift */; };
+		1E82803423465AF9006CBE4E /* AllVaccinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E82803123465AF9006CBE4E /* AllVaccinations.swift */; };
+		1E82803523465AF9006CBE4E /* VaccineHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E82803223465AF9006CBE4E /* VaccineHistoryTableViewController.swift */; };
+		1E8280372348AB71006CBE4E /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8280362348AB71006CBE4E /* ArrayExtension.swift */; };
 		6F384F40232CE23A00CDCA53 /* Vaccination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F3F232CE23A00CDCA53 /* Vaccination.swift */; };
 		6F384F42232CE55400CDCA53 /* VaccineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */; };
 		6F384F44232D1A7200CDCA53 /* VaccineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */; };
-		6F384F4823368D3B00CDCA53 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4723368D3B00CDCA53 /* LoginViewController.swift */; };
 		6F384F4A2337651600CDCA53 /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F492337651600CDCA53 /* Vaccine.swift */; };
 		6F384F4C2337730300CDCA53 /* Protection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4B2337730300CDCA53 /* Protection.swift */; };
 		6F384F4E2337BABF00CDCA53 /* VaccinationTimeLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */; };
@@ -38,10 +42,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E82802E23465AB4006CBE4E /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		1E82803023465AF9006CBE4E /* VaccineHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		1E82803123465AF9006CBE4E /* AllVaccinations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllVaccinations.swift; sourceTree = "<group>"; };
+		1E82803223465AF9006CBE4E /* VaccineHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineHistoryTableViewController.swift; sourceTree = "<group>"; };
+		1E8280362348AB71006CBE4E /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		6F384F3F232CE23A00CDCA53 /* Vaccination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vaccination.swift; sourceTree = "<group>"; };
 		6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineTableViewCell.swift; sourceTree = "<group>"; };
 		6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccineTableViewController.swift; sourceTree = "<group>"; };
-		6F384F4723368D3B00CDCA53 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
 		6F384F492337651600CDCA53 /* Vaccine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
 		6F384F4B2337730300CDCA53 /* Protection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protection.swift; sourceTree = "<group>"; };
 		6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaccinationTimeLeft.swift; sourceTree = "<group>"; };
@@ -101,6 +109,10 @@
 		6F5FD6822329912F00D45E20 /* Vaccess */ = {
 			isa = PBXGroup;
 			children = (
+				1E82803123465AF9006CBE4E /* AllVaccinations.swift */,
+				1E82803023465AF9006CBE4E /* VaccineHistoryTableViewCell.swift */,
+				1E82803223465AF9006CBE4E /* VaccineHistoryTableViewController.swift */,
+				1E82802E23465AB4006CBE4E /* HistoryViewController.swift */,
 				6F5FD6832329912F00D45E20 /* AppDelegate.swift */,
 				6F5FD6852329912F00D45E20 /* FirstViewController.swift */,
 				6F5FD6872329912F00D45E20 /* SecondViewController.swift */,
@@ -110,13 +122,13 @@
 				6F384F4F233BF99500CDCA53 /* HistoryTableViewController.swift */,
 				6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */,
 				6F384F3F232CE23A00CDCA53 /* Vaccination.swift */,
+				1E8280362348AB71006CBE4E /* ArrayExtension.swift */,
 				6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */,
 				6F5FD6A5232996D100D45E20 /* VaccineViewController.swift */,
-				6F384F4723368D3B00CDCA53 /* LoginViewController.swift */,
+				6F384F492337651600CDCA53 /* Vaccine.swift */,
 				6F5FD68C2329912F00D45E20 /* Assets.xcassets */,
 				6F5FD68E2329912F00D45E20 /* LaunchScreen.storyboard */,
 				6F5FD6912329912F00D45E20 /* Info.plist */,
-				6F384F492337651600CDCA53 /* Vaccine.swift */,
 				6F384F4B2337730300CDCA53 /* Protection.swift */,
 				6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */,
 			);
@@ -198,6 +210,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -240,13 +253,17 @@
 				6F384F4A2337651600CDCA53 /* Vaccine.swift in Sources */,
 				6F384F44232D1A7200CDCA53 /* VaccineTableViewController.swift in Sources */,
 				6F384F52233D1F9800CDCA53 /* HistoryTableViewCell.swift in Sources */,
+				1E8280372348AB71006CBE4E /* ArrayExtension.swift in Sources */,
 				6F5FD6882329912F00D45E20 /* SecondViewController.swift in Sources */,
+				1E82803323465AF9006CBE4E /* VaccineHistoryTableViewCell.swift in Sources */,
 				6F384F40232CE23A00CDCA53 /* Vaccination.swift in Sources */,
+				1E82802F23465AB4006CBE4E /* HistoryViewController.swift in Sources */,
 				6F5FD6842329912F00D45E20 /* AppDelegate.swift in Sources */,
-				6F384F4823368D3B00CDCA53 /* LoginViewController.swift in Sources */,
 				6F384F4E2337BABF00CDCA53 /* VaccinationTimeLeft.swift in Sources */,
+				1E82803523465AF9006CBE4E /* VaccineHistoryTableViewController.swift in Sources */,
 				6F5FD6A6232996D100D45E20 /* VaccineViewController.swift in Sources */,
 				6F384F50233BF99500CDCA53 /* HistoryTableViewController.swift in Sources */,
+				1E82803423465AF9006CBE4E /* AllVaccinations.swift in Sources */,
 				6F5FD6862329912F00D45E20 /* FirstViewController.swift in Sources */,
 				6F384F54233D3B7000CDCA53 /* VaccinationTabBarController.swift in Sources */,
 				6F384F4C2337730300CDCA53 /* Protection.swift in Sources */,
@@ -332,7 +349,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -376,7 +393,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -394,7 +411,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ryd.Vaccess;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -407,7 +424,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ryd.Vaccess;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

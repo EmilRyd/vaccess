@@ -116,12 +116,19 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         
         if datumVäljare === startDatePicker {
             startdatum = datumVäljare.date
-            startdatumTextruta.text = datumsFormat.string(from: datumVäljare.date)
-            if slutdatum(startdatum: startdatum) != nil {
-                slutdatumTextruta.text = datumsFormat.string(from: slutdatum)
+            startdatumTextruta.text = datumsFormat.string(from: startdatum)
+            
+            let checkVaccintypTextruta = vaccintypTextruta.text ?? ""
+            if !checkVaccintypTextruta.isEmpty {
+                vaccination = Vaccination(vaccine: Vaccine(rawValue: (vaccintypTextruta!.text!))!, startDate: startdatum)
+                if vaccination?.vaccine.endDate(startDate: startdatum) != nil {
+                    slutdatumTextruta.text = datumsFormat.string(from: (vaccination?.vaccine.endDate(startDate: startdatum)!)!)
+                }
+                else {
+                    slutdatum(startdatum: startdatum)
+                }
             }
         }
-        
         else if datumVäljare === endDatePicker {
             slutdatum = datumVäljare.date
             slutdatumTextruta.text = datumsFormat.string(from: datumVäljare.date)
@@ -254,16 +261,13 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     
     func slutdatum(startdatum: Date) -> Date? {
         
-        var varingstid = DateComponents()
         let openText = vaccintypTextruta.text!
         let vaccine = Vaccine(rawValue: openText)
         let protection = vaccine!.protection()
         
         switch protection {
-        case let .time(years):
-            varingstid.year = years
-            let slutDatum = Calendar.current.date(byAdding: varingstid, to: startdatum)
-            return slutDatum
+        case .time:
+            return vaccination?.getEndDate()
         case .lifeLong:
             slutdatumTextruta.text = "Du är skyddad för resten av livet!"
         case .unknown:

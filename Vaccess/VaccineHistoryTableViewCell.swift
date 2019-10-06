@@ -11,13 +11,14 @@ import UIKit
 class VaccineHistoryTableViewCell: UITableViewCell {
 
     //MARK: Properties
-    @IBOutlet weak var startdateLabel: UILabel!
-    @IBOutlet weak var enddateLabel: UILabel!
+    @IBOutlet weak var startdateTextField: UITextField!
+    @IBOutlet weak var enddateTextField: UITextField!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

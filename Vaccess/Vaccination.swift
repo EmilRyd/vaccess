@@ -31,7 +31,7 @@ class Vaccination: Equatable, Comparable {
     }
     
     func getVaccinationTimeLeft(atDate: Date) -> VaccinationTimeLeft {
-        let endDate = self.getEndDate(atDate: atDate)
+        let endDate = self.getEndDate(atDate: startDate)
 
         if (endDate != nil) {
             let years = Set([Calendar.Component.year])
@@ -87,48 +87,15 @@ class Vaccination: Equatable, Comparable {
     //MARK: Equatable Protocol functions
     
     static func == (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
-        let firstBool = (vaccination1.startDate == vaccination2.startDate)
-        if firstBool {
-            let secondBool = (vaccination1.vaccine == vaccination2.vaccine)
-            if secondBool {
-                let thirdBool = (vaccination1.getEndDate() == vaccination2.getEndDate())
-                if thirdBool {
-                    return true
-                }
-                else {
-                    return false
-                }
-            }
-            else {
-                return false
-            }
-        }
-        else {
-            return false
-        }
+       
+        
+        return vaccination1.startDate == vaccination2.startDate && vaccination1.vaccine == vaccination2.vaccine && vaccination1.getEndDate() == vaccination2.getEndDate()
     }
     
     static func != (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
-        let firstBool = (vaccination1.startDate == vaccination2.startDate)
-        if firstBool {
-            let secondBool = (vaccination1.vaccine == vaccination2.vaccine)
-            if secondBool {
-                let thirdBool = (vaccination1.getEndDate() == vaccination2.getEndDate())
-                if thirdBool {
-                    return false
-                }
-                else {
-                    return true
-                }
-            }
-            else {
-                return true
-            }
-        }
-        else {
-            return true
-        }
+        return !(vaccination1.startDate == vaccination2.startDate && vaccination1.vaccine == vaccination2.vaccine && vaccination1.getEndDate() == vaccination2.getEndDate())
     
+        
     }
     
     //MARK: Comparable Protocol functions

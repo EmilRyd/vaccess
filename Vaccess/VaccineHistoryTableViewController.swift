@@ -8,20 +8,31 @@
 import os.log
 import UIKit
 
-class VaccineHistoryTableViewController: UITableViewController {
+class VaccineHistoryTableViewController: UITableViewController, UITextFieldDelegate{
 
     //MARK: Properties
     var vaccine: Vaccine! = nil
     var vaccinations = [Vaccination]()
     @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     var sourceViewController: UIViewController? = nil
     var sectionsArray = [Vaccination]()
+    let datumsFormat = DateFormatter()
+    var startDatePicker = UIDatePicker()
+    var endDatePicker = UIDatePicker()
+    let dateFormat = DateFormatter()
+
+    var tableViewWasEdited = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = vaccine.rawValue
         sectionsArray = getArrayWithVaccinationsOfRightType()
-        // Hej Emil! Den 3:e Oktober ska du få in logike nsom bestämmer hur många rader det ska vara i denna tablieView och vad de ska fyllas med! Lycka till, och kom ihåg vad som står på spel! Njut inte bort tiden, utan arbeta!
+        saveButton.isEnabled = false
+        
+                // Hej Emil! Den 3:e Oktober ska du få in logike nsom bestämmer hur många rader det ska vara i denna tablieView och vad de ska fyllas med! Lycka till, och kom ihåg vad som står på spel! Njut inte bort tiden, utan arbeta!
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -50,6 +61,8 @@ class VaccineHistoryTableViewController: UITableViewController {
     }
     
     
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
@@ -64,21 +77,21 @@ class VaccineHistoryTableViewController: UITableViewController {
         let vaccination = sectionsArray[indexPath.row]
         
         // Configure the cell...
-        let dateFormat = DateFormatter()
         dateFormat.dateFormat = "dd/MM - yyyy"
         
         
-        cell.startdateLabel.text = dateFormat.string(from: vaccination.startDate)
-        
+        cell.startdateTextField.text = dateFormat.string(from: vaccination.startDate)
+        cell.startdateTextField.isEnabled = false
         if vaccination.getEndDate() != nil {
-            cell.enddateLabel.text = dateFormat.string(from: vaccination.getEndDate()!)
+            cell.enddateTextField.text = dateFormat.string(from: vaccination.getEndDate()!)
+            cell.enddateTextField.isEnabled = false
         }
         else {
             switch vaccination.vaccine.protection() {
             case .unknown:
-                cell.enddateLabel.text = "Obestämt"
+                cell.enddateTextField.text = "Obestämt"
             case .lifeLong:
-                cell.enddateLabel.text = "Livslångt"
+                cell.enddateTextField.text = "Livslångt"
             default:
                 fatalError("Inconcsistent Protection attribute")
             }
@@ -125,6 +138,23 @@ class VaccineHistoryTableViewController: UITableViewController {
      */
     
     
+    
+    //MARK: UITextFieldDelegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+    }
+    
+   
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -135,6 +165,9 @@ class VaccineHistoryTableViewController: UITableViewController {
         guard let button = sender as? UIBarButtonItem, button === backButton else {
             os_log("The back button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
+            
+            
+        
         }
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
@@ -167,6 +200,68 @@ class VaccineHistoryTableViewController: UITableViewController {
         return sectionsArray
         
     }
+   
+    
+    //MARK: Actions
+    
+    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+        tableViewWasEdited = true
+        for index in 0...(sectionsArray.count - 1){
+            let vaccineHistoryTableViewCell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! VaccineHistoryTableViewCell
+            vaccineHistoryTableViewCell.startdateTextField.isEnabled = true
+            vaccineHistoryTableViewCell.enddateTextField.isEnabled = true
+            
+            vaccineHistoryTableViewCell.startdateTextField.delegate = self
+            vaccineHistoryTableViewCell.enddateTextField.delegate = self
+            
+        }
+       //navigationItem.rightBarButtonItem.title = "Spara"
+        
+
+        editButton.isEnabled = false
+        saveButton.isEnabled = true
+    }
+    
+    
+    @IBAction func saveChanges(_ sender: UIBarButtonItem) {
+            
+        let vaccinationTabBarController = sourceViewController?.tabBarController as! VaccinationTabBarController
+        var allVaccinations = vaccinationTabBarController.allVaccinations
+        var x = 0
+        for i in sectionsArray {
+            let currentTableViewCell = tableView.cellForRow(at: IndexPath(row: x, section: 0)) as! VaccineHistoryTableViewCell
+            
+            let sDate = dateFormat.date(from: currentTableViewCell.startdateTextField.text!)
+            if sDate != nil && dateFormat.date(from: currentTableViewCell.enddateTextField.text!) != nil {
+                
+                let editedVaccinationIndex = allVaccinations.firstIndex(of: i)
+                let newVaccination = Vaccination(vaccine: vaccine, startDate: sDate!)!
+                newVaccination.setEndDate(endDate: dateFormat.date(from: currentTableViewCell.enddateTextField.text!)!)
+                allVaccinations[editedVaccinationIndex!] = newVaccination
+                vaccinationTabBarController.allVaccinations = allVaccinations
+                
+                if x == 0 {
+                    var ourVaccinations = vaccinationTabBarController.vaccinations
+                    let ourEditedVaccinationIndex = ourVaccinations.firstIndex(of: i)
+                    ourVaccinations[ourEditedVaccinationIndex!] = newVaccination
+                    vaccinationTabBarController.vaccinations = ourVaccinations
+                }
+            }
+            else {
+                return
+            }
+            x += 1
+            currentTableViewCell.startdateTextField.isEnabled = false
+            currentTableViewCell.enddateTextField.isEnabled = false
+        }
+
+        saveButton.isEnabled = false
+        editButton.isEnabled = true
+        
+    }
+    
+    
+    
     
 }
 
