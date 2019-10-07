@@ -13,6 +13,7 @@ class VaccinationTabBarController: UITabBarController {
     //MARK: Properties
     var vaccinations = [Vaccination]()
     var allVaccinations = [Vaccination]()
+    var vaccinationsWereChangedInVaccinationHistoryTableViewController: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

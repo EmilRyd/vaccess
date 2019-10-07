@@ -21,7 +21,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     let datumsFormat = DateFormatter()
     var startDatePicker = UIDatePicker()
     var endDatePicker = UIDatePicker()
-    let dateFormat = DateFormatter()
+    let dateFormatter = DateFormatter()
 
     var tableViewWasEdited = false
     
@@ -77,13 +77,13 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         let vaccination = sectionsArray[indexPath.row]
         
         // Configure the cell...
-        dateFormat.dateFormat = "dd/MM - yyyy"
+        dateFormatter.dateFormat = "dd/MM - yyyy"
         
         
-        cell.startdateTextField.text = dateFormat.string(from: vaccination.startDate)
+        cell.startdateTextField.text = dateFormatter.string(from: vaccination.startDate)
         cell.startdateTextField.isEnabled = false
         if vaccination.getEndDate() != nil {
-            cell.enddateTextField.text = dateFormat.string(from: vaccination.getEndDate()!)
+            cell.enddateTextField.text = dateFormatter.string(from: vaccination.getEndDate()!)
             cell.enddateTextField.isEnabled = false
         }
         else {
@@ -115,6 +115,25 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            sectionsArray = getArrayWithVaccinationsOfRightType()
+            
+            let vaccinationTabBarController = sourceViewController?.tabBarController as! VaccinationTabBarController
+            var allVaccinations = vaccinationTabBarController.allVaccinations
+            
+            let indexForThisVaccination = allVaccinations.firstIndex(of: sectionsArray[indexPath.row])
+            allVaccinations.remove(at: indexForThisVaccination!)
+            vaccinationTabBarController.allVaccinations = allVaccinations
+            
+            if indexPath.row == 0 {
+                vaccinationTabBarController.vaccinations.remove(sectionsArray[indexPath.row])
+            }
+
+            sectionsArray.remove(at: indexPath.row)
+            
+            if sectionsArray.count == 0 {
+                
+            }
+
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -224,19 +243,19 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     
     
     @IBAction func saveChanges(_ sender: UIBarButtonItem) {
-            
+        
         let vaccinationTabBarController = sourceViewController?.tabBarController as! VaccinationTabBarController
         var allVaccinations = vaccinationTabBarController.allVaccinations
         var x = 0
         for i in sectionsArray {
             let currentTableViewCell = tableView.cellForRow(at: IndexPath(row: x, section: 0)) as! VaccineHistoryTableViewCell
             
-            let sDate = dateFormat.date(from: currentTableViewCell.startdateTextField.text!)
-            if sDate != nil && dateFormat.date(from: currentTableViewCell.enddateTextField.text!) != nil {
+            let sDate = dateFormatter.date(from: currentTableViewCell.startdateTextField.text!)
+            if sDate != nil && dateFormatter.date(from: currentTableViewCell.enddateTextField.text!) != nil {
                 
                 let editedVaccinationIndex = allVaccinations.firstIndex(of: i)
                 let newVaccination = Vaccination(vaccine: vaccine, startDate: sDate!)!
-                newVaccination.setEndDate(endDate: dateFormat.date(from: currentTableViewCell.enddateTextField.text!)!)
+                newVaccination.setEndDate(endDate: dateFormatter.date(from: currentTableViewCell.enddateTextField.text!)!)
                 allVaccinations[editedVaccinationIndex!] = newVaccination
                 vaccinationTabBarController.allVaccinations = allVaccinations
                 
@@ -248,6 +267,10 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                 }
             }
             else {
+                let alert = UIAlertController(title: "Kunde inte redigera vaccineringen", message: "Se till att de öndrade datumen står i rätt typsnitt (dd/mm - åååå). Titta efter om du möjligtvis glömt ett mellanslag någonstans.", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "Ok", style: .cancel)
+                alert.addAction(alertAction)
+                present(alert, animated: false, completion: nil)
                 return
             }
             x += 1

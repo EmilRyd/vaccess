@@ -205,6 +205,8 @@ class VaccineTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         vaccinationTabBarController = tabBarController as? VaccinationTabBarController
+        vaccinations = vaccinationTabBarController.vaccinations
+        tableView.reloadData()
         
     }
  

@@ -248,13 +248,16 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         }
         
         let namn = vaccintypTextruta.text ?? ""
-        
+        startdatum = datumsFormat.date(from: startdatumTextruta.text!)!
+
         // Set the meal to be passed to VaccineTableViewController after the unwind segue.
         vaccination = Vaccination(vaccine: Vaccine(rawValue: namn)!, startDate: startdatum)
         
-        if endDateWasManuallyChosen {
-            vaccination?.setEndDate(endDate: slutdatum)
-        }
+        
+        slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
+        
+        vaccination?.setEndDate(endDate: slutdatum)
+        
     }
     
     //MARK: Private Methods

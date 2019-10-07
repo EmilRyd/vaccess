@@ -113,7 +113,7 @@ class HistoryTableViewController: UITableViewController {
     */
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
         vaccinations = vaccinationTabBarController.vaccinations
         tableView.reloadData()
@@ -142,8 +142,8 @@ class HistoryTableViewController: UITableViewController {
     
     //MARK: Private Methods
     @IBAction func unwindToHistoryTable(sender: UIStoryboardSegue){
-        if let sourceViewController = sender.source as? VaccineHistoryTableViewController {
-            
-        }
+        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+        vaccinations = vaccinationTabBarController.vaccinations
+        tableView.reloadData()
     }
 }
