@@ -305,7 +305,7 @@
         <scene sceneID="Y38-aD-xS2">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9M8-Ad-YPt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Mina Vaccin" image="MinaVaccinationerImage" selectedImage="MinaVaccinationerImage" id="xVI-bh-2hh"/>
+                    <tabBarItem key="tabBarItem" title="Mina Vaccin" image="Image-1" selectedImage="Image-1" id="xVI-bh-2hh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GrJ-tu-P4y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -342,7 +342,7 @@
         <scene sceneID="fiV-p2-Ofy">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DrX-LQ-gca" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Second" image="second" selectedImage="first" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OQo-lE-pBO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -410,11 +410,11 @@
             </objects>
             <point key="canvasLocation" x="1688.8" y="-335.08245877061472"/>
         </scene>
-        <!--Item-->
+        <!--Historik-->
         <scene sceneID="36z-91-lXt">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VJH-4a-5Sl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="4nc-64-ZH3"/>
+                    <tabBarItem key="tabBarItem" title="Historik" image="Image" selectedImage="Image" id="4nc-64-ZH3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vWr-OQ-E9N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -529,7 +529,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MinaVaccinationerImage" width="22" height="22"/>
+        <image name="Image" width="32" height="32"/>
+        <image name="Image-1" width="32" height="32"/>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
