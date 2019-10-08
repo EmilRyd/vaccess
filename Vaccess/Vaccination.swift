@@ -100,7 +100,18 @@ class Vaccination: Equatable, Comparable {
     
     //MARK: Comparable Protocol functions
     static func < (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
+        switch vaccination1.vaccine.protection() {
+        case .time:
+            switch vaccination2.vaccine.protection() {
+            case .time:
+                return (vaccination1.getEndDate()! < vaccination2.getEndDate()!)
+            
+            default:
+                return (vaccination1.startDate < vaccination2.startDate)
+            }
+        default:
             return (vaccination1.startDate < vaccination2.startDate)
+        }
     }
     
     

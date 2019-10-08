@@ -128,7 +128,7 @@ class HistoryTableViewController: UITableViewController {
 
         
         guard let selectedCell = sender as? HistoryTableViewCell else {
-            fatalError("Unexpected sender: \(sender)")
+            fatalError("Unexpected sender: \(String(describing: sender))")
         }
         
         guard let indexPath = tableView.indexPath(for: selectedCell) else {

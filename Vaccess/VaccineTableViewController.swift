@@ -150,6 +150,7 @@ class VaccineTableViewController: UITableViewController {
 
             // Delete the row from the data source
             vaccinations.remove(at: indexPath.row)
+            vaccinationTabBarController.vaccinations = vaccinations
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -234,21 +235,29 @@ class VaccineTableViewController: UITableViewController {
             else {
                 
                 var x = 0
+                var firstTime = true
                 let newIndexPath: IndexPath
      outerLoop: for i in vaccinations {
                     if vaccination.vaccine == i.vaccine {
-                        vaccinations.remove(at: x)
-                        newIndexPath = IndexPath(row: x, section: 0)
-                        tableView.deleteRows(at: [newIndexPath], with: .fade)
+                        if i < vaccination {
+                            vaccinations.remove(at: x)
+                            newIndexPath = IndexPath(row: x, section: 0)
+                            tableView.deleteRows(at: [newIndexPath], with: .fade)
+                            vaccinations.append(vaccination)
+                        }
+                        firstTime = false
 
                         break outerLoop
                     }
                     else {
                         x += 1
                     }
+
                 }
 
-                vaccinations.append(vaccination)
+                if firstTime {
+                    vaccinations.append(vaccination)
+                }
 
                 
                 

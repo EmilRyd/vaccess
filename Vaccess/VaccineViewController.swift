@@ -11,7 +11,6 @@ import UIKit
 class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     //MARK: Properties
-    @IBOutlet weak var vaccintypEtikett: UILabel!
     @IBOutlet weak var vaccintypTextruta: UITextField!
     @IBOutlet weak var dosEtikett: UILabel!
     @IBOutlet weak var dosTextruta: UITextField!
@@ -19,7 +18,6 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     @IBOutlet weak var slutdatumTextruta: UITextField!
     @IBOutlet weak var slutdatumEtikett: UILabel!
     @IBOutlet weak var sparaKnapp: UIBarButtonItem!
-    @IBOutlet weak var historyStartdateLabel1: UILabel!
     var startDatePicker = UIDatePicker()
     var endDatePicker = UIDatePicker()
     let datumsFormat = DateFormatter()
@@ -253,10 +251,14 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         // Set the meal to be passed to VaccineTableViewController after the unwind segue.
         vaccination = Vaccination(vaccine: Vaccine(rawValue: namn)!, startDate: startdatum)
         
-        
-        slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
-        
-        vaccination?.setEndDate(endDate: slutdatum)
+        switch vaccination?.vaccine.protection() {
+        case .time:
+            slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
+            vaccination?.setEndDate(endDate: slutdatum)
+
+        default:
+            break
+        }
         
     }
     
