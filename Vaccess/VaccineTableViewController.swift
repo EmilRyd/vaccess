@@ -275,15 +275,15 @@ class VaccineTableViewController: UITableViewController {
         let date2 = Date(timeInterval: -5, since: Date())
         let date3 = Date(timeIntervalSinceNow: 50000000000)
 
-        guard let vaccine1 = Vaccination(vaccine:Vaccine.Rabies, startDate: date1) else {
+        guard let vaccine1 = Vaccination(vaccine:Vaccine.Rabies, startDate: date1, amountOfDosesTaken: nil) else {
             fatalError("Kunde inte skapa vaccine1")
         }
         
-        guard let vaccine2 = Vaccination(vaccine:Vaccine.Hepatit_A, startDate: date2) else {
+        guard let vaccine2 = Vaccination(vaccine:Vaccine.Hepatit_A, startDate: date2, amountOfDosesTaken: nil) else {
             fatalError("Kunde inte skapa vaccine2")
         }
         
-        guard let vaccine3 = Vaccination(vaccine:Vaccine.Hepatit_B, startDate: date3) else {
+        guard let vaccine3 = Vaccination(vaccine:Vaccine.Hepatit_B, startDate: date3, amountOfDosesTaken: nil) else {
             fatalError("Kunde inte skapa vaccine1")
         }
         

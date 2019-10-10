@@ -95,30 +95,62 @@ enum Vaccine: String {
         }
     }
     
-    func protection() -> Protection {
+    func protection(amountOfDosesTaken: Int?) -> Protection {
         switch self {
         case .Gulafebern:
             return Protection.lifeLong
-        case .Meningokocker_A_C_Y_W, .Meningokocker_B, .Meningokocker_C, .Bältros:
+        case .Meningokocker_A_C_Y_W, .Meningokocker_B, .Meningokocker_C, .Bältros, .Pneumokocker:
             return Protection.unknown
         case .Tuberkulos_TB:
-            return Protection.time(10)
+            return Protection.time([10*12])
         case .Difteri:
-            return Protection.time(20)
+            return Protection.time([20*12])
         case .Influensa:
-            return Protection.time(1)
-
+            return Protection.time([1*12])
+        case .Haemophilus_influenzae_typ_b_Hib:
+            switch amountOfDosesTaken {
+            case 1:
+                return Protection.time([2])
+            case 2:
+                return Protection.time([6])
+            default:
+                return Protection.unknown
+            }
+        
+        case .Hepatit_A:
+            switch amountOfDosesTaken {
+            case 1:
+                return Protection.time([1])
+            case 2:
+                return Protection.time([20*12])
+            default:
+                return Protection.unknown
+            }
+            
+        case .Hepatit_B:
+            switch amountOfDosesTaken {
+            case 1:
+                return Protection.time([1])
+            case 2:
+                return Protection.time([5, 12])
+            default:
+                return Protection.lifeLong
+            }
+       /* case .Humant_papillomvirus_HPV:
+            switch amountOfDosesTaken {
+                
+            }*/
         default:
-            return Protection.time(0)
+            return Protection.time([0])
         }
     }
     
     
     func endDate(startDate: Date) -> Date? {        
         var varingstid = DateComponents()
-        switch self.protection() {
-        case let .time(years):
-            varingstid.year = years
+        switch self.protection(amountOfDosesTaken: nil) {
+        case let .time(months):
+            varingstid.year = months[1]/12
             let slutDatum = Calendar.current.date(byAdding: varingstid, to: startDate)
             return slutDatum
         case .lifeLong, .unknown:

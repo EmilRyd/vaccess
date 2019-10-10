@@ -278,7 +278,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             if sDate != nil && dateFormatter.date(from: currentTableViewCell.enddateTextField.text!) != nil {
                 
                 let editedVaccinationIndex = allVaccinations.firstIndex(of: i)
-                let newVaccination = Vaccination(vaccine: vaccine, startDate: sDate!)!
+                let newVaccination = Vaccination(vaccine: vaccine, startDate: sDate!, amountOfDosesTaken: nil)!
                 newVaccination.setEndDate(endDate: dateFormatter.date(from: currentTableViewCell.enddateTextField.text!)!)
                 allVaccinations[editedVaccinationIndex!] = newVaccination
                 vaccinationTabBarController.allVaccinations = allVaccinations

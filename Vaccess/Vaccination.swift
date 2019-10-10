@@ -15,9 +15,10 @@ class Vaccination: Equatable, Comparable {
     var vaccine: Vaccine
     var startDate: Date
     var manualEndDate: Date?
+    var amountOfDosesTaken: Int?
     //MARK: Initialization
     
-    init?(vaccine: Vaccine, startDate: Date) {
+    init?(vaccine: Vaccine, startDate: Date, amountOfDosesTaken: Int?) {
         
         // Namnet får inte vara tomt
 //        guard !namn.isEmpty else {
@@ -27,7 +28,7 @@ class Vaccination: Equatable, Comparable {
         // Initiera klassens attribut
         self.vaccine = vaccine
         self.startDate = startDate
-        
+        self.amountOfDosesTaken = amountOfDosesTaken
     }
     
     func getVaccinationTimeLeft(atDate: Date) -> VaccinationTimeLeft {
