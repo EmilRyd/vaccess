@@ -9,5 +9,5 @@
 import Foundation
 
 enum Protection {
-    case time([Int]), lifeLong, unknown
+    case time(Int), lifeLong, unknown
 }

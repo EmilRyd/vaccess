@@ -31,8 +31,8 @@ class Vaccination: Equatable, Comparable {
         self.amountOfDosesTaken = amountOfDosesTaken
     }
     
-    func getVaccinationTimeLeft(atDate: Date) -> VaccinationTimeLeft {
-        let endDate = self.getEndDate(atDate: startDate)
+    func getVaccinationTimeLeft(atDate: Date, amountOfDosesTaken: Int?) -> VaccinationTimeLeft {
+        let endDate = self.getEndDate(atDate: startDate, amountOfDosesTaken: amountOfDosesTaken)
 
         if (endDate != nil) {
             let years = Set([Calendar.Component.year])
@@ -55,7 +55,7 @@ class Vaccination: Equatable, Comparable {
             
             return VaccinationTimeLeft(status: status, years: yearInterval, months: monthInterval, days: dayInterval)
         }
-        switch vaccine.protection() {
+        switch vaccine.protection(amountOfDosesTaken: amountOfDosesTaken) {
         case Protection.unknown:
             return VaccinationTimeLeft(status: VaccinationStatus.unknown, years: 0, months: 0, days: 0)
         default:
@@ -69,15 +69,15 @@ class Vaccination: Equatable, Comparable {
         
     }
     
-    func getEndDate () -> Date? {
-        return self.getEndDate(atDate: self.startDate)
+    func getEndDate (amountOfDosesTaken: Int?) -> Date? {
+        return self.getEndDate(atDate: self.startDate, amountOfDosesTaken: amountOfDosesTaken)
         
     }
     
-    func getEndDate (atDate: Date) -> Date? {
+    func getEndDate (atDate: Date, amountOfDosesTaken: Int?) -> Date? {
         var endDate: Date?
         if self.manualEndDate == nil {
-            endDate = self.vaccine.endDate(startDate: atDate)
+            endDate = self.vaccine.endDate(startDate: atDate, amountOfDosesTaken: amountOfDosesTaken)
         } else {
             endDate = self.manualEndDate
         }
@@ -90,22 +90,22 @@ class Vaccination: Equatable, Comparable {
     static func == (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
        
         
-        return vaccination1.startDate == vaccination2.startDate && vaccination1.vaccine == vaccination2.vaccine && vaccination1.getEndDate() == vaccination2.getEndDate()
+        return vaccination1.startDate == vaccination2.startDate && vaccination1.vaccine == vaccination2.vaccine && vaccination1.getEndDate(amountOfDosesTaken: vaccination1.amountOfDosesTaken) == vaccination2.getEndDate(amountOfDosesTaken: vaccination2.amountOfDosesTaken)
     }
     
     static func != (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
-        return !(vaccination1.startDate == vaccination2.startDate && vaccination1.vaccine == vaccination2.vaccine && vaccination1.getEndDate() == vaccination2.getEndDate())
+        return !(vaccination1.startDate == vaccination2.startDate && vaccination1.vaccine == vaccination2.vaccine && vaccination1.getEndDate(amountOfDosesTaken: vaccination1.amountOfDosesTaken) == vaccination2.getEndDate(amountOfDosesTaken: vaccination2.amountOfDosesTaken))
     
         
     }
     
     //MARK: Comparable Protocol functions
     static func < (vaccination1: Vaccination, vaccination2: Vaccination) -> Bool {
-        switch vaccination1.vaccine.protection() {
+        switch vaccination1.vaccine.protection(amountOfDosesTaken: nil) {
         case .time:
-            switch vaccination2.vaccine.protection() {
+            switch vaccination2.vaccine.protection(amountOfDosesTaken: nil) {
             case .time:
-                return (vaccination1.getEndDate()! < vaccination2.getEndDate()!)
+                return (vaccination1.getEndDate(amountOfDosesTaken: nil)! < vaccination2.getEndDate(amountOfDosesTaken: nil)!)
             
             default:
                 return (vaccination1.startDate < vaccination2.startDate)

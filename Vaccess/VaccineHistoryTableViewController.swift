@@ -82,12 +82,12 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
         cell.startdateTextField.text = dateFormatter.string(from: vaccination.startDate)
         cell.startdateTextField.isEnabled = false
-        if vaccination.getEndDate() != nil {
-            cell.enddateTextField.text = dateFormatter.string(from: vaccination.getEndDate()!)
+        if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) != nil {
+            cell.enddateTextField.text = dateFormatter.string(from: vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken)!)
             cell.enddateTextField.isEnabled = false
         }
         else {
-            switch vaccination.vaccine.protection() {
+            switch vaccination.vaccine.protection(amountOfDosesTaken: nil) {
             case .unknown:
                 cell.enddateTextField.text = "Obestämt"
             case .lifeLong:
@@ -128,14 +128,73 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                     vaccinationTabBarController.allVaccinations = allVaccinations
                     
                    if self.sectionsArray.count == 1 {
+                    if self.sectionsArray[indexPath.row].amountOfDosesTaken! < self.sectionsArray[indexPath.row].vaccine.getTotalAmountOfDoses() {
+                        vaccinationTabBarController.ongoingVaccinations.remove(self.sectionsArray[indexPath.row])
+                    }
+                    else {
                         vaccinationTabBarController.vaccinations.remove(self.sectionsArray[indexPath.row])
-
+                    }
                     }
 
                     
                 if indexPath.row == 0 && self.sectionsArray.count > 1 {
-                    let index = vaccinationTabBarController.vaccinations.firstIndex(of: self.sectionsArray[indexPath.row])
-                    vaccinationTabBarController.vaccinations[index!] = self.sectionsArray[(indexPath.row + 1)]
+                    
+                    if self.sectionsArray[indexPath.row].amountOfDosesTaken! < self.sectionsArray[indexPath.row].vaccine.getTotalAmountOfDoses() {
+                        let index = vaccinationTabBarController.ongoingVaccinations.firstIndex(of: self.sectionsArray[indexPath.row])
+                        vaccinationTabBarController.ongoingVaccinations[index!] = self.sectionsArray[(indexPath.row + 1)]
+
+                    }
+                        /*
+                         
+                         
+                         Hej Emil! Den 12/10 ska du fixa så att man kan radera den senaste dosen man tagit av ett vaccin, och så hoppar den tidigare upp!
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                          
+                         
+                         
+                         
+                         */
+                         
+                    else {
+                        let index = vaccinationTabBarController.vaccinations.firstIndex(of: self.sectionsArray[indexPath.row])
+                        if self.sectionsArray[(indexPath.row + 1)].amountOfDosesTaken! < self.sectionsArray[indexPath.row + 1].vaccine.getTotalAmountOfDoses() {
+                            vaccinationTabBarController.ongoingVaccinations.append( self.sectionsArray[(indexPath.row + 1)])
+
+                        }
+                        else {
+                            vaccinationTabBarController.vaccinations[index!] = self.sectionsArray[(indexPath.row + 1)]
+
+                        }
+                    }
                 }
                 self.sectionsArray.remove(at: indexPath.row)
 

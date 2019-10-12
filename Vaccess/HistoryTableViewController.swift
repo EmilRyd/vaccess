@@ -116,6 +116,7 @@ class HistoryTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
         vaccinations = vaccinationTabBarController.vaccinations
+        vaccinations += vaccinationTabBarController.ongoingVaccinations
         tableView.reloadData()
     }
     
@@ -144,6 +145,7 @@ class HistoryTableViewController: UITableViewController {
     @IBAction func unwindToHistoryTable(sender: UIStoryboardSegue){
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
         vaccinations = vaccinationTabBarController.vaccinations
+        vaccinations += vaccinationTabBarController.ongoingVaccinations
         tableView.reloadData()
     }
 }

@@ -23,6 +23,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     
     var startDatePicker = UIDatePicker()
     var endDatePicker = UIDatePicker()
+    var nextDoseDatePicker = UIDatePicker()
     var dosePicker = UIPickerView()
     let datumsFormat = DateFormatter()
     var startdatum = Date()
@@ -83,6 +84,17 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         // Sätt datumVäljare som input till textrutan
         slutdatumTextruta.inputView = endDatePicker
         
+        
+        
+        // Skapa datum-pickern
+        nextDoseDatePicker.datePickerMode = .date
+        
+        // Se till att textrutan påverkas när datumet ändras av användaren
+        nextDoseDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
+        
+        // Sätt datumVäljare som input till textrutan
+        nästaDosDatumTextruta.inputView = nextDoseDatePicker
+        
         // Make sure the saveButton is disabled in the beginning
         updateSaveButtonState()
         
@@ -92,6 +104,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         
         // Set up views if editing an existing Vaccination.
         if let vaccination = vaccination {
+            if vaccination.vaccine.getTotalAmountOfDoses() == 1 {
             slutdatumTextruta.isHidden = false
             slutdatumEtikett.isHidden = false
             navigationItem.title = vaccination.vaccine.rawValue
@@ -99,9 +112,9 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             
             datumsFormat.dateFormat = "dd/MM - yyyy"
             startdatumTextruta.text = datumsFormat.string(from: vaccination.startDate)
-            let endDate = vaccination.getEndDate()
+            let endDate = vaccination.getEndDate(amountOfDosesTaken: nil)
             if endDate == nil {
-                switch vaccination.vaccine.protection() {
+                switch vaccination.vaccine.protection(amountOfDosesTaken: nil) {
                 case .unknown:
                     slutdatumTextruta.text = "Skyddstiden inte bestämd ännu. Fråga din läkare och fyll i själv."
                 case .lifeLong:
@@ -115,6 +128,37 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             }
             updateSaveButtonState()
 
+        }
+            else {
+                navigationItem.title = vaccination.vaccine.rawValue
+                vaccintypTextruta.text   = vaccination.vaccine.rawValue
+                slutdatumEtikett.isHidden = true
+                slutdatumTextruta.isHidden = true
+                dosEtikett.isHidden = false
+                dosTextruta.isHidden = false
+                dosTextruta.text = String(vaccination.amountOfDosesTaken!)
+                nästaDosDatumTextruta.isHidden = false
+                nästaDosDatumEtikett.isHidden = false
+                datumsFormat.dateFormat = "dd/MM - yyyy"
+                startdatumTextruta.text = datumsFormat.string(from: vaccination.startDate)
+                datumsFormat.dateFormat = "dd/MM - yyyy"
+                startdatumTextruta.text = datumsFormat.string(from: vaccination.startDate)
+                let endDate = vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken)
+                if endDate == nil {
+                    switch vaccination.vaccine.protection(amountOfDosesTaken: vaccination.amountOfDosesTaken) {
+                    case .unknown:
+                        nästaDosDatumTextruta.text = "Skyddstiden inte bestämd ännu. Fråga din läkare och fyll i själv."
+                    case .lifeLong:
+                        nästaDosDatumTextruta.text = "Du är skyddad för resten av livet!"
+                    default:
+                        fatalError("Unknown Protecttion value.")
+                }
+                }
+                else {
+                    nästaDosDatumTextruta.text = datumsFormat.string(from: endDate!)
+                }
+                updateSaveButtonState()
+            }
         }
     }
     
@@ -131,17 +175,30 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             let checkVaccintypTextruta = vaccintypTextruta.text ?? ""
             if !checkVaccintypTextruta.isEmpty {
                 vaccination = Vaccination(vaccine: Vaccine(rawValue: (vaccintypTextruta!.text!))!, startDate: startdatum, amountOfDosesTaken: nil)
-                if vaccination?.vaccine.endDate(startDate: startdatum) != nil {
-                    slutdatumTextruta.text = datumsFormat.string(from: (vaccination?.vaccine.endDate(startDate: startdatum)!)!)
+                if vaccination?.vaccine.endDate(startDate: startdatum, amountOfDosesTaken: nil) != nil {
+                    slutdatumTextruta.text = datumsFormat.string(from: (vaccination?.vaccine.endDate(startDate: startdatum, amountOfDosesTaken: nil)!)!)
                 }
                 else {
-                    slutdatum(startdatum: startdatum)
+                    if dosTextruta.isHidden {
+                        slutdatum(startdatum: startdatum)
+                    }
+                    else {
+                        dosTextruta.text = nil
+                        nästaDosDatumTextruta.text = nil
+                    }
                 }
             }
         }
         else if datumVäljare === endDatePicker {
+            slutdatumTextruta.text = ""
             slutdatum = datumVäljare.date
             slutdatumTextruta.text = datumsFormat.string(from: datumVäljare.date)
+            endDateWasManuallyChosen = true
+        }
+        
+        else if datumVäljare === nextDoseDatePicker {
+            nästaDosDatumTextruta.text = ""
+            nästaDosDatumTextruta.text = datumsFormat.string(from: datumVäljare.date)
             endDateWasManuallyChosen = true
         }
     
@@ -172,8 +229,13 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == dosePicker {
-            return 20
+        if pickerView === dosePicker {
+            if vaccination?.vaccine.getTotalAmountOfDoses() != nil {
+                return vaccination?.vaccine.getTotalAmountOfDoses() ?? 5
+            }
+            else {
+                return 5
+            }
         }
         else {
             return vacciner.count
@@ -182,17 +244,31 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == dosePicker {
-            return String(row)
+        if pickerView === dosePicker {
+            return String(row + 1)
         }
         else {
             return vacciner[row].simpleDescription()
+        
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == dosePicker {
-            dosTextruta.text = String(row)
+            dosTextruta.text = String(row + 1)
+            vaccination?.amountOfDosesTaken = row+1
+            nästaDosDatumTextruta.isHidden = false
+            nästaDosDatumEtikett.isHidden = false
+            switch vaccination?.vaccine.protection(amountOfDosesTaken: vaccination?.amountOfDosesTaken){
+            case .time(_):
+                nästaDosDatumTextruta.text = datumsFormat.string(from: (vaccination?.vaccine.endDate(startDate: vaccination!.startDate, amountOfDosesTaken: row+1))!)
+            case .unknown:
+                nästaDosDatumTextruta.text = "Skyddstiden inte bestämd ännu. Fråga din läkare och fyll i själv."
+            case .lifeLong:
+                nästaDosDatumTextruta.text = "Du är skyddad för resten av livet!"
+            default:
+                nästaDosDatumTextruta.text = "Jag vet inte, men du har någon bugg i din vaccine.protection metod"
+            }
         }
         else {
             valdRad = row
@@ -200,6 +276,29 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             vaccintypTextruta.text = vacciner[row].simpleDescription()
             startdatumTextruta.text = nil
             slutdatumTextruta.text = nil
+            
+            if vacciner[row].takenOnce() {
+                nästaDosDatumTextruta.isHidden = true
+                nästaDosDatumEtikett.isHidden = true
+                dosEtikett.isHidden = true
+                dosTextruta.isHidden = true
+                slutdatumTextruta.isHidden = false
+                slutdatumEtikett.isHidden = false
+            }
+            else {
+                dosEtikett.isHidden = false
+                dosTextruta.isHidden = false
+                
+                nästaDosDatumTextruta.isHidden = false
+                nästaDosDatumEtikett.isHidden = false
+                
+                slutdatumTextruta.isHidden = true
+                slutdatumEtikett.isHidden = true
+                
+                
+                nästaDosDatumTextruta.text = nil
+                dosTextruta.text = nil
+            }
         }
 
         
@@ -275,13 +374,28 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             vaccination = Vaccination(vaccine: Vaccine(rawValue: namn)!, startDate: startdatum, amountOfDosesTaken: Int(dosTextruta.text!))
 
         }
-        switch vaccination?.vaccine.protection() {
+        switch vaccination?.vaccine.protection(amountOfDosesTaken: vaccination?.amountOfDosesTaken) {
         case .time:
-            slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
-            vaccination?.setEndDate(endDate: slutdatum)
-
+            if dosEtikett.isHidden {
+                slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
+                vaccination?.setEndDate(endDate: slutdatum)
+            }
+            else {
+                slutdatum = datumsFormat.date(from: nästaDosDatumTextruta.text!)!
+                vaccination?.setEndDate(endDate: slutdatum)
+            }
         default:
             break
+        }
+        if endDateWasManuallyChosen {
+            if dosEtikett.isHidden {
+            slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
+            vaccination?.setEndDate(endDate: slutdatum)
+            }
+            else {
+                slutdatum = datumsFormat.date(from: nästaDosDatumTextruta.text!)!
+                vaccination?.setEndDate(endDate: slutdatum)
+            }
         }
         
     }
@@ -292,11 +406,11 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         
         let openText = vaccintypTextruta.text!
         let vaccine = Vaccine(rawValue: openText)
-        let protection = vaccine!.protection()
+        let protection = vaccine!.protection(amountOfDosesTaken: nil)
         
         switch protection {
         case .time:
-            return vaccination?.getEndDate()
+            return vaccination?.getEndDate(amountOfDosesTaken: vaccination?.amountOfDosesTaken)
         case .lifeLong:
             slutdatumTextruta.text = "Du är skyddad för resten av livet!"
         case .unknown:

@@ -102,17 +102,20 @@ enum Vaccine: String {
         case .Meningokocker_A_C_Y_W, .Meningokocker_B, .Meningokocker_C, .Bältros, .Pneumokocker:
             return Protection.unknown
         case .Tuberkulos_TB:
-            return Protection.time([10*12])
+            return Protection.time(10*12)
         case .Difteri:
-            return Protection.time([20*12])
+            return Protection.time(20*12)
         case .Influensa:
-            return Protection.time([1*12])
+            return Protection.time(1*12)
         case .Haemophilus_influenzae_typ_b_Hib:
+            //Kan påverkas av ålder, här antaget mindre än 1 år.
             switch amountOfDosesTaken {
             case 1:
-                return Protection.time([2])
+                return Protection.time(2)
             case 2:
-                return Protection.time([6])
+                return Protection.time(7)
+            case 3:
+                return Protection.unknown
             default:
                 return Protection.unknown
             }
@@ -120,9 +123,9 @@ enum Vaccine: String {
         case .Hepatit_A:
             switch amountOfDosesTaken {
             case 1:
-                return Protection.time([1])
+                return Protection.time(1)
             case 2:
-                return Protection.time([20*12])
+                return Protection.time(20*12)
             default:
                 return Protection.unknown
             }
@@ -130,31 +133,193 @@ enum Vaccine: String {
         case .Hepatit_B:
             switch amountOfDosesTaken {
             case 1:
-                return Protection.time([1])
+                return Protection.time(1)
             case 2:
-                return Protection.time([5, 12])
+                return Protection.time(5)//, 12
+            case 3:
+                return Protection.lifeLong
             default:
                 return Protection.lifeLong
             }
-       /* case .Humant_papillomvirus_HPV:
-            switch amountOfDosesTaken {
-                
-            }*/
-        default:
-            return Protection.time([0])
-        }
+        
+             
+         case .Humant_papillomvirus_HPV:
+             // Påverkas av personens ålder
+             return Protection.unknown
+             
+         case .Japansk_encefalit:
+             // Påverkas av ålder
+             return Protection.unknown
+             
+         case .Kikhosta:
+             //3 månader + 5 månader + 12 månader
+             //5 år
+             //årskurs 8-9
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(2)
+             case 2:
+                 return Protection.time(7)
+             case 3:
+                 return Protection.time(12*4)
+             case 4:
+                 return Protection.time(9*12)//10*12
+             case 5:
+                 //Fixa så att du vet.
+                 return Protection.unknown
+             default:
+                 return Protection.unknown
+             }
+         case .Kolera:
+             // Påverkas av ålder
+             return Protection.unknown
+             
+         case .Mässling:
+             //Kan påverkas av ålder
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(66)//, 78
+             case 2:
+                 return Protection.lifeLong
+             default:
+                 return Protection.unknown
+             }
+        
+         case .Polio:
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(2)
+             case 2:
+                 return Protection.time(2)
+             case 3:
+                 return Protection.time(4*12) //, 12]
+             case 4:
+                return Protection.lifeLong
+             default:
+                 return Protection.unknown
+             }
+         case .Påssjuka:
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(66)//, 78]
+             case 2:
+                 return Protection.unknown
+             default:
+                 return Protection.unknown
+
+             }
+             
+         case .Rabies:
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(0)
+             case 2:
+                 return Protection.time(1*12)//, 1000]
+             default:
+                 return Protection.unknown
+             }
+             
+         case .Rotavirus:
+             //Påverkas av ålder
+             return Protection.unknown
+         case .Röda_hund:
+             //Påverkas av  ålder
+             return Protection.unknown
+             
+         case .Stelkramp:
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(1)//,2]
+             case 2:
+                 return Protection.time(5)//,12]
+             case 3:
+                 return Protection.time(5*12)//, 10*12]
+             case 4:
+                 return Protection.time(20*12)//, 1000]
+             default:
+                 return Protection.unknown
+             }
+             
+         case .Tick_Borne_Encephalitis_TBE:
+             //Påverkas av ålder
+             return Protection.unknown
+         case .Tyfoidfeber:
+             //Speciell, kan ske med både kapslar och sprutas och påverkas därav
+             return Protection.unknown
+             
+         case .Vattkoppor:
+             switch amountOfDosesTaken {
+             case 1:
+                 return Protection.time(1)//, 1000]
+             case 2:
+                 return Protection.unknown
+             default:
+                 return Protection.unknown
+             }
+      
+    }
     }
     
-    
-    func endDate(startDate: Date) -> Date? {        
+    func endDate(startDate: Date, amountOfDosesTaken: Int?) -> Date? {
         var varingstid = DateComponents()
-        switch self.protection(amountOfDosesTaken: nil) {
+        switch self.protection(amountOfDosesTaken: amountOfDosesTaken) {
         case let .time(months):
-            varingstid.year = months[1]/12
+            varingstid.month = months
             let slutDatum = Calendar.current.date(byAdding: varingstid, to: startDate)
             return slutDatum
         case .lifeLong, .unknown:
             return nil
+        }
+    }
+    
+    func getTotalAmountOfDoses() -> Int {
+        switch self {
+        case .Haemophilus_influenzae_typ_b_Hib:
+            return 3
+        case .Hepatit_A:
+            return 2
+        case .Hepatit_B:
+            return 3
+        case .Humant_papillomvirus_HPV:
+            //Påverkas av  ålder
+            return 1
+        case .Japansk_encefalit:
+            //Påverkas av  ålder
+            return 1
+        case .Kikhosta:
+            return 5
+        case .Kolera:
+            //Påverkas av  ålder
+            return 1
+        case .Mässling:
+            //Kan påverkas av ålder
+            return 2
+        case .Polio:
+            return 4
+        case .Påssjuka:
+            return 2
+        case .Rabies:
+            return 2
+        case .Rotavirus:
+            //Påverkas av ålder
+            return 1
+        case .Röda_hund:
+            //Påverkas av ålder
+            return 1
+        case .Stelkramp:
+            return 4
+        case .Tick_Borne_Encephalitis_TBE:
+            //Påverkas av ålder
+            return 1
+        case .Tyfoidfeber:
+            //Speciell, kan tas med kapslar vilket förändrar ALLT
+            return 1
+        case .Vattkoppor:
+            return 2
+        default:
+            return 1
+            
+            
         }
     }
 
@@ -164,3 +329,4 @@ enum Vaccine: String {
 
 
 }
+
