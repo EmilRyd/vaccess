@@ -144,50 +144,15 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                         vaccinationTabBarController.ongoingVaccinations[index!] = self.sectionsArray[(indexPath.row + 1)]
 
                     }
-                        /*
+                       
+                         //Hej Emil! Den 12/10 ska du fixa så att man kan radera den senaste dosen man tagit av ett vaccin, och så hoppar den tidigare upp!
                          
-                         
-                         Hej Emil! Den 12/10 ska du fixa så att man kan radera den senaste dosen man tagit av ett vaccin, och så hoppar den tidigare upp!
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                          
-                         
-                         
-                         
-                         */
                          
                     else {
                         let index = vaccinationTabBarController.vaccinations.firstIndex(of: self.sectionsArray[indexPath.row])
                         if self.sectionsArray[(indexPath.row + 1)].amountOfDosesTaken! < self.sectionsArray[indexPath.row + 1].vaccine.getTotalAmountOfDoses() {
                             vaccinationTabBarController.ongoingVaccinations.append( self.sectionsArray[(indexPath.row + 1)])
+                            vaccinationTabBarController.vaccinations.remove(self.sectionsArray[indexPath.row])
 
                         }
                         else {

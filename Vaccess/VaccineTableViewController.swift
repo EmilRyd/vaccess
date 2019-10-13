@@ -208,19 +208,60 @@ class VaccineTableViewController: UITableViewController {
             vaccinationTabBarController.vaccinations = vaccinations
             vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             //FIXA DETTA!
-            let indexOfVaccineOfThatType = vaccinationTabBarController.allVaccinations.index(of: vaccinations[indexPath.row])
-            vaccinationTabBarController.allVaccinations.remove(at: indexOfVaccineOfThatType!)
 
             if indexPath.section == 0 {
                 // Delete the row from the data source
+                vaccinationTabBarController.allVaccinations.remove(vaccinations[indexPath.row])
+                var noOtherVaccines = true
+                for i in vaccinationTabBarController.allVaccinations {
+                    if i.vaccine == vaccinations[indexPath.row].vaccine {
+                        
+                        if i.amountOfDosesTaken! < i.vaccine.getTotalAmountOfDoses() {
+                            ongoingVaccinations.append(i)
+                        }
+                        else {
+                            vaccinations.append(i)
+                        }
+                        noOtherVaccines = false
+                    }
+                }
+                if noOtherVaccines {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+
+                }
                 vaccinations.remove(at: indexPath.row)
+
                 vaccinationTabBarController.vaccinations = vaccinations
-            }
-            else {
-                ongoingVaccinations.remove(at: indexPath.row)
                 vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             }
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            else {
+                vaccinationTabBarController.allVaccinations.remove(ongoingVaccinations[indexPath.row])
+                var noOtherVaccines2 = true
+                for i in vaccinationTabBarController.allVaccinations {
+                    if i.vaccine == ongoingVaccinations[indexPath.row].vaccine {
+                        if i.amountOfDosesTaken! < i.vaccine.getTotalAmountOfDoses() {
+                            ongoingVaccinations.append(i)
+                        }
+                        else {
+                            vaccinations.append(i)
+                        }
+                        noOtherVaccines2 = false
+                    }
+                }
+                if noOtherVaccines2 {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+
+                }
+                ongoingVaccinations.remove(at: indexPath.row)
+
+                vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+                
+            }
+            
+            
+            
+            
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -257,15 +298,20 @@ class VaccineTableViewController: UITableViewController {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             
-            guard let selectedMealCell = sender as? VaccineTableViewCell else {
+            guard let selectedVaccineCell = sender as? VaccineTableViewCell else {
                 fatalError("Unexpected sender: \(String(describing: sender))")
             }
             
-            guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+            guard let indexPath = tableView.indexPath(for: selectedVaccineCell) else {
                 fatalError("The selected cell is not being displayed by the table")
             }
-            
-            let selectedVaccination = vaccinations[indexPath.row]
+            let selectedVaccination: Vaccination
+            if indexPath.section == 0 {
+                selectedVaccination = vaccinations[indexPath.row]
+            }
+            else {
+                selectedVaccination = ongoingVaccinations[indexPath.row]
+            }
             vaccineDetailViewController.vaccination = selectedVaccination
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
@@ -290,22 +336,53 @@ class VaccineTableViewController: UITableViewController {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
-                // Update an existing vaccination.
-                let indexOfVaccineOfThatType = vaccinationTabBarController.allVaccinations.index(of: vaccinations[selectedIndexPath.row])
-                vaccinationTabBarController.allVaccinations.remove(at: indexOfVaccineOfThatType!)
-                vaccinationTabBarController.allVaccinations.append(vaccination)
-                
-                if selectedIndexPath.section == 0 {
-                    vaccinations[selectedIndexPath.row] = vaccination
+                if vaccination.amountOfDosesTaken! < vaccination.vaccine.getTotalAmountOfDoses() {
+                    
+                    if selectedIndexPath.section == 1 {
+                        ongoingVaccinations[selectedIndexPath.row] = vaccination
+                        
+                    }
+                    else {
+                        ongoingVaccinations.append(vaccination)
+                        vaccinations.remove(at: selectedIndexPath.row)
+                        
+                    }
                     vaccinationTabBarController.vaccinations = vaccinations
+                    
+                    vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+                    
+                    
                 }
                 else {
-                    ongoingVaccinations[selectedIndexPath.row] = vaccination
+                    if selectedIndexPath.section == 0 {
+                        vaccinations[selectedIndexPath.row] = vaccination
+                        
+                    }
+                    else {
+                        vaccinations.append(vaccination)
+                        ongoingVaccinations.remove(at: selectedIndexPath.row)
+                        
+                    }
+                    vaccinationTabBarController.vaccinations = vaccinations
                     vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+                    
                 }
                 
+                /*if vaccinations.contains(vaccinations[selectedIndexPath.row]) {
+                    vaccinations.remove(vaccinations[selectedIndexPath.row])
+                }
+                else {
+                    ongoingVaccinations.remove(vaccinations[selectedIndexPath.row])
+                }
+                
+                // Update an existing vaccination.
+                vaccinationTabBarController.allVaccinations.remove(vaccination)
+                vaccinationTabBarController.allVaccinations.append(vaccination)
+                
+                */
+                
 
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                tableView.reloadData()
             
             }
             else {

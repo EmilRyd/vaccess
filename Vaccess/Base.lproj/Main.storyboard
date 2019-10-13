@@ -389,17 +389,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgA-df-6Yr">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IgA-df-6Yr">
                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="90" id="qD4-p5-0ts"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83i-FJ-fhE">
-                                            <rect key="frame" x="98" y="8" width="269" height="73"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83i-FJ-fhE">
+                                            <rect key="frame" x="98" y="8" width="269" height="71"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Gula febern">
                                                     <attributes>
-                                                        <font key="NSFont" size="39" name=".AppleSystemUIFont"/>
+                                                        <font key="NSFont" metaFont="system" size="39"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -407,6 +408,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="83i-FJ-fhE" firstAttribute="leading" secondItem="IgA-df-6Yr" secondAttribute="trailing" constant="8" id="6xt-Vc-1a5"/>
+                                        <constraint firstItem="IgA-df-6Yr" firstAttribute="leading" secondItem="g7p-G1-7Hk" secondAttribute="leading" id="GZJ-dt-9H5"/>
+                                        <constraint firstAttribute="trailing" secondItem="83i-FJ-fhE" secondAttribute="trailing" constant="8" id="pIk-Gx-is1"/>
+                                        <constraint firstItem="83i-FJ-fhE" firstAttribute="leading" secondItem="IgA-df-6Yr" secondAttribute="trailing" constant="8" id="sSs-rm-Ydk"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="VaccineImage" destination="IgA-df-6Yr" id="7Zj-X1-TTr"/>
