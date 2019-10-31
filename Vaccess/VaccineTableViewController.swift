@@ -208,60 +208,115 @@ class VaccineTableViewController: UITableViewController {
             vaccinationTabBarController.vaccinations = vaccinations
             vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             //FIXA DETTA!
-
+            
             if indexPath.section == 0 {
                 // Delete the row from the data source
                 vaccinationTabBarController.allVaccinations.remove(vaccinations[indexPath.row])
                 var noOtherVaccines = true
+                var alikeVaccinations = [Vaccination]()
                 for i in vaccinationTabBarController.allVaccinations {
                     if i.vaccine == vaccinations[indexPath.row].vaccine {
                         
-                        if i.amountOfDosesTaken! < i.vaccine.getTotalAmountOfDoses() {
-                            ongoingVaccinations.append(i)
-                        }
-                        else {
-                            vaccinations.append(i)
-                        }
+                        alikeVaccinations.append(i)
+                        
+                        
                         noOtherVaccines = false
                     }
                 }
+                
+                
+                if alikeVaccinations.count == 1 {
+                    if alikeVaccinations[0].amountOfDosesTaken! < alikeVaccinations[0].vaccine.getTotalAmountOfDoses() {
+                        ongoingVaccinations.append(alikeVaccinations[0])
+                    }
+                    else {
+                        vaccinations.append(alikeVaccinations[0])
+                    }
+                }
+                else if alikeVaccinations.count > 1{
+                    alikeVaccinations.sort(by: <)
+                    
+                    let z = alikeVaccinations[alikeVaccinations.count - 1]
+                    
+                    if z.amountOfDosesTaken! < z.vaccine.getTotalAmountOfDoses() {
+                        ongoingVaccinations.append(z)
+                    }
+                    else {
+                        vaccinations.append(z)
+                    }
+                }
+                    
+                
+        
+                vaccinations.remove(at: indexPath.row)
+
                 if noOtherVaccines {
                     tableView.deleteRows(at: [indexPath], with: .fade)
 
                 }
-                vaccinations.remove(at: indexPath.row)
 
                 vaccinationTabBarController.vaccinations = vaccinations
                 vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             }
             else {
+                _ = ongoingVaccinations.firstIndex(of: ongoingVaccinations[indexPath.row])!
                 vaccinationTabBarController.allVaccinations.remove(ongoingVaccinations[indexPath.row])
+                
                 var noOtherVaccines2 = true
+                var alikeVaccinations = [Vaccination]()
                 for i in vaccinationTabBarController.allVaccinations {
-                    if i.vaccine == ongoingVaccinations[indexPath.row].vaccine {
-                        if i.amountOfDosesTaken! < i.vaccine.getTotalAmountOfDoses() {
-                            ongoingVaccinations.append(i)
-                        }
-                        else {
-                            vaccinations.append(i)
-                        }
+                    if i.vaccine == ongoingVaccinations[indexPath.row].vaccine && !(i === ongoingVaccinations[indexPath.row]) {
+                        
+                        alikeVaccinations.append(i)
+
                         noOtherVaccines2 = false
                     }
                 }
+                
+                
+                if alikeVaccinations.count == 1 {
+                    if alikeVaccinations[0].amountOfDosesTaken! < alikeVaccinations[0].vaccine.getTotalAmountOfDoses() {
+                        ongoingVaccinations.append(alikeVaccinations[0])
+                    }
+                    else {
+                        vaccinations.append(alikeVaccinations[0])
+                    }
+                }
+                else {
+                    alikeVaccinations.sort(by: <)
+                    let z: Vaccination
+                    if alikeVaccinations.count == 0 {
+                        z = alikeVaccinations[alikeVaccinations.count - 1]
+                    }
+                    else {
+                        z = alikeVaccinations[0]
+
+                    }
+                    if z.amountOfDosesTaken! < z.vaccine.getTotalAmountOfDoses() {
+                        ongoingVaccinations.append(z)
+                    }
+                    else {
+                        vaccinations.append(z)
+                    }
+                }
+                
+                
+                ongoingVaccinations.remove(at: indexPath.row)
+
                 if noOtherVaccines2 {
                     tableView.deleteRows(at: [indexPath], with: .fade)
 
                 }
-                ongoingVaccinations.remove(at: indexPath.row)
 
+                
                 vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+                vaccinationTabBarController.vaccinations = vaccinations
                 
             }
             
             
-            
-            
             tableView.reloadData()
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -395,7 +450,7 @@ class VaccineTableViewController: UITableViewController {
                         if i < vaccination {
                             vaccinations.remove(at: x)
                             if vaccination.amountOfDosesTaken! < vaccination.vaccine.getTotalAmountOfDoses() {
-                                newIndexPath = IndexPath(row: x, section: 1)
+                                newIndexPath = IndexPath(row: x, section: 0)
                                 tableView.deleteRows(at: [newIndexPath], with: .fade)
                                 ongoingVaccinations.append(vaccination)
                             }
@@ -423,7 +478,7 @@ class VaccineTableViewController: UITableViewController {
                         if i < vaccination {
                             ongoingVaccinations.remove(at: y)
                             if vaccination.amountOfDosesTaken! < vaccination.vaccine.getTotalAmountOfDoses() {
-                                newIndexPath = IndexPath(row: x, section: 1)
+                                newIndexPath = IndexPath(row: y, section: 1)
                                 tableView.deleteRows(at: [newIndexPath], with: .fade)
                                 ongoingVaccinations.append(vaccination)
                             }
@@ -444,6 +499,7 @@ class VaccineTableViewController: UITableViewController {
                 }
 
                 if firstTime {
+
                     if vaccination.amountOfDosesTaken! < vaccination.vaccine.getTotalAmountOfDoses() {
                         ongoingVaccinations.append(vaccination)
 

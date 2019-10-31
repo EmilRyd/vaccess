@@ -1,25 +1,24 @@
 //
-//  VaccineHistoryTableViewCell.swift
+//  CountryTableViewCell.swift
 //  Vaccess
 //
-//  Created by Gustav Ryd on 2019-10-02.
+//  Created by emil on 2019-10-30.
 //  Copyright © 2019 Ryd Corporation. All rights reserved.
 //
 
 import UIKit
 
-class VaccineHistoryTableViewCell: UITableViewCell {
+class CountryTableViewCell: UITableViewCell {
 
-    //MARK: Properties
-    @IBOutlet weak var startdateTextField: UITextField!
-    @IBOutlet weak var enddateTextField: UITextField!
-    @IBOutlet weak var doseTextField: UITextField!
+    
+    @IBOutlet weak var counrtyImage: UIImageView!
+    @IBOutlet weak var countryLabel: UILabel!
+    
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -180,7 +180,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                 }
                 else {
                     if dosTextruta.isHidden {
-                        slutdatum(startdatum: startdatum)
+                        let _ = slutdatum(startdatum: startdatum)
                     }
                     else {
                         dosTextruta.text = nil
@@ -368,7 +368,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         startdatum = datumsFormat.date(from: startdatumTextruta.text!)!
         if dosEtikett.isHidden {
             // Set the meal to be passed to VaccineTableViewController after the unwind segue.
-            vaccination = Vaccination(vaccine: Vaccine(rawValue: namn)!, startDate: startdatum, amountOfDosesTaken: nil)
+            vaccination = Vaccination(vaccine: Vaccine(rawValue: namn)!, startDate: startdatum, amountOfDosesTaken: 1)
         }
         else if !dosEtikett.isHidden {
             vaccination = Vaccination(vaccine: Vaccine(rawValue: namn)!, startDate: startdatum, amountOfDosesTaken: Int(dosTextruta.text!))
@@ -406,7 +406,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         
         let openText = vaccintypTextruta.text!
         let vaccine = Vaccine(rawValue: openText)
-        let protection = vaccine!.protection(amountOfDosesTaken: nil)
+        let protection = vaccine!.protection(amountOfDosesTaken: 1)
         
         switch protection {
         case .time:
