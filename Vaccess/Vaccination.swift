@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Vaccination: Equatable, Comparable {
+class Vaccination: Equatable, Comparable, Codable {
     
     //MARK: Properties
     
@@ -115,5 +115,9 @@ class Vaccination: Equatable, Comparable {
         }
     }
     
+  
+    
     
 }
+
+

@@ -9,7 +9,7 @@
         <!--Mina Vaccin-->
         <scene sceneID="nZH-VP-YAn">
             <objects>
-                <tableViewController id="9ya-sX-72k" customClass="VaccineTableViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="VaccineTableViewController" id="9ya-sX-72k" customClass="VaccineTableViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="40" sectionFooterHeight="40" id="7ZG-jf-Fqq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,12 +22,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vaccin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gz-ui-Xjr">
-                                            <rect key="frame" x="110" y="11" width="257" height="26.5"/>
-                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="22"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flA-I1-1MV">
                                             <rect key="frame" x="110" y="58" width="257" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -43,6 +37,12 @@
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="yXf-KM-MUl"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vaccin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gz-ui-Xjr">
+                                            <rect key="frame" x="110" y="11" width="257" height="26.5"/>
+                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="2Gz-ui-Xjr" secondAttribute="trailing" constant="8" id="6BE-1L-QxF"/>
@@ -64,6 +64,23 @@
                                     <segue destination="eW7-N6-sCI" kind="show" identifier="ShowDetail" id="TD0-ov-r3i"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="5Wn-Qy-9qO" customClass="ComingVaccinationTableViewCell" customModule="Vaccess" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="118" width="375" height="90"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Wn-Qy-9qO" id="jUf-Ze-rmz">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vaccin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHm-Q6-AJ6">
+                                            <rect key="frame" x="109" y="11" width="250" height="27"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="9ya-sX-72k" id="CBJ-RM-ZuK"/>
@@ -80,7 +97,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aqC-5W-VbB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4506" y="-1012"/>
+            <point key="canvasLocation" x="4504.8000000000002" y="-1012.4437781109445"/>
         </scene>
         <!--Vaccin-->
         <scene sceneID="fxW-Zo-Vhe">
@@ -184,7 +201,7 @@
                                 <action selector="cancel:" destination="eW7-N6-sCI" id="8Mg-UG-jw9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Spara" style="done" id="0Jo-dH-2pd">
+                        <barButtonItem key="rightBarButtonItem" title="Lägg till" style="done" id="0Jo-dH-2pd">
                             <connections>
                                 <segue destination="FsG-3f-vIJ" kind="unwind" unwindAction="unwindToVaccineListWithSender:" id="DvD-pF-Hy8"/>
                             </connections>
@@ -645,7 +662,7 @@
         <scene sceneID="fiV-p2-Ofy">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DrX-LQ-gca" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Resor" image=" " selectedImage="first" id="cPa-gy-q4n" userLabel="Resor"/>
+                    <tabBarItem key="tabBarItem" title="Resor" image="TravelIcon" selectedImage="TravelIcon" id="cPa-gy-q4n" userLabel="Resor"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OQo-lE-pBO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -815,23 +832,32 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VaH-kE-q7g">
-                                            <rect key="frame" x="128" y="46" width="120" height="34"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEU-9b-lRP">
-                                            <rect key="frame" x="247" y="45" width="120" height="34"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MgS-tw-H76">
-                                            <rect key="frame" x="8" y="45" width="120" height="34"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlq-e7-m4T">
+                                            <rect key="frame" x="8" y="45" width="359" height="34"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MgS-tw-H76">
+                                                    <rect key="frame" x="0.0" y="0.0" width="119.5" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VaH-kE-q7g">
+                                                    <rect key="frame" x="119.5" y="0.0" width="120" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEU-9b-lRP">
+                                                    <rect key="frame" x="239.5" y="0.0" width="119.5" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pEU-9b-lRP" firstAttribute="width" secondItem="MgS-tw-H76" secondAttribute="width" id="0T1-eu-gao"/>
+                                                <constraint firstItem="pEU-9b-lRP" firstAttribute="height" secondItem="MgS-tw-H76" secondAttribute="height" id="YlR-JT-0h7"/>
+                                                <constraint firstItem="VaH-kE-q7g" firstAttribute="height" secondItem="MgS-tw-H76" secondAttribute="height" id="pTY-7S-elT"/>
+                                                <constraint firstItem="VaH-kE-q7g" firstAttribute="width" secondItem="MgS-tw-H76" secondAttribute="width" id="yIa-3m-OfS"/>
+                                            </constraints>
+                                        </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfm-Tp-mw9">
                                             <rect key="frame" x="8" y="8" width="359" height="34"/>
                                             <subviews>
@@ -862,9 +888,11 @@
                                     <constraints>
                                         <constraint firstItem="gfm-Tp-mw9" firstAttribute="leading" secondItem="j7H-d5-G4P" secondAttribute="leading" constant="8" id="2nO-MK-vgL"/>
                                         <constraint firstAttribute="trailing" secondItem="gfm-Tp-mw9" secondAttribute="trailing" constant="8" id="9ND-Vm-0S8"/>
-                                        <constraint firstItem="VaH-kE-q7g" firstAttribute="top" secondItem="gfm-Tp-mw9" secondAttribute="bottom" constant="3" id="NFs-qE-ZqC"/>
+                                        <constraint firstItem="dlq-e7-m4T" firstAttribute="top" secondItem="gfm-Tp-mw9" secondAttribute="bottom" constant="3" id="Gyu-PZ-9dW"/>
+                                        <constraint firstAttribute="trailing" secondItem="dlq-e7-m4T" secondAttribute="trailing" constant="8" id="LOZ-il-iyd"/>
                                         <constraint firstAttribute="trailing" secondItem="gfm-Tp-mw9" secondAttribute="trailing" constant="8" id="R2c-uF-U7D"/>
                                         <constraint firstItem="gfm-Tp-mw9" firstAttribute="leading" secondItem="j7H-d5-G4P" secondAttribute="leading" constant="8" id="cty-26-Zpa"/>
+                                        <constraint firstItem="dlq-e7-m4T" firstAttribute="leading" secondItem="j7H-d5-G4P" secondAttribute="leading" constant="8" id="p6j-oM-pQz"/>
                                         <constraint firstItem="gfm-Tp-mw9" firstAttribute="top" secondItem="j7H-d5-G4P" secondAttribute="top" constant="8" id="sQB-BM-a8A"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -929,7 +957,7 @@
         <scene sceneID="Ds8-BW-m1J">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ekF-Qn-K22" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="First" image="person" catalog="system" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MMG-72-RW4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1008,11 +1036,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name=" " width="16" height="16"/>
         <image name="Image" width="32" height="32"/>
         <image name="Image-1" width="32" height="32"/>
         <image name="NoPhotoImage" width="137.5" height="137.5"/>
+        <image name="TravelIcon" width="32" height="32"/>
         <image name="first" width="30" height="30"/>
+        <image name="person" catalog="system" width="64" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="TD0-ov-r3i"/>

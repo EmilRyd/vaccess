@@ -16,8 +16,9 @@ class VaccineTableViewController: UITableViewController {
     var vaccinations = [Vaccination]()
     var vaccinationTabBarController: VaccinationTabBarController!
     var ongoingVaccinations = [Vaccination]()
+    var comingVaccinations = [Vaccination]()
     
-    let titlar = ["Vaccin du tagit:", "Vaccin du håller på att ta", "Vaccin du inte tagit:"]
+    let titlar = ["Vaccin du tagit:", "Vaccin du håller på att ta:", "Nästa vaccin du ska ta:"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +29,8 @@ class VaccineTableViewController: UITableViewController {
         loadSampleVaccines()
         
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        vaccinationTabBarController.vaccinations = vaccinations
-        vaccinationTabBarController.allVaccinations = vaccinations
-        vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+        vaccinations = vaccinationTabBarController.vaccinations
+        ongoingVaccinations = vaccinationTabBarController.ongoingVaccinations
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,11 +50,11 @@ class VaccineTableViewController: UITableViewController {
             return vaccinations.count
         }
             
-        else if section == 1{
+        else if section == 1 {
             return ongoingVaccinations.count
         }
         else {
-            return 0
+            return comingVaccinations.count
         }
     }
    
@@ -68,8 +68,17 @@ class VaccineTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of VaccineTableViewCell.")
         }
         // Hämtar rätt vaccin
+        let vaccin: Vaccination
+        
         if indexPath.section == 0 {
-            let vaccin = vaccinations[indexPath.row]
+            vaccin = vaccinations[indexPath.row]
+        }
+        else if indexPath.section == 1 {
+            vaccin = ongoingVaccinations[indexPath.row]
+        }
+        else {
+            vaccin = comingVaccinations[indexPath.row]
+        }
             
             cell.namnEtikett.text = vaccin.vaccine.simpleDescription()
             
@@ -126,64 +135,8 @@ class VaccineTableViewController: UITableViewController {
             return cell
     }
         
-        else {
-            let vaccin = ongoingVaccinations[indexPath.row]
-            
-            cell.namnEtikett.text = vaccin.vaccine.simpleDescription()
-            
-            
-            let today = Date()
-            
-            switch (vaccin.vaccine.protection(amountOfDosesTaken: vaccin.amountOfDosesTaken)) {
-            case .time(_), .unknown:
-                let timeLeft = vaccin.getVaccinationTimeLeft(atDate: today, amountOfDosesTaken: vaccin.amountOfDosesTaken)
-                
-                switch (timeLeft.status) {
-                case VaccinationStatus.expired:
-                    cell.tidsFoto.image = #imageLiteral(resourceName: "firstRed")
-                    
-                case VaccinationStatus.ok:
-                    cell.tidsFoto.image = #imageLiteral(resourceName: "firstGreen")
-                    
-                case VaccinationStatus.soon_to_expiry:
-                    cell.tidsFoto.image = #imageLiteral(resourceName: "firstYellow")
-                case VaccinationStatus.unknown:
-                    cell.tidsFoto.image = nil
-                    cell.tidsEtikett.text = "Vet ej"
-                    return cell
-                }
-                
-                switch timeLeft.days {
-                case 0:
-                    cell.tidsEtikett.text = "Går ut idag"
-                case 1...31:
-                    cell.tidsEtikett.text = "Går ut om \(timeLeft.days) dagar"
-                case (-31)...(-1):
-                    cell.tidsEtikett.text = "Gick ut för \(-timeLeft.days) dagar sedan"
-                default:
-                    switch timeLeft.months {
-                    case let x where x >= 12:
-                        cell.tidsEtikett.text = "Går ut om \(timeLeft.years) år och \(timeLeft.months - (timeLeft.years * 12)) månader"
-                    case let x where x <= -12:
-                        cell.tidsEtikett.text = "Gick ut för \(-timeLeft.years) år och \(-timeLeft.months - (timeLeft.years * -12)) månader sedan"
-                    case 1...12:
-                        cell.tidsEtikett.text = "Går ut om \(timeLeft.months) månader"
-                    case (-11)...0:
-                        cell.tidsEtikett.text = "Gick ut för  \(-timeLeft.months) månader sedan"
-                    default:
-                        fatalError("Inconsistent time left")
-                    }
-                    
-                }
-            case Protection.lifeLong:
-                cell.tidsFoto.image = #imageLiteral(resourceName: "firstGreen")
-                cell.tidsEtikett.text = "Livslångt"
-                
-            }
-            
-            return cell
-        }
-    }
+       
+    
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return titlar[section]
@@ -364,8 +317,12 @@ class VaccineTableViewController: UITableViewController {
             if indexPath.section == 0 {
                 selectedVaccination = vaccinations[indexPath.row]
             }
-            else {
+            else if indexPath.section == 1 {
                 selectedVaccination = ongoingVaccinations[indexPath.row]
+            }
+            else {
+                selectedVaccination = comingVaccinations[indexPath.row]
+                vaccineDetailViewController.presentingComingVaccination = true
             }
             vaccineDetailViewController.vaccination = selectedVaccination
         default:
@@ -397,14 +354,35 @@ class VaccineTableViewController: UITableViewController {
                         ongoingVaccinations[selectedIndexPath.row] = vaccination
                         
                     }
-                    else {
+                    else if selectedIndexPath.section == 0{
                         ongoingVaccinations.append(vaccination)
                         vaccinations.remove(at: selectedIndexPath.row)
                         
                     }
+                    else {
+                        
+                        comingVaccinations.remove(at: selectedIndexPath.row)
+                        if vaccination.amountOfDosesTaken == 1 {
+                            for i in vaccinations {
+                                if i.vaccine == vaccination.vaccine {
+                                    vaccinations.remove(i)
+                                }
+                            }
+                        }
+                        else {
+                            for i in ongoingVaccinations {
+                                if i.vaccine == vaccination.vaccine {
+                                    ongoingVaccinations.remove(i)
+                                }
+                            }
+                        }
+                        ongoingVaccinations.append(vaccination)
+                    }
                     vaccinationTabBarController.vaccinations = vaccinations
                     
                     vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+                    
+                    vaccinationTabBarController.comingVaccinations = comingVaccinations
                     
                     
                 }
@@ -413,9 +391,37 @@ class VaccineTableViewController: UITableViewController {
                         vaccinations[selectedIndexPath.row] = vaccination
                         
                     }
-                    else {
+                    else if selectedIndexPath.section == 1 {
                         vaccinations.append(vaccination)
                         ongoingVaccinations.remove(at: selectedIndexPath.row)
+                        
+                    }
+                    
+                    else {
+                        comingVaccinations.remove(at: selectedIndexPath.row)
+                        
+                        if vaccination.amountOfDosesTaken == 1 {
+                            for i in vaccinations {
+                                if i.vaccine == vaccination.vaccine {
+                                    vaccinations.remove(i)
+                                }
+                            }
+                        }
+                        else {
+                            for i in ongoingVaccinations {
+                                if i.vaccine == vaccination.vaccine {
+                                    ongoingVaccinations.remove(i)
+                                }
+                            }
+                        }
+                        
+                        if vaccination.amountOfDosesTaken! < vaccination.vaccine.getTotalAmountOfDoses() {
+                            ongoingVaccinations.append(vaccination)
+                        }
+                        else {
+                            vaccinations.append(vaccination)
+
+                        }
                         
                     }
                     vaccinationTabBarController.vaccinations = vaccinations
@@ -509,13 +515,23 @@ class VaccineTableViewController: UITableViewController {
 
                     }
                 }
-
                 
-                vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
-                vaccinationTabBarController.vaccinations = vaccinations
-                vaccinationTabBarController.allVaccinations.append(vaccination)
-                tableView.reloadData()
         }
+            if sourceViewController.comingVaccination != nil {
+                comingVaccinations.append(sourceViewController.comingVaccination!)
+                vaccinationTabBarController.allVaccinations.append(vaccination)
+
+
+            }
+            switch sourceViewController.vaccination?.vaccine.protection(amountOfDosesTaken: sourceViewController.vaccination?.amountOfDosesTaken) {
+            case .lifeLong:
+                vaccinationTabBarController.allVaccinations.append(vaccination)
+            default:
+                break
+            }
+            vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
+            vaccinationTabBarController.vaccinations = vaccinations
+            tableView.reloadData()
     }
     }
     // Private Methods

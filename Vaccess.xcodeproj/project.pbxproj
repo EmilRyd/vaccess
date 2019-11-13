@@ -20,8 +20,11 @@
 		20C98053235E475300CAEE87 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C98052235E475300CAEE87 /* Extensions.swift */; };
 		20C980552362311000CAEE87 /* VaccineLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C980542362311000CAEE87 /* VaccineLogInViewController.swift */; };
 		20C980622364946400CAEE87 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C980612364946400CAEE87 /* SignInViewController.swift */; };
+		20CA6946236B6BA100B141EA /* StoragePropertyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6945236B6BA100B141EA /* StoragePropertyList.plist */; };
+		20CA6948236B70EF00B141EA /* ExtensionVaccination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6947236B70EF00B141EA /* ExtensionVaccination.swift */; };
 		20EFF696235BB1E200032B11 /* BeginningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFF695235BB1E200032B11 /* BeginningViewController.swift */; };
 		20EFF69A235BB7E900032B11 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFF699235BB7E900032B11 /* RegistrationViewController.swift */; };
+		20F16774237C872700082719 /* ComingVaccinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F16773237C872700082719 /* ComingVaccinationTableViewCell.swift */; };
 		6F384F40232CE23A00CDCA53 /* Vaccination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F3F232CE23A00CDCA53 /* Vaccination.swift */; };
 		6F384F42232CE55400CDCA53 /* VaccineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */; };
 		6F384F44232D1A7200CDCA53 /* VaccineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */; };
@@ -69,8 +72,11 @@
 		20C98052235E475300CAEE87 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "../../../ios-swift-quickstart-example-swiftProjectBranch/QuickStartExampleApp/QuickStartExampleApp/Extensions.swift"; sourceTree = "<group>"; };
 		20C980542362311000CAEE87 /* VaccineLogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineLogInViewController.swift; sourceTree = "<group>"; };
 		20C980612364946400CAEE87 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		20CA6945236B6BA100B141EA /* StoragePropertyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StoragePropertyList.plist; sourceTree = "<group>"; };
+		20CA6947236B70EF00B141EA /* ExtensionVaccination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionVaccination.swift; sourceTree = "<group>"; };
 		20EFF695235BB1E200032B11 /* BeginningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginningViewController.swift; sourceTree = "<group>"; };
 		20EFF699235BB7E900032B11 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		20F16773237C872700082719 /* ComingVaccinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingVaccinationTableViewCell.swift; sourceTree = "<group>"; };
 		40E60CF2C091B3FE02A246B1 /* Pods-Vaccess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vaccess.release.xcconfig"; path = "Target Support Files/Pods-Vaccess/Pods-Vaccess.release.xcconfig"; sourceTree = "<group>"; };
 		6A210CACBCC71DB0D7291793 /* Pods-Vaccess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vaccess.debug.xcconfig"; path = "Target Support Files/Pods-Vaccess/Pods-Vaccess.debug.xcconfig"; sourceTree = "<group>"; };
 		6F384F3F232CE23A00CDCA53 /* Vaccination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vaccination.swift; sourceTree = "<group>"; };
@@ -168,40 +174,43 @@
 		6F5FD6822329912F00D45E20 /* Vaccess */ = {
 			isa = PBXGroup;
 			children = (
-				2036424E2368D30600DC9F0B /* Vaccess.entitlements */,
-				6F5FD68E2329912F00D45E20 /* LaunchScreen.storyboard */,
-				20C98052235E475300CAEE87 /* Extensions.swift */,
-				202223DF235E231E00D63DF0 /* LoggedInViewController.swift */,
-				20EFF699235BB7E900032B11 /* RegistrationViewController.swift */,
 				1E82803123465AF9006CBE4E /* AllVaccinations.swift */,
-				1E82803023465AF9006CBE4E /* VaccineHistoryTableViewCell.swift */,
-				1E82803223465AF9006CBE4E /* VaccineHistoryTableViewController.swift */,
-				1E82802E23465AB4006CBE4E /* HistoryViewController.swift */,
 				6F5FD6832329912F00D45E20 /* AppDelegate.swift */,
-				6F5FD6852329912F00D45E20 /* FirstViewController.swift */,
-				6F5FD6872329912F00D45E20 /* SecondViewController.swift */,
+				1E8280362348AB71006CBE4E /* ArrayExtension.swift */,
+				6F5FD68C2329912F00D45E20 /* Assets.xcassets */,
 				20EFF695235BB1E200032B11 /* BeginningViewController.swift */,
-				6F384F53233D3B7000CDCA53 /* VaccinationTabBarController.swift */,
+				203642512369EFD000DC9F0B /* Country.swift */,
+				203642532369F33200DC9F0B /* CountryTableViewCell.swift */,
+				20C98052235E475300CAEE87 /* Extensions.swift */,
+				20CA6947236B70EF00B141EA /* ExtensionVaccination.swift */,
+				6F5FD6852329912F00D45E20 /* FirstViewController.swift */,
 				6F384F51233D1F9800CDCA53 /* HistoryTableViewCell.swift */,
 				6F384F4F233BF99500CDCA53 /* HistoryTableViewController.swift */,
-				6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */,
-				6F384F3F232CE23A00CDCA53 /* Vaccination.swift */,
-				1E8280362348AB71006CBE4E /* ArrayExtension.swift */,
-				6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */,
-				6F5FD6A5232996D100D45E20 /* VaccineViewController.swift */,
-				6F384F492337651600CDCA53 /* Vaccine.swift */,
-				6F5FD68C2329912F00D45E20 /* Assets.xcassets */,
-				6F5FD6892329912F00D45E20 /* Main.storyboard */,
-				2036424F23699EDD00DC9F0B /* TravellingTableViewController.swift */,
-				203642532369F33200DC9F0B /* CountryTableViewCell.swift */,
-				203642512369EFD000DC9F0B /* Country.swift */,
+				1E82802E23465AB4006CBE4E /* HistoryViewController.swift */,
 				6F5FD6912329912F00D45E20 /* Info.plist */,
-				6F384F4B2337730300CDCA53 /* Protection.swift */,
-				6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */,
-				202223DD235E231900D63DF0 /* ViewController.swift */,
-				20C980612364946400CAEE87 /* SignInViewController.swift */,
-				20C980542362311000CAEE87 /* VaccineLogInViewController.swift */,
+				6F5FD68E2329912F00D45E20 /* LaunchScreen.storyboard */,
+				202223DF235E231E00D63DF0 /* LoggedInViewController.swift */,
 				20C980562362314A00CAEE87 /* Login */,
+				6F5FD6892329912F00D45E20 /* Main.storyboard */,
+				6F384F4B2337730300CDCA53 /* Protection.swift */,
+				20EFF699235BB7E900032B11 /* RegistrationViewController.swift */,
+				6F5FD6872329912F00D45E20 /* SecondViewController.swift */,
+				20C980612364946400CAEE87 /* SignInViewController.swift */,
+				20CA6945236B6BA100B141EA /* StoragePropertyList.plist */,
+				2036424F23699EDD00DC9F0B /* TravellingTableViewController.swift */,
+				2036424E2368D30600DC9F0B /* Vaccess.entitlements */,
+				6F384F3F232CE23A00CDCA53 /* Vaccination.swift */,
+				6F384F53233D3B7000CDCA53 /* VaccinationTabBarController.swift */,
+				6F384F4D2337BABF00CDCA53 /* VaccinationTimeLeft.swift */,
+				6F384F492337651600CDCA53 /* Vaccine.swift */,
+				1E82803023465AF9006CBE4E /* VaccineHistoryTableViewCell.swift */,
+				1E82803223465AF9006CBE4E /* VaccineHistoryTableViewController.swift */,
+				20C980542362311000CAEE87 /* VaccineLogInViewController.swift */,
+				6F384F41232CE55400CDCA53 /* VaccineTableViewCell.swift */,
+				20F16773237C872700082719 /* ComingVaccinationTableViewCell.swift */,
+				6F384F43232D1A7200CDCA53 /* VaccineTableViewController.swift */,
+				6F5FD6A5232996D100D45E20 /* VaccineViewController.swift */,
+				202223DD235E231900D63DF0 /* ViewController.swift */,
 			);
 			path = Vaccess;
 			sourceTree = "<group>";
@@ -314,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F5FD6902329912F00D45E20 /* LaunchScreen.storyboard in Resources */,
+				20CA6946236B6BA100B141EA /* StoragePropertyList.plist in Resources */,
 				6F5FD68D2329912F00D45E20 /* Assets.xcassets in Resources */,
 				6F5FD68B2329912F00D45E20 /* Main.storyboard in Resources */,
 			);
@@ -426,7 +436,9 @@
 				6F5FD6862329912F00D45E20 /* FirstViewController.swift in Sources */,
 				20C98053235E475300CAEE87 /* Extensions.swift in Sources */,
 				6F384F54233D3B7000CDCA53 /* VaccinationTabBarController.swift in Sources */,
+				20F16774237C872700082719 /* ComingVaccinationTableViewCell.swift in Sources */,
 				20EFF69A235BB7E900032B11 /* RegistrationViewController.swift in Sources */,
+				20CA6948236B70EF00B141EA /* ExtensionVaccination.swift in Sources */,
 				6F384F4C2337730300CDCA53 /* Protection.swift in Sources */,
 				20C980552362311000CAEE87 /* VaccineLogInViewController.swift in Sources */,
 				6F384F42232CE55400CDCA53 /* VaccineTableViewCell.swift in Sources */,

@@ -58,12 +58,12 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if rowsInEachSection[0] != 0 {
+        
             return rowsInEachSection[section]
-        }
-        else {
+        
+        /*else {
             return sectionsArray.count
-        }
+        }*/
         
     }
     
@@ -127,8 +127,8 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             // Delete the row from the data source
             let index = returnPositionForThisIndexPath(indexPath: indexPath, insideThisTable: self.tableView)
             
-            //let alert = UIAlertController(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", preferredStyle: .alert)
-            //let alertAction = UIAlertAction(title: "Radera", style: .destructive, handler: { action in
+            let alert = UIAlertController(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Radera", style: .destructive, handler: { action in
                 self.sectionsArray = self.getArrayWithVaccinationsOfRightType()
                     
                 let vaccinationTabBarController = self.sourceViewController?.tabBarController as! VaccinationTabBarController
@@ -141,17 +141,29 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                 if self.rowsInEachSection[indexPath.section] == 1 && indexPath.section == 0 {
                     if self.sectionsArray[index].amountOfDosesTaken! < self.sectionsArray[index].vaccine.getTotalAmountOfDoses() {
                         vaccinationTabBarController.ongoingVaccinations.remove(self.sectionsArray[index])
+                        let index5 = vaccinationTabBarController.ongoingVaccinations.firstIndex(of: self.sectionsArray[index])
+                        
+                        if self.sectionsArray[(index + 1)].amountOfDosesTaken! < self.sectionsArray[index + 1].vaccine.getTotalAmountOfDoses() {
+                            vaccinationTabBarController.ongoingVaccinations[index5!] = self.sectionsArray[index + 1]
+                        }
+                        else {
+                            vaccinationTabBarController.ongoingVaccinations.remove(self.sectionsArray[index])
+                            vaccinationTabBarController.vaccinations.append(self.sectionsArray[index + 1])
+                        }
+                        
                     }
                     else {
-                        vaccinationTabBarController.vaccinations.remove(self.sectionsArray[index])
+                        let index4 = vaccinationTabBarController.vaccinations.firstIndex(of: self.sectionsArray[index])
+                        vaccinationTabBarController.vaccinations[index4!] = self.sectionsArray[index + 1]
                         
                        
-
+                    
                     }
-                    }
+                    
+                }
 
                     
-                if indexPath.row == 0 && self.rowsInEachSection[indexPath.section] > 1 && indexPath.section == 0 {
+                else if indexPath.row == 0 && self.rowsInEachSection[indexPath.section] > 1 && indexPath.section == 0 {
                     
                     if self.sectionsArray[index].amountOfDosesTaken! < self.sectionsArray[index].vaccine.getTotalAmountOfDoses() {
                         let index2 = vaccinationTabBarController.ongoingVaccinations.firstIndex(of: self.sectionsArray[index])
@@ -176,17 +188,30 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                     }
                 }
                 self.sectionsArray.remove(at: index)
-
                 
+            if self.rowsInEachSection[indexPath.section] > 1{
+                self.rowsInEachSection[indexPath.section] -= 1
+                tableView.deleteRows(at: [indexPath], with: .fade)
 
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            else {
+                self.rowsInEachSection[indexPath.section] -= 1
+                tableView.deleteRows(at: [indexPath], with: .fade)
+
+                self.rowsInEachSection.remove(at: indexPath.section)
+                self.amountOfSections -= 1
+            }
+
             
-              //  else if editingStyle == .insert {
+            tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .fade)
+            
+                vaccinationTabBarController.locallyModified = true
+            //else if editingStyle == .insert {
                     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
                 
-            }
+            })
             
-            
+        
             
           
          //else if editingStyle == .insert {
@@ -198,11 +223,18 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
 /*            let alertAction2 = UIAlertAction(title: "Avbryt", style: .cancel, handler: { action in
                 return
             })
-            alert.addAction(alertAction)
-            alert.addAction(alertAction2)
-            present(alert, animated: true, completion: nil)*/
+            */
     
+        
+        let alertAction2 = UIAlertAction(title: "Avbryt", style: .cancel, handler: { action in
+            return
+            })
+        
+        alert.addAction(alertAction)
+        alert.addAction(alertAction2)
+        present(alert, animated: true, completion: nil)
     }
+}
     /*
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -280,7 +312,6 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
         return sectionsArray
         
-        
     }
    
     private func groupVaccinations(sectionsArray: [Vaccination]) {
@@ -353,6 +384,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
         tableViewWasEdited = true
         for index in 0...(sectionsArray.count - 1){
+            let indexPath = tableView.index
             let vaccineHistoryTableViewCell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! VaccineHistoryTableViewCell
             vaccineHistoryTableViewCell.startdateTextField.isEnabled = true
             vaccineHistoryTableViewCell.enddateTextField.isEnabled = true

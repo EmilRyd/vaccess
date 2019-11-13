@@ -21,6 +21,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     @IBOutlet weak var nästaDosDatumEtikett: UILabel!
     @IBOutlet weak var nästaDosDatumTextruta: UITextField!
     
+
     var startDatePicker = UIDatePicker()
     var endDatePicker = UIDatePicker()
     var nextDoseDatePicker = UIDatePicker()
@@ -30,9 +31,10 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     var slutdatum = Date()
     var endDateWasManuallyChosen = false
     var vaccination: Vaccination?
+    var comingVaccination: Vaccination?
     var valdRad: Int!
     let vacciner = Vaccine.allValues
-    
+    var presentingComingVaccination: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +46,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         dosTextruta.isHidden = true
         nästaDosDatumEtikett.isHidden = true
         nästaDosDatumTextruta.isHidden = true
+        sparaKnapp.title = "Lägg till"
         
         
         // Skapa vaccin-pickern
@@ -102,33 +105,34 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         vaccintypTextruta.delegate = self
         startdatumTextruta.delegate = self
         
+        
         // Set up views if editing an existing Vaccination.
-        if let vaccination = vaccination {
+        if let vaccination = vaccination  {
             if vaccination.vaccine.getTotalAmountOfDoses() == 1 {
-            slutdatumTextruta.isHidden = false
-            slutdatumEtikett.isHidden = false
-            navigationItem.title = vaccination.vaccine.rawValue
-            vaccintypTextruta.text   = vaccination.vaccine.rawValue
-            
-            datumsFormat.dateFormat = "dd/MM - yyyy"
-            startdatumTextruta.text = datumsFormat.string(from: vaccination.startDate)
-            let endDate = vaccination.getEndDate(amountOfDosesTaken: nil)
-            if endDate == nil {
-                switch vaccination.vaccine.protection(amountOfDosesTaken: nil) {
-                case .unknown:
-                    slutdatumTextruta.text = "Skyddstiden inte bestämd ännu. Fråga din läkare och fyll i själv."
-                case .lifeLong:
-                    slutdatumTextruta.text = "Du är skyddad för resten av livet!"
-                default:
-                    fatalError("Unknown Protecttion value.")
+                slutdatumTextruta.isHidden = false
+                slutdatumEtikett.isHidden = false
+                navigationItem.title = vaccination.vaccine.rawValue
+                vaccintypTextruta.text   = vaccination.vaccine.rawValue
+                
+                datumsFormat.dateFormat = "dd/MM - yyyy"
+                startdatumTextruta.text = datumsFormat.string(from: vaccination.startDate)
+                let endDate = vaccination.getEndDate(amountOfDosesTaken: nil)
+                if endDate == nil {
+                    switch vaccination.vaccine.protection(amountOfDosesTaken: nil) {
+                    case .unknown:
+                        slutdatumTextruta.text = "Skyddstiden inte bestämd ännu. Fråga din läkare och fyll i själv."
+                    case .lifeLong:
+                        slutdatumTextruta.text = "Du är skyddad för resten av livet!"
+                    default:
+                        fatalError("Unknown Protecttion value.")
+                    }
+                }
+                else {
+                    slutdatumTextruta.text = datumsFormat.string(from: endDate!)
+                }
+                updateSaveButtonState()
+                
             }
-            }
-            else {
-                slutdatumTextruta.text = datumsFormat.string(from: endDate!)
-            }
-            updateSaveButtonState()
-
-        }
             else {
                 navigationItem.title = vaccination.vaccine.rawValue
                 vaccintypTextruta.text   = vaccination.vaccine.rawValue
@@ -152,12 +156,15 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                         nästaDosDatumTextruta.text = "Du är skyddad för resten av livet!"
                     default:
                         fatalError("Unknown Protecttion value.")
-                }
+                    }
                 }
                 else {
                     nästaDosDatumTextruta.text = datumsFormat.string(from: endDate!)
                 }
                 updateSaveButtonState()
+            }
+            if !presentingComingVaccination {
+                sparaKnapp.title = "Spara"
             }
         }
     }
@@ -195,13 +202,15 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             slutdatumTextruta.text = datumsFormat.string(from: datumVäljare.date)
             endDateWasManuallyChosen = true
         }
-        
+            
         else if datumVäljare === nextDoseDatePicker {
             nästaDosDatumTextruta.text = ""
             nästaDosDatumTextruta.text = datumsFormat.string(from: datumVäljare.date)
             endDateWasManuallyChosen = true
         }
-    
+        updateSaveButtonState()
+        
+        
     }
     
     @objc func tapped(gestureRecognizer: UITapGestureRecognizer) {
@@ -217,7 +226,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             }
         }
         
-       
+        
     }
     
     // HEJ EMIL! 9/14. Imorgon kan du börja skriva in massa if och switchsatser för olika vaccin folk väljer. Om de väljer något som de ska ta igen, så sätt upp ett ungefärligt nästa-datum, men låt dde också få välja själva.
@@ -227,7 +236,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView === dosePicker {
             if vaccination?.vaccine.getTotalAmountOfDoses() != nil {
@@ -240,7 +249,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         else {
             return vacciner.count
         }
-    
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -249,7 +258,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         }
         else {
             return vacciner[row].simpleDescription()
-        
+            
         }
     }
     
@@ -300,7 +309,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                 dosTextruta.text = nil
             }
         }
-
+        
         
         
         
@@ -332,19 +341,20 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
 
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
-        let isPresentingInAddVaccinationMode = presentingViewController is UINavigationController
         
-        if isPresentingInAddVaccinationMode {
-            dismiss(animated: true, completion: nil)
-        }
-        else if let owningNavigationController = navigationController{
-            owningNavigationController.popViewController(animated: true)
-        }
-        else {
-            fatalError("The VaccineViewController is not inside a navigation controller.")
-        }
-
+            // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
+            let isPresentingInAddMealMode = presentingViewController is UINavigationController
+            
+            if !isPresentingInAddMealMode {
+                dismiss(animated: true, completion: nil)
+            }
+            else if let owningNavigationController = navigationController{
+                owningNavigationController.popViewController(animated: true)
+            }
+            else {
+                fatalError("The MealViewController is not inside a navigation controller.")
+            }
+        
     
     }
     
@@ -398,6 +408,28 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             }
         }
         
+        if vaccination?.manualEndDate != nil && sparaKnapp.title == "Lägg till" {
+            
+            
+                
+                if vaccination!.amountOfDosesTaken! < vaccination!.vaccine.getTotalAmountOfDoses() {
+                    comingVaccination = Vaccination(vaccine: vaccination!.vaccine, startDate: vaccination!.manualEndDate!, amountOfDosesTaken: (vaccination!.amountOfDosesTaken! + 1))
+                    comingVaccination?.manualEndDate = comingVaccination?.getEndDate(atDate: comingVaccination!.startDate, amountOfDosesTaken: comingVaccination?.amountOfDosesTaken)
+                }
+                else {
+                    comingVaccination = Vaccination(vaccine: vaccination!.vaccine, startDate: vaccination!.manualEndDate!, amountOfDosesTaken: 1)
+                }
+                
+            }
+            
+        
+        else {
+            //comingVaccination = Vaccination(vaccine: vaccination!.vaccine, startDate: slutdatum, amountOfDosesTaken: (vaccination!.amountOfDosesTaken! + 1))
+            //comingVaccination?.setEndDate(endDate: Date())
+
+        }
+        let vaccinationTabBarController = storyboard?.instantiateViewController(identifier: "VaccinationTabBarController") as! VaccinationTabBarController
+        vaccinationTabBarController.locallyModified = true
     }
     
     //MARK: Private Methods
@@ -422,10 +454,23 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     private func updateSaveButtonState() {
         // Disable the Save button if the text field is empty.
         var textBool = vaccintypTextruta.text ?? ""
+        var bool = false
         if !textBool.isEmpty {
             textBool = startdatumTextruta.text ?? ""
+            if !textBool.isEmpty {
+                let vaccine = Vaccine(rawValue: vaccintypTextruta.text!)
+                let amountOfDosesTaken = Int(dosTextruta.text!) ?? 1
+                switch vaccine!.protection(amountOfDosesTaken: amountOfDosesTaken) {
+                case .unknown:
+                    bool = endDateWasManuallyChosen
+                
+                default:
+                    bool = true
+                }
+            }
         }
-        sparaKnapp.isEnabled = !textBool.isEmpty
+        sparaKnapp.isEnabled = bool
+        
     }
-
+    
 }

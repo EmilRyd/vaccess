@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Vaccine: String {
+enum Vaccine: String, Codable {
     case
     Bältros = "Bältros",
     Difteri = "Difteri",
