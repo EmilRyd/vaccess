@@ -8,15 +8,19 @@
 
 import UIKit
 import Parse
-
+import MaterialComponents
 
 class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: Properties
-    @IBOutlet weak var signInEmailTextField: UITextField!
-    @IBOutlet weak var signInPasswordTextField: UITextField!
+    @IBOutlet weak var signInEmailTextField: MDCTextField!
+    @IBOutlet weak var signInPasswordTextField: MDCTextField!
     @IBOutlet weak var signUpButton: UIButton!
     var activeTextField: UITextField?
+    @IBOutlet weak var signInButton: UIButton!
+    var signInPasswordTextFieldController: MDCTextInputControllerFilled?
+    var signInEmailTextFieldController: MDCTextInputControllerFilled?
+    
     
     
     var isLoggedIn = false
@@ -26,14 +30,31 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
 
         super.viewDidLoad()
         
-        navigationItem.title = "Registrera konto"
+        navigationItem.title = "Logga in"
         
-        signUpButton.layer.cornerRadius = 15;
+        signUpButton.layer.cornerRadius = signUpButton.frame.height/2;
+        signUpButton.layer.borderColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+        signUpButton.layer.borderWidth = 5
         signUpButton.layer.masksToBounds = true;
+        signInButton.layer.cornerRadius = signInButton.frame.height/2;
+        signInButton.layer.masksToBounds = true;
+        print(signUpButton.titleLabel?.font.fontName)
+        
+        signInEmailTextField.font = UIFont(name: "Futura-CondensedMedium", size: 17.0)
+        signInPasswordTextField.font = UIFont(name: "Futura-CondensedMedium", size: 17.0)
+        
+        signInEmailTextFieldController = MDCTextInputControllerFilled(textInput: signInEmailTextField)// Hold on as a property
+        signInPasswordTextFieldController = MDCTextInputControllerFilled(textInput: signInPasswordTextField)// Hold on as a property
+        
+        signInEmailTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        signInEmailTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+               
+        signInPasswordTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        signInPasswordTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
         //Listen for keyboard events
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-       NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         signInPasswordTextField.delegate = self
         signInEmailTextField.delegate = self
@@ -59,10 +80,10 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
     deinit {
         //Stop listening to keyboard events
 
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
 
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     
@@ -97,11 +118,11 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
     @objc func keyboardWillChange (notification: Notification) {
 
         
-        guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+        guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
         
-        if notification.name == Notification.Name.UIKeyboardWillShow || notification.name == Notification.Name.UIKeyboardWillChangeFrame  {
+        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification {
             view.frame.origin.y = -50
             
         }
@@ -148,6 +169,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         let signInScreen = storyBoard.instantiateViewController(withIdentifier: "SignInViewController")
         signInScreen.modalPresentationStyle = .fullScreen
         self.present(signInScreen, animated: true, completion: nil)
+        
     }
     
     

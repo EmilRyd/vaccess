@@ -19,6 +19,15 @@ class VaccineHistoryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        startdateTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        enddateTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        doseTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        
+        doseTextField.adjustsFontSizeToFitWidth = true
+        enddateTextField.adjustsFontSizeToFitWidth = true
+        startdateTextField.adjustsFontSizeToFitWidth = true
+
+        
 
     }
 

@@ -43,7 +43,7 @@ class RegistrationViewController: UIViewController {
             return
         }
         // Fix Activity Indicator
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.medium)
+        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
         
         activityIndicator.center = view.center
         

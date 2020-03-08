@@ -12,18 +12,34 @@ import os.log
 class HistoryTableViewController: UITableViewController {
 
     //MARK: Properties
-    var vaccinations = [Vaccination]()
-
-   override func viewDidLoad() {
+    var vaccinations = [Vaccine]()
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
-      
+        //Configure the label a bit
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "Futura-Medium", size: 21)!]
+        
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        
+        
+        let longTitleLabel = UILabel()
+        longTitleLabel.text = "Historik"
+        longTitleLabel.font = UIFont(name: "Futura-Medium", size: 30)
+        longTitleLabel.sizeToFit()
+
+        let leftItem = UIBarButtonItem(customView: longTitleLabel)
+        self.navigationItem.leftBarButtonItem = leftItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,6 +56,24 @@ class HistoryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             
+        
+        
+        
+        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+            //vaccinations = vaccinationTabBarController.vaccinations
+            //vaccinations += vaccinationTabBarController.ongoingVaccinations
+        vaccinations = []
+            for i in vaccinationTabBarController.allVaccinations {
+                vaccinations.append(i.vaccine)
+            }
+            vaccinations = Array(Set(vaccinations))
+        
+        if vaccinations.count == 0 {
+        tableView.setEmptyView(title: "Du har inga tagna vaccin.", message: "Dina tagna vaccin visas här.", image: "ColoredSyringe")
+        }
+        else {
+        tableView.restore()
+        }
             return vaccinations.count
         
         
@@ -60,7 +94,8 @@ class HistoryTableViewController: UITableViewController {
         let vaccine = vaccinations[indexPath.row]
         
         // Configure the cell...
-        cell.VaccineLabel.text = vaccine.vaccine.rawValue
+    
+        cell.VaccineLabel.text = vaccine.simpleDescription()
         cell.VaccineImage = nil
         
         return cell
@@ -115,8 +150,13 @@ class HistoryTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        vaccinations = vaccinationTabBarController.vaccinations
-        vaccinations += vaccinationTabBarController.ongoingVaccinations
+        //vaccinations = vaccinationTabBarController.vaccinations
+        //vaccinations += vaccinationTabBarController.ongoingVaccinations
+        
+        for i in vaccinationTabBarController.allVaccinations {
+            vaccinations.append(i.vaccine)
+        }
+        vaccinations = Array(Set(vaccinations))
         tableView.reloadData()
     }
     
@@ -136,7 +176,7 @@ class HistoryTableViewController: UITableViewController {
             fatalError("The selected cell is not being displayed by the table")
         }
         
-        let selectedVaccine = vaccinations[indexPath.row].vaccine
+        let selectedVaccine = vaccinations[indexPath.row]
         destinationViewController.vaccine = selectedVaccine
         }
     }
@@ -144,8 +184,12 @@ class HistoryTableViewController: UITableViewController {
     //MARK: Private Methods
     @IBAction func unwindToHistoryTable(sender: UIStoryboardSegue){
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        vaccinations = vaccinationTabBarController.vaccinations
-        vaccinations += vaccinationTabBarController.ongoingVaccinations
+        //vaccinations = vaccinationTabBarController.vaccinations
+        //vaccinations += vaccinationTabBarController.ongoingVaccinations
+        for i in vaccinationTabBarController.allVaccinations {
+            vaccinations.append(i.vaccine)
+        }
+        vaccinations = Array(Set(vaccinations))
         tableView.reloadData()
     }
 }

@@ -12,6 +12,7 @@ class Vaccination: Equatable, Comparable, Codable {
     
     //MARK: Properties
     
+    var isPartOfVaccinationProgram: Bool?
     var vaccine: Vaccine
     var startDate: Date
     var manualEndDate: Date?
@@ -32,17 +33,17 @@ class Vaccination: Equatable, Comparable, Codable {
     }
     
     func getVaccinationTimeLeft(atDate: Date, amountOfDosesTaken: Int?) -> VaccinationTimeLeft {
-        let endDate = self.getEndDate(atDate: startDate, amountOfDosesTaken: amountOfDosesTaken)
+        //let endDate = self.getEndDate(atDate: startDate, amountOfDosesTaken: amountOfDosesTaken)
 
-        if (endDate != nil) {
+        //if (endDate != nil) {
             let years = Set([Calendar.Component.year])
-            let yearInterval = Calendar.current.dateComponents(years, from: atDate, to: endDate!).year!
+            let yearInterval = Calendar.current.dateComponents(years, from: atDate, to: startDate).year!
             
             let months = Set([Calendar.Component.month])
-            let monthInterval = Calendar.current.dateComponents(months, from: atDate, to: endDate!).month!
+            let monthInterval = Calendar.current.dateComponents(months, from: atDate, to: startDate).month!
             
             let days = Set([Calendar.Component.day])
-            let dayInterval = Calendar.current.dateComponents(days, from: atDate, to: endDate!).day!
+            let dayInterval = Calendar.current.dateComponents(days, from: atDate, to: startDate).day!
             
             var status: VaccinationStatus
             if dayInterval < 0 {
@@ -54,10 +55,10 @@ class Vaccination: Equatable, Comparable, Codable {
             }
             
             return VaccinationTimeLeft(status: status, years: yearInterval, months: monthInterval, days: dayInterval)
-        }
+       // }
         switch vaccine.protection(amountOfDosesTaken: amountOfDosesTaken) {
-        case Protection.unknown:
-            return VaccinationTimeLeft(status: VaccinationStatus.unknown, years: 0, months: 0, days: 0)
+        //case Protection.unknown:
+          //  return VaccinationTimeLeft(status: VaccinationStatus.unknown, years: 0, months: 0, days: 0)
         default:
             return VaccinationTimeLeft(status: .ok, years: 0, months: 0, days: 0)            
         }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 enum Vaccine: String, Codable {
     case
@@ -16,7 +17,7 @@ enum Vaccine: String, Codable {
     Haemophilus_influenzae_typ_b_Hib = "Haemophilus influenzae typ b (Hib)",
     Hepatit_A = "Hepatit A",
     Hepatit_B = "Hepatit B",
-    Humant_papillomvirus_HPV = "Humant papillomvirus (HPV), 2-valent",
+    Humant_papillomvirus_HPV = "Humant papillomvirus (HPV)",
     Influensa = "Influensa",
     Japansk_encefalit = "Japansk encefalit",
     Kikhosta = "Kikhosta",
@@ -69,17 +70,36 @@ enum Vaccine: String, Codable {
     func simpleDescription() -> String {
         return self.rawValue
     }
+    
+    func simpleTableDescription() -> String {
+        if self == .Haemophilus_influenzae_typ_b_Hib {
+            return "Hib"
+        }
+        if self == .Humant_papillomvirus_HPV {
+            return "HPV"
+        }
+        if self == .Tick_Borne_Encephalitis_TBE {
+            return "TBE"
+        }
+        else {
+            return self.simpleDescription()
+        }
+    }
+    
+    func simpleHistoryTableDescription() -> String {
+        
+        return self.simpleTableDescription()
+    }
         
     func takenOnce() -> Bool {
         switch self {
         case .Bältros,
-            .Difteri,
+            
             .Gulafebern,
             .Influensa,
             .Meningokocker_A_C_Y_W,
             .Meningokocker_B,
             .Meningokocker_C,
-            .Pneumokocker,
             .Tuberkulos_TB:
             return true
         default:
@@ -96,15 +116,37 @@ enum Vaccine: String, Codable {
     }
     
     func protection(amountOfDosesTaken: Int?) -> Protection {
+        
+        let user = PFUser.current()
+        let vaccinationProgramIndicator: Int = (user?.object(forKey: "VaccinationProgramIndicator") as! Int)
+        let birthDay = user?.object(forKey: "birthDate") as! Date
+        let months = Set([Calendar.Component.month])
+
+        let ageInMonths = Calendar.current.dateComponents(months, from: birthDay, to: Date()).month!
+        
+        
         switch self {
         case .Gulafebern:
             return Protection.lifeLong
-        case .Meningokocker_A_C_Y_W, .Meningokocker_B, .Meningokocker_C, .Bältros, .Pneumokocker:
+        case .Meningokocker_A_C_Y_W, .Meningokocker_B, .Meningokocker_C, .Bältros:
             return Protection.unknown
         case .Tuberkulos_TB:
             return Protection.time(10*12)
         case .Difteri:
-            return Protection.time(20*12)
+            switch amountOfDosesTaken {
+            case 1:
+                return Protection.time(2)
+            case 2:
+                return Protection.time(7)
+            case 3:
+                return Protection.time(4*12)
+            case 4:
+                return Protection.time(20*12)
+            default:
+                return Protection.time(20*12)
+                
+            }
+            
         case .Influensa:
             return Protection.time(1*12)
         case .Haemophilus_influenzae_typ_b_Hib:
@@ -115,7 +157,7 @@ enum Vaccine: String, Codable {
             case 2:
                 return Protection.time(7)
             case 3:
-                return Protection.unknown
+                return Protection.lifeLong
             default:
                 return Protection.unknown
             }
@@ -131,16 +173,32 @@ enum Vaccine: String, Codable {
             }
             
         case .Hepatit_B:
-            switch amountOfDosesTaken {
-            case 1:
-                return Protection.time(1)
-            case 2:
-                return Protection.time(5)//, 12
-            case 3:
-                return Protection.lifeLong
-            default:
-                return Protection.lifeLong
+            if vaccinationProgramIndicator == 2 {
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(2)
+                case 2:
+                    return Protection.time(7)//, 12
+                case 3:
+                    return Protection.time(30*12)
+                default:
+                    return Protection.unknown
+                }
             }
+            
+            else {
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(1)
+                case 2:
+                    return Protection.time(5)//, 12
+                case 3:
+                    return Protection.lifeLong
+                default:
+                    return Protection.unknown
+                }
+            }
+            //Finns kombinationsvaccin tillsammans med Hepatit A, och har då andra tidsscheman
         
              
          case .Humant_papillomvirus_HPV:
@@ -151,25 +209,27 @@ enum Vaccine: String, Codable {
              // Påverkas av ålder
              return Protection.unknown
              
-         case .Kikhosta:
-             //3 månader + 5 månader + 12 månader
-             //5 år
-             //årskurs 8-9
-             switch amountOfDosesTaken {
-             case 1:
-                 return Protection.time(2)
-             case 2:
-                 return Protection.time(7)
-             case 3:
-                 return Protection.time(12*4)
-             case 4:
-                 return Protection.time(9*12)//10*12
-             case 5:
-                 //Fixa så att du vet.
-                 return Protection.unknown
-             default:
-                 return Protection.unknown
-             }
+        case .Kikhosta:
+            //3 månader + 5 månader + 12 månader
+            //5 år
+            //årskurs 8-9
+            switch amountOfDosesTaken {
+            case 1:
+                return Protection.time(2)
+            case 2:
+                return Protection.time(7)
+            case 3:
+                return Protection.time(12*4)
+            case 4:
+                return Protection.time(9*12)//10*12
+            case 5:
+                //Fixa så att du vet.
+                return Protection.time(10*12) //Inte helt säkert, fråga mamma
+            default:
+                
+                return Protection.time(10*12) //Inte helt säkert, fråga mamma
+                
+            }
          case .Kolera:
              // Påverkas av ålder
              return Protection.unknown
@@ -184,20 +244,53 @@ enum Vaccine: String, Codable {
              default:
                  return Protection.unknown
              }
+        case .Pneumokocker:
+            if vaccinationProgramIndicator == 2 {
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(2)
+                case 2:
+                    return Protection.time(7)//, 12
+                case 3:
+                    return Protection.unknown
+                default:
+                    return Protection.unknown
+                }
+            }
+            else {
+                return Protection.unknown
+            }
         
          case .Polio:
-             switch amountOfDosesTaken {
-             case 1:
-                 return Protection.time(2)
-             case 2:
-                 return Protection.time(2)
-             case 3:
-                 return Protection.time(4*12) //, 12]
-             case 4:
-                return Protection.lifeLong
-             default:
-                 return Protection.unknown
-             }
+            if vaccinationProgramIndicator == 2 {
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(2)
+                case 2:
+                    return Protection.time(7)
+                case 3:
+                    return Protection.time(4*12) //, 12]
+                case 4:
+                   return Protection.lifeLong
+                default:
+                    return Protection.unknown
+                }
+            }
+            else {
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(2)//Dos 1, 2, 3 nom sex månader
+                case 2:
+                    return Protection.time(2)
+                case 3:
+                    return Protection.time(2) //, 12]
+                case 4:
+                   return Protection.lifeLong
+                default:
+                    return Protection.unknown
+                }
+            }
+             
          case .Påssjuka:
              switch amountOfDosesTaken {
              case 1:
@@ -221,24 +314,48 @@ enum Vaccine: String, Codable {
              
          case .Rotavirus:
              //Påverkas av ålder
-             return Protection.unknown
-         case .Röda_hund:
-             //Påverkas av  ålder
-             return Protection.unknown
-             
-         case .Stelkramp:
              switch amountOfDosesTaken {
              case 1:
-                 return Protection.time(1)//,2]
+                 return Protection.time(2)
              case 2:
-                 return Protection.time(5)//,12]
-             case 3:
-                 return Protection.time(5*12)//, 10*12]
-             case 4:
-                 return Protection.time(20*12)//, 1000]
+                 return Protection.lifeLong //, 1000]
              default:
                  return Protection.unknown
              }
+        case .Röda_hund:
+             //Påverkas av  ålder
+             return Protection.unknown
+             
+        case .Stelkramp:
+            if vaccinationProgramIndicator == 2 {
+                
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(2)//,2]
+                case 2:
+                    return Protection.time(7)//,12]
+                case 3:
+                    return Protection.time(4*12)//, 10*12]
+                case 4:
+                    return Protection.time(20*12)//, 1000]
+                default:
+                    return Protection.time(20*12)
+                }
+            }
+            else {
+                switch amountOfDosesTaken {
+                case 1:
+                    return Protection.time(2)
+                case 2:
+                    return Protection.time(12)
+                case 3:
+                    return Protection.time(10*12)
+                case 4:
+                    return Protection.time(20*12)
+                default:
+                    return Protection.time(20*12)
+                }
+            }
              
          case .Tick_Borne_Encephalitis_TBE:
              //Påverkas av ålder
@@ -274,6 +391,8 @@ enum Vaccine: String, Codable {
     
     func getTotalAmountOfDoses() -> Int {
         switch self {
+        case .Difteri:
+            return 4
         case .Haemophilus_influenzae_typ_b_Hib:
             return 3
         case .Hepatit_A:
@@ -302,7 +421,7 @@ enum Vaccine: String, Codable {
             return 2
         case .Rotavirus:
             //Påverkas av ålder
-            return 1
+            return 2
         case .Röda_hund:
             //Påverkas av ålder
             return 1

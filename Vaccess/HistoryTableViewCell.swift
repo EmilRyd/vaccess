@@ -18,6 +18,10 @@ class HistoryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        VaccineLabel.numberOfLines = 1
+        //VaccineLabel.font = UIFont(name: "Futura-Medium", size: 17.0)
+        VaccineLabel.adjustsFontSizeToFitWidth = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
