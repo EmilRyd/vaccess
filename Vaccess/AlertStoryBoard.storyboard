@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AzV-Bh-4VX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Alert View Controller-->
+        <scene sceneID="Xea-OE-oNw">
+            <objects>
+                <viewController storyboardIdentifier="AlertViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="AzV-Bh-4VX" customClass="AlertViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Y32-qg-Qf8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uye-6z-xWA">
+                                <rect key="frame" x="69.5" y="356" width="275" height="194"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vpA-ro-ZZx">
+                                        <rect key="frame" x="20" y="52" width="235" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="Gch-uZ-XJ3"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Success">
+                                                <attributes>
+                                                    <font key="NSFont" size="23" name="Futura-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="thJ-36-xbE">
+                                        <rect key="frame" x="105.5" y="-32" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="6Cf-f4-NKS"/>
+                                            <constraint firstAttribute="width" constant="64" id="9NY-Xq-8l2"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYj-jS-gdr">
+                                        <rect key="frame" x="20" y="112" width="235" height="22.5"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Message">
+                                                <attributes>
+                                                    <font key="NSFont" size="17" name="Futura-Medium"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6IU-9E-eO6">
+                                        <rect key="frame" x="8" y="154.5" width="259" height="31.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdo-t9-1fg">
+                                                <rect key="frame" x="0.0" y="0.0" width="121.5" height="31.5"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="Avbryt">
+                                                            <attributes>
+                                                                <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <font key="NSFont" size="15" name="Futura-Medium"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </state>
+                                                <connections>
+                                                    <action selector="didtapCancel:" destination="AzV-Bh-4VX" eventType="touchUpInside" id="rfW-vF-DWw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUl-c5-GvX">
+                                                <rect key="frame" x="137.5" y="0.0" width="121.5" height="31.5"/>
+                                                <color key="backgroundColor" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="didTapActionButton:" destination="AzV-Bh-4VX" eventType="touchUpInside" id="7Jt-GE-PK4"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="vpA-ro-ZZx" firstAttribute="leading" secondItem="Uye-6z-xWA" secondAttribute="leading" constant="20" id="C7K-cW-iix"/>
+                                    <constraint firstItem="MYj-jS-gdr" firstAttribute="leading" secondItem="Uye-6z-xWA" secondAttribute="leading" constant="20" id="L0b-dB-sLZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="vpA-ro-ZZx" secondAttribute="trailing" constant="20" id="Nwe-rf-CbU"/>
+                                    <constraint firstItem="vpA-ro-ZZx" firstAttribute="top" secondItem="thJ-36-xbE" secondAttribute="bottom" constant="20" id="aSv-HM-D5J"/>
+                                    <constraint firstAttribute="width" constant="275" id="cLy-IU-l1l"/>
+                                    <constraint firstItem="6IU-9E-eO6" firstAttribute="leading" secondItem="Uye-6z-xWA" secondAttribute="leadingMargin" id="cU8-pY-ac2"/>
+                                    <constraint firstItem="thJ-36-xbE" firstAttribute="centerY" secondItem="Uye-6z-xWA" secondAttribute="top" id="dpz-p9-mgK"/>
+                                    <constraint firstItem="6IU-9E-eO6" firstAttribute="top" secondItem="MYj-jS-gdr" secondAttribute="bottom" constant="20" id="e9f-4k-CqV"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="6IU-9E-eO6" secondAttribute="bottom" id="gWP-7O-TSK"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="6IU-9E-eO6" secondAttribute="trailing" id="hQD-wu-YpE"/>
+                                    <constraint firstItem="thJ-36-xbE" firstAttribute="centerX" secondItem="Uye-6z-xWA" secondAttribute="centerX" id="lep-fx-gIG"/>
+                                    <constraint firstAttribute="trailing" secondItem="MYj-jS-gdr" secondAttribute="trailing" constant="20" id="ozz-CT-52x"/>
+                                    <constraint firstItem="MYj-jS-gdr" firstAttribute="top" secondItem="vpA-ro-ZZx" secondAttribute="bottom" constant="20" id="zWl-au-FFO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.80241331339999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Uye-6z-xWA" firstAttribute="centerY" secondItem="qUn-2P-QmS" secondAttribute="centerY" id="M4v-1s-SyI"/>
+                            <constraint firstItem="Uye-6z-xWA" firstAttribute="centerX" secondItem="qUn-2P-QmS" secondAttribute="centerX" id="s1p-4e-Oin"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qUn-2P-QmS"/>
+                    </view>
+                    <connections>
+                        <outlet property="actionButton" destination="TUl-c5-GvX" id="VfN-3e-pH3"/>
+                        <outlet property="cancelButton" destination="pdo-t9-1fg" id="kxq-pl-BBZ"/>
+                        <outlet property="imageView" destination="thJ-36-xbE" id="3ih-QB-fMk"/>
+                        <outlet property="messageLabel" destination="MYj-jS-gdr" id="Ei5-KL-DnQ"/>
+                        <outlet property="titleLabel" destination="vpA-ro-ZZx" id="n30-it-Gd0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="grd-Bj-eBH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2168.1159420289855" y="-1035.2678571428571"/>
+        </scene>
+    </scenes>
+</document>

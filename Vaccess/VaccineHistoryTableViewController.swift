@@ -11,6 +11,7 @@ import UIKit
 class VaccineHistoryTableViewController: UITableViewController, UITextFieldDelegate{
 
     //MARK: Properties
+    let alertService = AlertService()
     var vaccine: Vaccine! = nil
     var vaccinations = [Vaccination]()
     var amountOfSections: Int = 1
@@ -141,8 +142,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             // Delete the row from the data source
             let index = returnPositionForThisIndexPath(indexPath: indexPath, insideThisTable: self.tableView)
             
-            let alert = UIAlertController(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "Radera", style: .destructive, handler: { action in
+            let alertController = alertService.alert(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", buttonTitle: "Radera", alertType: .error, completionWithAction: { () in
                 self.sectionsArray = self.getArrayWithVaccinationsOfRightType()
                     
                 let vaccinationTabBarController = self.sourceViewController?.tabBarController as! VaccinationTabBarController
@@ -160,55 +160,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
 
                 }
                     
-                /*if self.rowsInEachSection[indexPath.section] == 1 && indexPath.section == 0 {
-                    if self.sectionsArray[index].amountOfDosesTaken! < self.sectionsArray[index].vaccine.getTotalAmountOfDoses() {
-                        vaccinationTabBarController.ongoingVaccinations.remove(self.sectionsArray[index])
-                        let index5 = vaccinationTabBarController.ongoingVaccinations.firstIndex(of: self.sectionsArray[index])
-                        
-                        if self.sectionsArray[(index + 1)].amountOfDosesTaken! < self.sectionsArray[index + 1].vaccine.getTotalAmountOfDoses() {
-                            vaccinationTabBarController.ongoingVaccinations[index5!] = self.sectionsArray[index + 1]
-                        }
-                        else {
-                            vaccinationTabBarController.ongoingVaccinations.remove(self.sectionsArray[index])
-                            vaccinationTabBarController.vaccinations.append(self.sectionsArray[index + 1])
-                        }
-                        
-                    }
-                    else {
-                        let index4 = vaccinationTabBarController.vaccinations.firstIndex(of: self.sectionsArray[index])
-                        vaccinationTabBarController.vaccinations[index4!] = self.sectionsArray[index + 1]
-                        
-                       
-                    
-                    }
-                    
-                }
-
-                    
-                else if indexPath.row == 0 && self.rowsInEachSection[indexPath.section] > 1 && indexPath.section == 0 {
-                    
-                    if self.sectionsArray[index].amountOfDosesTaken! < self.sectionsArray[index].vaccine.getTotalAmountOfDoses() {
-                        let index2 = vaccinationTabBarController.ongoingVaccinations.firstIndex(of: self.sectionsArray[index])
-                        vaccinationTabBarController.ongoingVaccinations[index2!] = self.sectionsArray[(index + 1)]
-
-                    }
-                       
-                         //Hej Emil! Den 12/10 ska du fixa så att man kan radera den senaste dosen man tagit av ett vaccin, och så hoppar den tidigare upp!
-                         
-                         
-                    else {
-                        let index3 = vaccinationTabBarController.vaccinations.firstIndex(of: self.sectionsArray[index])
-                        if self.sectionsArray[(index + 1)].amountOfDosesTaken! < self.sectionsArray[index + 1].vaccine.getTotalAmountOfDoses() {
-                            vaccinationTabBarController.ongoingVaccinations.append( self.sectionsArray[(index + 1)])
-                            vaccinationTabBarController.vaccinations.remove(self.sectionsArray[index])
-
-                        }
-                        else {
-                            vaccinationTabBarController.vaccinations[index3!] = self.sectionsArray[(index + 1)]
-
-                        }
-                    }
-                }*/
+              
                 self.sectionsArray.remove(at: index)
                 
             if self.rowsInEachSection[indexPath.section] > 1{
@@ -232,30 +184,16 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             //else if editingStyle == .insert {
                     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
                 
+            }, completionWithCancel: {
+                () in
             })
             
-        
             
-          
-         //else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        //}
-     
-    
-        //})
-/*            let alertAction2 = UIAlertAction(title: "Avbryt", style: .cancel, handler: { action in
-                return
-            })
-            */
+            
     
         
-        let alertAction2 = UIAlertAction(title: "Avbryt", style: .cancel, handler: { action in
-            return
-            })
         
-        alert.addAction(alertAction)
-        alert.addAction(alertAction2)
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
     /*

@@ -17,6 +17,7 @@ class SettingsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         subjectLabel.adjustsFontSizeToFitWidth = true
+        
         // Initialization code
     }
 

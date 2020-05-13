@@ -58,7 +58,7 @@ class VaccinationProgramViewController: UIViewController {
     }
     */
     @IBAction func button1Tapped(_ sender: UIButton) {
-        let vaccinationTabBarController = PFObject(className: "VaccinationTabBarController")
+        
         let user = PFUser.current()
        
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -128,10 +128,12 @@ class VaccinationProgramViewController: UIViewController {
               if (success) {
                 // The object has been saved.
               } else {
-                print (error?.localizedDescription)
+                print (error?.localizedDescription as Any)
               }
             
         }
     }
+    
+    
     
 }

@@ -12,6 +12,8 @@ import MaterialComponents
 
 class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    
+    let alertService = AlertService()
     @IBOutlet weak var firstNameTextField: MDCTextField!
     @IBOutlet weak var lastNameTextField: MDCTextField!
     @IBOutlet weak var emailTextField: MDCTextField!
@@ -208,7 +210,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        genderTitlesArray[row]
+        return genderTitlesArray[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -268,7 +270,10 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
             user.signUpInBackground { (success, error) in
                 UIViewController.removeSpinner(spinner: sv)
                 if success {
-                    self.loadHomeScreen()
+                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", buttonTitle: "Ok", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                    
+                    
+                    self.present(alertViewController, animated: true)                   // self.loadHomeScreen()
                 }
                 else {
                     if var descrip = error?.localizedDescription {
@@ -297,6 +302,9 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     
     
     func displayErrorMessage(message: String) {
+        
+        let alertViewController = alertService.alert(title: "Error!", message: message, buttonTitle: "Ok", alertType: .error, completionWithAction: { ()in}, completionWithCancel: { ()in})
+        
         let alertView = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
             
@@ -308,6 +316,18 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
             presenter.sourceRect = self.view.bounds
         }
         self.present(alertView, animated: true, completion: nil)
+    }
+    
+    func processSignOut() {
+    
+        // // Sign out
+        PFUser.logOut()
+        
+        // Display sign in / up view controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "VaccineLogInViewController") as! VaccineLogInViewController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
 
 }

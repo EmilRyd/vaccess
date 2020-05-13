@@ -9,19 +9,28 @@ import os.log
 
 import UIKit
 import Parse
+import UserNotifications
 
 class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    let center = UNUserNotificationCenter.current()
     
     
+    let alertService = AlertService()
     var vaccinations = [Vaccination]()
     var vaccinationTabBarController: VaccinationTabBarController!
     var ongoingVaccinations = [Vaccination]()
     var comingVaccinations = [Vaccination]()
+    var arrayOfArrayOfComingVaccinations = [[Vaccination]]()
     var unwindingFromVaccineList: Bool = false
     let titlar = ["Nästa vaccin du ska ta:"]
     var addButton1: FloatingActionButton = FloatingActionButton()
     var user = PFUser.current()
+    var sectionHeaderHeight: CGFloat = 0.0
+    var arrayOfYears: [Int] = []
+    let datumsFormat = DateFormatter()
+
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
@@ -29,13 +38,16 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        datumsFormat.dateFormat = "dd/MM - yyyy"
+        let height: CGFloat = 56
         //Fix font layout
         addButton.backgroundColor = UIColor(displayP3Red: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
         addButton.layer.cornerRadius = addButton.frame.height / 2
         addButton.layer.shadowOpacity = 0.25
         addButton.layer.shadowRadius = 5
         addButton.layer.shadowOffset = CGSize(width: 0, height: 10)
-        addButton.frame = CGRect(x: UIScreen.main.bounds.width - 80, y: UIScreen.main.bounds.height - 80 - (self.tabBarController?.tabBar.frame.height ?? 49), width: 56, height: 56)
+        addButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
         addButton.imageView?.tintColor = .white
         
         print(addButton.frame)
@@ -51,7 +63,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         
         loadSampleVaccines()
         
-        vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+        vaccinationTabBarController = tabBarController as? VaccinationTabBarController
         vaccinations = vaccinationTabBarController.vaccinations
         ongoingVaccinations = vaccinationTabBarController.ongoingVaccinations
         
@@ -65,6 +77,15 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         
         navigationItem.rightBarButtonItems?.remove(navigationItem.rightBarButtonItems![1])
         
+        tableView.delegate = self
+        self.tableView.separatorStyle = .none
+        
+        
+        sectionHeaderHeight = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell")?.contentView.bounds.height ?? 44
+
+        
+        
+        
         /*addButton.frame = CGRect(x:self.view.frame.width - 80, y:self.view.frame.height - 250, width: 50, height: 50)
         self.view.addSubview(addButton)
         self.view.bringSubview(toFront: addButton)
@@ -77,14 +98,31 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if unwindingFromVaccineList {
+            let alertViewController = alertService.alert(title: "Vaccination sparad!", message: "Din vaccination är sparad. Gå till 'Historik' för att se på och modifiera den", buttonTitle: "Ok", alertType: .success, completionWithAction: {
+                () in
+                
+            }, completionWithCancel: {
+                () in
+            })
+            present(alertViewController, animated: true)
+            /*var alertView = AlertView()
+            alertView.showAlert(title: "Vaccinering sparad", message: "Din vaccinering är sparad. Gå till 'Historik' för att se på och modifiera den", alertType: .success)
+            
+            */
+            
+            
+            
+            
+            /*
+            
             let alert = UIAlertController(title: "Vaccinering sparad", message: "Din vaccinering är sparad. Gå till 'Historik' för att se på och modifiera den", preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { action in
             })
             alert.addAction(alertAction)
-            self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)*/
             
         }
-        self.tableView.headerView(forSection: 0)?.textLabel?.font = UIFont(name: "Futura-Medium", size: 17.0)
+        //self.tableView.headerView(forSection: 0)?.textLabel?.font = UIFont(name: "Futura-Medium", size: 17.0)
         
         unwindingFromVaccineList = false
         
@@ -99,7 +137,13 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     }
     override func viewWillAppear(_ animated: Bool) {
         vaccinations = vaccinationTabBarController.vaccinations
-        comingVaccinations = vaccinationTabBarController.comingVaccinations
+        comingVaccinations = vaccinationTabBarController.comingVaccinations.sorted(by: { lhs, rhs in
+          return lhs.vaccine < rhs.vaccine
+            
+        })
+        loadArrayOfYears()
+        loadArrayOfArrayOfComingVaccinations()
+
         tableView.reloadData()
         
     }
@@ -117,7 +161,16 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
 //MARK: UITableViewDelegate
 
      func numberOfSections(in tableView: UITableView) -> Int {
-           return 1
+        if arrayOfYears.count > 0 && arrayOfArrayOfComingVaccinations[0].count > 0 {
+            tableView.restore()
+
+        }
+        else {
+            tableView.setEmptyView(title: "Du har inga kommande vaccinationer.", message: "Dina kommande vaccinationer visas här.", image: "Emptiness")
+            
+        }
+        return arrayOfYears.count
+
        }
        
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -128,7 +181,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
            tableView.restore()
            }
            
-           return comingVaccinations.count
+            return arrayOfArrayOfComingVaccinations[section].count
            
        }
        
@@ -145,20 +198,37 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
            let vaccin: Vaccination
            
            
-           
-           vaccin = comingVaccinations[indexPath.row]
-           
-        if vaccin.vaccine.getTotalAmountOfDoses() > 1 {
-            cell.namnEtikett.text = vaccin.vaccine.simpleDescription() + " (dos \(vaccin.amountOfDosesTaken!))"
+       
+        
+        
+            vaccin = arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row]
+
+        
+           if vaccin.vaccine.getTotalAmountOfDoses() == 17 {
+               cell.namnEtikett.text = vaccin.vaccine.simpleDescription() + " (Booster)"
+
+           }
+        else if vaccin.vaccine.getTotalAmountOfDoses() > 1  {
+            cell.namnEtikett.text = vaccin.vaccine.simpleDescription()
+            let amountOfDosesTakenString = String(vaccin.amountOfDosesTaken!)
+            cell.doseLabel!.text = amountOfDosesTakenString + "/" + String(vaccin.vaccine.getTotalAmountOfDoses())
+
+            
 
         }
-        if vaccin.vaccine.getTotalAmountOfDoses() == 17 {
-            cell.namnEtikett.text = vaccin.vaccine.simpleDescription() + " (Booster)"
-
-        }
+       
         else {
             cell.namnEtikett.text = vaccin.vaccine.simpleDescription()
 
+        }
+        
+        if vaccinationTabBarController.isVaccinationPartOfVaccinationProgram(vaccination: vaccin) {
+            //cell.namnEtikett.textColor = UIColor(displayP3Red: 0.35, green: 0.78, blue: 0.98, alpha: 0.7)
+            cell.vaccinationProgramImageView.isHidden = false
+            //cell..isHidden = false
+        }
+        else {
+            cell.vaccinationProgramImageView.isHidden = true
         }
         
            
@@ -193,7 +263,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
                print(x)
                x = x.squareRoot().squareRoot()
                
-               let color = UIColor(displayP3Red: CGFloat(2.0 * (1 - x)), green: CGFloat(2.0 * x), blue: 0.0, alpha: 1.0)
+               let color = UIColor(displayP3Red: CGFloat((2.0 * x)), green: CGFloat((2.0 * (1 - x))), blue: 0.0, alpha: 1.0)
                
                
                
@@ -227,11 +297,11 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
                
            }
         
-        if vaccin.isPartOfVaccinationProgram ?? false {
-            cell.vaccinationProgramLabel.isHidden = false
-        }
+        
+        
            
            return cell
+        
        }
        
        
@@ -240,26 +310,15 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
        
        
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-           let view = UIView()
-           view.backgroundColor = UIColor(cgColor: CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0))
-           
-           let icon = UIImageView(image: UIImage(named: "MinaVaccinationerImage"))
-           icon.frame = CGRect(x: 5, y: 5, width: 35, height: 35)
-           view.addSubview(icon)
-           
-           let label = UILabel()
-           label.text = titlar[section]
-           label.font = UIFont(name: "Futura-Medium", size: 12)
-           label.sizeToFit()
-           label.frame = CGRect(x: 45, y: 5, width: 200, height: 35)
-           view.addSubview(label)
-           
-           return view
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell") as? SectionHeaderTableViewCell
+            cell?.setUp(year: String(arrayOfYears[section]))
+            return cell
        }
        
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-           return 45
-       }
+                return sectionHeaderHeight
+            
+    }
        
        // Override to support conditional editing of the table view.
         func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -274,55 +333,138 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
            if editingStyle == .delete {
                
                
+            let alertViewController = alertService.alert(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", buttonTitle: "Radera", alertType: .error, completionWithAction: { ()  in
+                
+                // Make sure the general vaccinations array is updated and informed after this change
+                let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
+                vaccinationTabBarController.comingVaccinations = self.comingVaccinations
+                vaccinationTabBarController.ongoingVaccinations = self.ongoingVaccinations
+                   //FIXA DETTA!
+                   
+                   
+                       // Delete the row from the data source
+                vaccinationTabBarController.comingVaccinations.remove(self.arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row])
+                self.comingVaccinations.remove(self.arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row])
+                   
+                   /*var noOtherVaccines = true
+                    var alikeVaccinations = [Vaccination]()
+                    for i in vaccinationTabBarController.allVaccinations {
+                    if i.vaccine == comingVaccinations[indexPath.row].vaccine {
+                    
+                    alikeVaccinations.append(i)
+                    
+                    
+                    noOtherVaccines = false
+                    }
+                    }
+                    
+                    
+                    if alikeVaccinations.count == 1 {
+                    comingVaccinations.append(alikeVaccinations[0])
+                    }
+                    else if alikeVaccinations.count > 1{
+                    alikeVaccinations.sort(by: <)
+                    
+                    let z = alikeVaccinations[alikeVaccinations.count - 1]
+                    
+                    comingVaccinations.append(z)
+                    }
+                    
+                    
+                    if noOtherVaccines {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    }
+                    */
+                   
+                self.comingVaccinations.remove(self.arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row])
+                   
+                   
+                   
+                self.vaccinationTabBarController.vaccinations = self.vaccinations
+                self.vaccinationTabBarController.comingVaccinations = self.comingVaccinations
+                var bool = false
+                if self.arrayOfArrayOfComingVaccinations[indexPath.section].count == 1 {
+                    bool = true
+                }
+                
+                
+                let identifier = (self.arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row].vaccine.simpleDescription() + self.datumsFormat.string(from: self.arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row].startDate))
+                    print(identifier)
+                    
+                    print(self.center.getPendingNotificationRequests(completionHandler:
+                        
+                
+                        {_ in ()
+                        
+                        return
+                        }))
+                    
+                    
+                    self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+                    
+                    
+                    print(self.center.getPendingNotificationRequests(completionHandler:
+                            
+                    
+                            {_ in ()
+                            
+                            return
+                            }))
+                
+                
+                
+                print(self.comingVaccinations)
+                print(self.arrayOfArrayOfComingVaccinations)
+                
+                
+                
+                self.loadArrayOfArrayOfComingVaccinations()
+                                
                
-               // Make sure the general vaccinations array is updated and informed after this change
-               let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-               vaccinationTabBarController.comingVaccinations = comingVaccinations
-               vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
-               //FIXA DETTA!
-               
-               if indexPath.section == 0 {
-                   // Delete the row from the data source
-                   vaccinationTabBarController.allVaccinations.remove(comingVaccinations[indexPath.row])
-               }
-               /*var noOtherVaccines = true
-                var alikeVaccinations = [Vaccination]()
-                for i in vaccinationTabBarController.allVaccinations {
-                if i.vaccine == comingVaccinations[indexPath.row].vaccine {
                 
-                alikeVaccinations.append(i)
-                
-                
-                noOtherVaccines = false
-                }
-                }
-                
-                
-                if alikeVaccinations.count == 1 {
-                comingVaccinations.append(alikeVaccinations[0])
-                }
-                else if alikeVaccinations.count > 1{
-                alikeVaccinations.sort(by: <)
-                
-                let z = alikeVaccinations[alikeVaccinations.count - 1]
-                
-                comingVaccinations.append(z)
-                }
-                
-                
-                if noOtherVaccines {
+                print(self.comingVaccinations)
+                print(self.arrayOfArrayOfComingVaccinations)
+
                 tableView.deleteRows(at: [indexPath], with: .fade)
+               
                 
+
+                if bool {
+                    self.arrayOfYears.remove(at: indexPath.section)
+                    self.loadArrayOfArrayOfComingVaccinations()
+                   // self.arrayOfArrayOfComingVaccinations[indexPath.section].remove(at: indexPath.row)
+
+
+                    print(self.arrayOfYears)
+                    print(tableView.numberOfSections)
+                    print(tableView.numberOfRows(inSection: 0))
+                    
+                    print("We made it, we´re inside")
+                    tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section)
+                        , with: .fade)
+                    
+                    self.loadArrayOfYears()
+                    
                 }
-                */
+
+                
+                
+                                
+                
                
-               comingVaccinations.remove(at: indexPath.row)
                
+                tableView.reloadData()
+
+                
+            }, completionWithCancel: {() in})
+            
+            present(alertViewController, animated: true)
+
                
-               
-               vaccinationTabBarController.vaccinations = vaccinations
-               vaccinationTabBarController.comingVaccinations = comingVaccinations
            }
+        
+
            /*else {
             _ = comingVaccinations.firstIndex(of: comingVaccinations[indexPath.row])!
             vaccinationTabBarController.allVaccinations.remove(comingVaccinations[indexPath.row])
@@ -370,7 +512,6 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
             }*/
            
            
-           tableView.reloadData()
            
            if editingStyle == .insert {
                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -430,6 +571,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         switch (segue.identifier ?? "") {
         case "AddItem":
             os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            segue.destination.modalPresentationStyle = .fullScreen
         case "ShowDetail":
             guard let vaccineDetailViewController = segue.destination as? VaccineViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
@@ -444,7 +586,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
             }
             let selectedVaccination: Vaccination
             
-            selectedVaccination = comingVaccinations[indexPath.row]
+            selectedVaccination = arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row]
             vaccineDetailViewController.presentingComingVaccination = true
             
             vaccineDetailViewController.vaccination = selectedVaccination
@@ -460,13 +602,15 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     //MARK: Actions
     
     @IBAction func unwindToVaccineList(sender: UIStoryboardSegue) {
+        unwindingFromVaccineList = true
+
         if let sourceViewController = sender.source as? VaccineViewController, let vaccination = sourceViewController.vaccination {
             // Add a new vaccine
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow, let comingVaccination = sourceViewController.comingVaccination {
                 
-                if comingVaccinations[selectedIndexPath.row].startDate < sourceViewController.comingVaccination!.startDate {
-                    comingVaccinations.remove(at: selectedIndexPath.row)
+                if arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].amountOfDosesTaken! < sourceViewController.comingVaccination!.amountOfDosesTaken! {
+                    comingVaccinations.remove(arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row])
                     comingVaccinations.append(comingVaccination)
                     
                 }
@@ -482,16 +626,37 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
                 if let comingVaccination = sourceViewController.comingVaccination {
                     comingVaccinations.append(comingVaccination)
                     
+                    
+
                 }
                 
             }
-            unwindingFromVaccineList = true
             vaccinationTabBarController.allVaccinations.append(vaccination)
             vaccinationTabBarController.comingVaccinations = self.comingVaccinations
+            vaccinationTabBarController.saveLocally()
             //vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             //vaccinationTabBarController.vaccinations = vaccinations
+            comingVaccinations.sort()
+            loadArrayOfYears()
+            loadArrayOfArrayOfComingVaccinations()
             
             tableView.reloadData()
+            
+            /*if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                
+            }
+            else {
+                if unwindingFromVaccineList {
+                           let alert = UIAlertController(title: "Vaccinering sparad", message: "Din vaccinering är sparad. Gå till 'Historik' för att se på och modifiera den", preferredStyle: .alert)
+                           let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { action in
+                           })
+                           alert.addAction(alertAction)
+                           self.present(alert, animated: true, completion: nil)
+                           
+                       }
+                       unwindingFromVaccineList = false
+                   
+            }*/
             
             //self.viewDidAppear(true)
             
@@ -510,13 +675,64 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    /* func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offSet = scrollView.contentOffset
-        addButton.frame = CGRect(x: self.view.frame.width - 80, y: self.view.frame.height - 250 + offSet.y, width: 50, height: 50)
+        addButton.frame = CGRect(x: self.view.frame.width - 80, y: self.view.frame.height - 80 - addButton.layer.frame.height , width: 56, height: 56)
+        //- offSet.y
+    }*/
+    
+    private func loadArrayOfYears() {
+        let years = Set([Calendar.Component.year])
+        arrayOfYears = []
+        for i in comingVaccinations {
+            let year = Calendar.current.dateComponents(years, from: i.startDate).year
+            if !arrayOfYears.contains(year!) {
+                arrayOfYears.append(year!)
+            }
+            
+        }
+        
+        arrayOfYears.sort()
+    }
+    
+    func loadArrayOfArrayOfComingVaccinations() {
+        arrayOfArrayOfComingVaccinations = [[Vaccination]]()
+        let years = Set([Calendar.Component.year])
+        var a = 0
+        while a < arrayOfYears.count {
+            arrayOfArrayOfComingVaccinations.append([])
+            a += 1
+        }
+
+        var y = 0
+        outerLoop: for i in arrayOfYears {
+            innerLoop: for x in comingVaccinations {
+                let year = Calendar.current.dateComponents(years, from: x.startDate).year
+                if year == i {
+                    arrayOfArrayOfComingVaccinations[y].append(x)
+                }
+                
+                
+            }
+            y += 1
+
+        }
+        
+        
         
     }
     
     
+    @IBAction func sendNotification(_ sender: UIButton) {
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) {
+            (action) in
+            
+            self.appDelegate?.scheduleNotifications(notificationType: "default", identifier: "testNotification")
+        }
+    }
+    
+        
     
     
 

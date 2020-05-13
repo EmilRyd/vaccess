@@ -13,6 +13,7 @@ import MaterialComponents
 class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: Properties
+    let alertService = AlertService()
     @IBOutlet weak var signInEmailTextField: MDCTextField!
     @IBOutlet weak var signInPasswordTextField: MDCTextField!
     @IBOutlet weak var signUpButton: UIButton!
@@ -64,6 +65,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         let currentUser = PFUser.current()
         if currentUser != nil {
             isLoggedIn = true
+            
         }
         // Do any additional setup after loading the view.
         
@@ -89,8 +91,14 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
     
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if isLoggedIn {
+            let emptyView = UIView(frame: CGRect(x: self.view.center.x, y: self.view.center.y, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            emptyView.backgroundColor = .red
+            print("Emptyview:  \(emptyView.frame)")
+            self.view.addSubview(emptyView)
             loadHomeScreen()
+            emptyView.removeFromSuperview()
 
         }
         isLoggedIn = false
@@ -144,6 +152,34 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         let sv = UIViewController.displaySpinner(onView: self.view)
         PFUser.logInWithUsername(inBackground: signInEmailTextField.text!, password: signInPasswordTextField.text!) { (user, error) in
             UIViewController.removeSpinner(spinner: sv)
+            if user != nil {
+                if user!["emailVerified"] as! Bool == true {
+                    self.loadHomeScreen()
+
+                    
+                } else {
+                    // User needs to verify email address before continuing
+                    
+                    
+                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", buttonTitle: "Ok", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                    
+                    
+                    self.present(alertViewController, animated: true)
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             if user != nil {
                 self.loadHomeScreen()
             }else{
@@ -206,5 +242,14 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
            }
            self.present(alertView, animated: true, completion: nil)
        }
+    
+    func processSignOut() {
+    
+        // // Sign out
+        PFUser.logOut()
+        
+        // Display sign in / up view controller
+        
+    }
 
 }

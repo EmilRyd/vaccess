@@ -66,7 +66,7 @@ class HistoryTableViewController: UITableViewController {
             for i in vaccinationTabBarController.allVaccinations {
                 vaccinations.append(i.vaccine)
             }
-            vaccinations = Array(Set(vaccinations))
+        vaccinations = Array(Set(vaccinations)).sorted()
         
         if vaccinations.count == 0 {
         tableView.setEmptyView(title: "Du har inga tagna vaccin.", message: "Dina tagna vaccin visas här.", image: "ColoredSyringe")
@@ -156,7 +156,8 @@ class HistoryTableViewController: UITableViewController {
         for i in vaccinationTabBarController.allVaccinations {
             vaccinations.append(i.vaccine)
         }
-        vaccinations = Array(Set(vaccinations))
+        vaccinations = Array(Set(vaccinations)).sorted()
+        
         tableView.reloadData()
     }
     
@@ -189,7 +190,7 @@ class HistoryTableViewController: UITableViewController {
         for i in vaccinationTabBarController.allVaccinations {
             vaccinations.append(i.vaccine)
         }
-        vaccinations = Array(Set(vaccinations))
+        vaccinations = Array(Set(vaccinations)).sorted()
         tableView.reloadData()
     }
 }

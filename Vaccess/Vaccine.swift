@@ -9,7 +9,9 @@
 import Foundation
 import Parse
 
-enum Vaccine: String, Codable {
+enum Vaccine: String, Codable, Comparable {
+    
+    
     case
     Bältros = "Bältros",
     Difteri = "Difteri",
@@ -118,7 +120,7 @@ enum Vaccine: String, Codable {
     func protection(amountOfDosesTaken: Int?) -> Protection {
         
         let user = PFUser.current()
-        let vaccinationProgramIndicator: Int = (user?.object(forKey: "VaccinationProgramIndicator") as! Int)
+        let vaccinationProgramIndicator: Int = (user?.object(forKey: "VaccinationProgramIndicator") as? Int ?? 2)
         let birthDay = user?.object(forKey: "birthDate") as! Date
         let months = Set([Calendar.Component.month])
 
@@ -441,6 +443,40 @@ enum Vaccine: String, Codable {
             
         }
     }
+    
+    func isPartOfVaccinationProgram() -> Bool {
+        switch self {
+        case .Rotavirus, .Difteri, .Stelkramp, .Polio, .Haemophilus_influenzae_typ_b_Hib, .Pneumokocker, .Mässling, .Påssjuka, .Röda_hund, .Hepatit_B, .Kikhosta:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    func isRecommended() -> Bool {
+        if self.isPartOfVaccinationProgram() {
+            return true
+        }
+        else {
+            switch self {
+            case .Tuberkulos_TB, .Tick_Borne_Encephalitis_TBE, .Hepatit_A:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
+    
+    //MARK: Comparable Protocol Functions
+    static func < (vaccine1: Vaccine, vaccine2: Vaccine) -> Bool {
+        let vaccines = Vaccine.allValues
+        let indexForVaccine1 = vaccines.firstIndex(of: vaccine1)!
+        let indexForVaccine2 = vaccines.firstIndex(of: vaccine2)!
+        return indexForVaccine1 < indexForVaccine2
+    }
+    
+   
 
     
     

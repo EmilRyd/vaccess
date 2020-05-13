@@ -15,21 +15,24 @@ class VaccineTableViewCell: UITableViewCell {
     @IBOutlet weak var tidsEtikett: UILabel!
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var vaccinationProgramLabel: UILabel!
+    @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var doseLabel: UILabel!
+    @IBOutlet weak var vaccinationProgramImageView: UIImageView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         //profilePictureView.layer.cornerRadius = profilePictureView.frame.size.width/2
-
+        
+        //cardView.addShadowAndRoundedCorners()
+        cardView.addRoundedCorners()
         timeView.layer.cornerRadius = timeView.frame.size.width/2
         namnEtikett.numberOfLines = 1
         namnEtikett.adjustsFontSizeToFitWidth = true
-        namnEtikett.font = UIFont(name: "Futura-Medium", size: 22.0)
-        tidsEtikett.font = UIFont(name: "Futura-Medium", size: 17.0)
+        //namnEtikett.font = UIFont(name: "Futura-Medium", size: 22.0)
+        //tidsEtikett.font = UIFont(name: "Futura-Medium", size: 17.0)
         
-        vaccinationProgramLabel.isHidden = true
 
         //colorView.frame = CGRect(x: colorView.frame.maxX, y: colorView.frame.maxY, width: namnEtikett.frame.width, height: colorView.frame.height)
 
@@ -39,6 +42,10 @@ class VaccineTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setup() {
+        
     }
 
 }

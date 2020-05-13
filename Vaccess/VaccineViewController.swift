@@ -8,8 +8,11 @@
 import os.log
 import UIKit
 import MaterialComponents.MaterialTextFields
-
+import UserNotifications
 class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    let center = UNUserNotificationCenter.current()
+
     
     //MARK: Properties
     @IBOutlet weak var dosEtikett: UILabel!
@@ -148,7 +151,9 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         nästaDosDatumTextrutaController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
 
         
-    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         
         
@@ -224,6 +229,15 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         }
     }
     
+    deinit {
+        //Stop listening to keyboard events
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
     //MARK: UIDatePicker and UIPickerView methods
     
     @objc func dateChanged (datumVäljare: UIDatePicker) {
@@ -282,6 +296,26 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         }
         
         
+    }
+    
+    @objc func keyboardWillChange (notification: Notification) {
+
+        
+      guard let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        guard let keyBoard = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue) else {
+            return
+        }
+        
+        
+      if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification  {
+            view.frame.origin.y = -38 //50
+            
+        }
+        else {
+            view.frame.origin.y = 0
+        }
     }
     
     // HEJ EMIL! 9/14. Imorgon kan du börja skriva in massa if och switchsatser för olika vaccin folk väljer. Om de väljer något som de ska ta igen, så sätt upp ett ungefärligt nästa-datum, men låt dde också få välja själva.
@@ -385,6 +419,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         sparaKnapp.isEnabled = false
+        updateSaveButtonState()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -396,6 +431,8 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateSaveButtonState()
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -536,9 +573,11 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             vaccinationTabBarController.vaccinationsNotTakenInTime.append(vaccination!)
         }
             vaccinationTabBarController.locallyModified = true
-        }
+        
+    
+        makeNotification(identifier: comingVaccination!.vaccine.simpleDescription() + datumsFormat.string(from: comingVaccination!.startDate), deliveryDate: comingVaccination!.startDate, vaccination: comingVaccination!)
             
-       
+    }
     
     //MARK: Private Methods
     
@@ -568,9 +607,10 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             if !textBool.isEmpty {
                 textBool = dosTextruta.text ?? ""
                 if !textBool.isEmpty || dosTextruta.isHidden {
-                    
-                    
-                    let vaccine = Vaccine(rawValue: vaccintypTextruta.text!)
+                    textBool = slutdatumTextruta.text ?? ""
+                    if !textBool.isEmpty {
+                    bool = true
+                    /*let vaccine = Vaccine(rawValue: vaccintypTextruta.text!)
                     let amountOfDosesTaken = Int(dosTextruta.text!) ?? 1
                     switch vaccine!.protection(amountOfDosesTaken: amountOfDosesTaken) {
                     case .unknown:
@@ -578,7 +618,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                         
                     default:
                         bool = true
-                    }
+                    }*/
                     if bool {
                         let vaccinationTabBarController: VaccinationTabBarController
                         if presentingViewController as? VaccinationTabBarController != nil{
@@ -597,11 +637,39 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                         
                         
                     }
+                    }
                 }
             }
         }
         sparaKnapp.isEnabled = bool
         
+    }
+    
+    
+    func makeNotification(identifier: String, deliveryDate: Date, vaccination: Vaccination) {
+        let content = UNMutableNotificationContent()
+        
+        let vaccineName = (comingVaccination!.vaccine.simpleDescription()).lowercased()
+           print(vaccineName)
+           content.title = "Det finns ett vaccin att ta!"
+           content.subtitle = ""
+        content.body = "Vaccinet mot \(String(describing: vaccineName)) kan tas nu."
+           content.sound = UNNotificationSound.default
+           content.threadIdentifier = "local-notifications temp"
+           
+           
+           let date = Date(timeIntervalSinceNow: 20)
+           let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+           
+           let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        print(identifier)
+           
+           let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+           center.add(request) { (error) in
+               if error != nil {
+                   print(error)
+               }
+           }
     }
     
     
@@ -622,6 +690,9 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         }
         
     }
+    
+    
+    
     
     
 }

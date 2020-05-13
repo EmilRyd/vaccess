@@ -12,6 +12,7 @@ import Parse
 class VaccinationTabBarController: UITabBarController  {
 
     //MARK: Properties
+    let alertService = AlertService()
     var vaccinations = [Vaccination]()
     var allVaccinations = [Vaccination]()
     var ongoingVaccinations = [Vaccination]()
@@ -71,6 +72,11 @@ class VaccinationTabBarController: UITabBarController  {
         //user?.setObject(try? PropertyListEncoder().encode(vaccinations), forKey: "Vaccinations")
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //askToSendPushNotifications()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -514,7 +520,7 @@ class VaccinationTabBarController: UITabBarController  {
         var vaccinationProgramVaccinationsArray: [Vaccination] = []
         
         let hours = Set([Calendar.Component.hour])
-        let birthDay = (PFUser.current()?.object(forKey: "birthDate") as! Date)
+        let birthDay = (PFUser.current()?.object(forKey: "birthDate") as? Date) ?? Date()
         let hourInterval = Calendar.current.dateComponents(hours, from: birthDay, to: Date()).hour!
         let weekInterval = hourInterval / 168
         
@@ -686,6 +692,57 @@ class VaccinationTabBarController: UITabBarController  {
             
         }
     }
+    
+    func coverageForThisVaccine(vaccine: Vaccine) -> Int {
+        var vaccinationsWithThisVaccine: [Vaccination] = []
+        for i in allVaccinations {
+            if i.vaccine == vaccine {
+                vaccinationsWithThisVaccine.append(i)
+            }
+        }
+        var vaccination = Vaccination(vaccine: vaccine, startDate: Date(), amountOfDosesTaken: 0)
+        for i in vaccinationsWithThisVaccine {
+            if i.amountOfDosesTaken! > (vaccination?.amountOfDosesTaken!)! {
+                vaccination = i
+            }
+        }
+        
+        if vaccination!.amountOfDosesTaken! >= (vaccination?.vaccine.getTotalAmountOfDoses())! {
+            return 2
+        }
+        else {
+            return 0
+        }
+    }
+    //MARK: Push Notifications
+    /*func askToSendPushNotifications() {
+        let alertController = alertService.alert(title: "Skicka en push-notis till nyhetskanalen", message: "", buttonTitle: "OK", alertType: .success, completionWithAction: {
+            () in
+            self.sendPushNotifications()}
+            , completionWithCancel: {()
+                in})
+        if let presenter = alertController.popoverPresentationController {
+            presenter.sourceView = self.view
+            presenter.sourceRect = self.view.bounds
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func sendPushNotifications() {
+        let cloudParams : [AnyHashable:String] = [:]
+        PFCloud.callFunction(inBackground: "pushsample", withParameters: cloudParams, block: {
+            (result: Any?, error: Error?) -> Void in
+            if error != nil {
+                if let descrip = error?.localizedDescription{
+                    print(descrip)
+                }
+            }
+            else {
+                print(result as? String)
+            }
+        })
+    }*/
         
         
     }
