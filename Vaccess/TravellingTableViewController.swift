@@ -314,6 +314,8 @@ class TravellingTableViewController: UITableViewController{//MARK: Properties
 }
 
 extension TravellingTableViewController: UISearchResultsUpdating {
+    
+    
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let continent = Country.Continent(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
@@ -322,7 +324,7 @@ extension TravellingTableViewController: UISearchResultsUpdating {
 }
 
 extension TravellingTableViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+    func travellingsearchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         
         let category = Country.Continent(rawValue: searchBar.scopeButtonTitles![selectedScope])
         filterContentForSearchText(searchBar.text!, category: category)

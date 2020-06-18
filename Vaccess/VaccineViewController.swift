@@ -533,7 +533,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             default:
                 break
             }
-            if endDateWasManuallyChosen {
+        if endDateWasManuallyChosen && vaccination?.vaccine.protection(amountOfDosesTaken: Int(dosTextruta.text!)) != Protection.lifeLong {
                 if dosTextruta.isHidden {
                     slutdatum = datumsFormat.date(from: slutdatumTextruta.text!)!
                     vaccination?.setEndDate(endDate: slutdatum)
@@ -574,9 +574,9 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         }
             vaccinationTabBarController.locallyModified = true
         
-    
+        if vaccination?.vaccine.protection(amountOfDosesTaken: Int(dosTextruta.text!)) != Protection.lifeLong {
         makeNotification(identifier: comingVaccination!.vaccine.simpleDescription() + datumsFormat.string(from: comingVaccination!.startDate), deliveryDate: comingVaccination!.startDate, vaccination: comingVaccination!)
-            
+        }
     }
     
     //MARK: Private Methods

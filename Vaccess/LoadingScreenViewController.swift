@@ -28,7 +28,10 @@ class LoadingScreenViewController: UIViewController {
         let currentUser = PFUser.current()
         if currentUser != nil {
             print("Home screen should load")
-            loadHomeScreen()
+            //loadHomeScreen()
+        loadLoginScreen()
+
+        
         }
         else {
             print("Log in screen should load")

@@ -132,7 +132,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     override func viewDidAppear(_ animated: Bool) {
         let currentUser = PFUser.current()
         if currentUser != nil {
-            loadHomeScreen()
+            //loadHomeScreen()
         }
     }
 
@@ -283,9 +283,9 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
                         else if descrip == "bad or missing username" {
                             descrip = "Alla fält måste fyllas i."
                         }
-                        else if descrip == "Account already exists for this username." {
-                            descrip = "Ett konto med denna email-address finns redan."
-                        }
+                        //else if descrip == "Account already exists for this username." {
+                          //  descrip = "Ett konto med denna email-address finns redan."
+                        //}
                         
                         self.displayErrorMessage(message: descrip)
                     }

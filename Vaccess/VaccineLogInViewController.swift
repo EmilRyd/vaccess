@@ -97,7 +97,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
             emptyView.backgroundColor = .red
             print("Emptyview:  \(emptyView.frame)")
             self.view.addSubview(emptyView)
-            loadHomeScreen()
+            //loadHomeScreen()
             emptyView.removeFromSuperview()
 
         }
@@ -153,7 +153,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         PFUser.logInWithUsername(inBackground: signInEmailTextField.text!, password: signInPasswordTextField.text!) { (user, error) in
             UIViewController.removeSpinner(spinner: sv)
             if user != nil {
-                if user!["emailVerified"] as! Bool == true {
+                if (user!["emailVerified"] as? Bool ?? true) == true {
                     self.loadHomeScreen()
 
                     

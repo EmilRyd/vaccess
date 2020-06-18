@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum Protection {
+enum Protection: Equatable {
     case time(Int), lifeLong, unknown
 }

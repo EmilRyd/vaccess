@@ -123,7 +123,7 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         
         let user = PFUser.current()
         
-        let fullNameString = user?.object(forKey: "Name") as! String
+        let fullNameString = user?.object(forKey: "Name") as? String ?? "Vildsvin"
         var array = Array(fullNameString)
         var firstNameArray: [Character] = []
         for i in fullNameString {
