@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     var user = PFUser.current()
-    let titles = ["Har genomgått hela vaccinationsprgrammet för barn", "Har inte genomgått vacciantionsprogramet men vill göra det", "Har inte genomgått vaccinationsprogrammet och vill inte göra det"]
+    let titles = ["Har genomgått hela vaccinationsprgrammet för barn", "Vill genomgå vaccinationsprogrammet för barn", "Har inte genomgått vaccinationsprogrammet och vill inte göra det"]
     
     let sectionTitles = ["Vaccinationsprogrammet", "Mina uppgifter"]
     
@@ -36,7 +36,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 3
+            return 2
         }
         else {
             return 1
@@ -114,10 +114,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
             let value = user?.value(forKey: "VaccinationProgramIndicator") as? Int
             if value == indexPath.row {
-                cell.yesNoSegmentControl.selectedSegmentIndex = 0
+                cell.yesNoSwitch.setOn(true, animated: true)
             }
             else {
-                cell.yesNoSegmentControl.selectedSegmentIndex = 1
+                cell.yesNoSwitch.setOn(false, animated: true)
             }
             return cell
 
@@ -155,10 +155,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func valueForCell1Changed(_ sender: UISegmentedControl) {
+    @IBAction func valueForCellChanged(_ sender: UISwitch) {
+    
+    
        
         
-        let alertViewController = alertService.alert(title: "Vill du göra denna ändring?", message: "Denna åtgärd kan orsaka att vaccin du lagt till tidigare tas bort, och att du sedan måste lägga till dem igen om du byter tillbaka.", buttonTitle: "Ja", alertType: .error, completionWithAction: { ()  in
+        let alertViewController = alertService.alert(title: "Vill du göra denna ändring?", message: "Denna åtgärd kan orsaka att vaccin du lagt till tidigare tas bort, och att du sedan måste lägga till dem igen om du byter tillbaka.", button1Title: "Ja", button2Title: "Avbryt", alertType: .warning, completionWithAction: { ()  in
          
         
              
@@ -168,31 +170,23 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
              
                          let cell1 = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SettingsTableViewCell
                          let cell2 = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! SettingsTableViewCell
-                         let cell3 = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as! SettingsTableViewCell
+                         
 
-                         if sender.selectedSegmentIndex == 0 {
-                             if cell1.yesNoSegmentControl == sender {
-                                 cell2.yesNoSegmentControl.selectedSegmentIndex = 1
-                                 cell3.yesNoSegmentControl.selectedSegmentIndex = 1
+                         if sender.isOn {
+                             if cell1.yesNoSwitch == sender {
+                                cell2.yesNoSwitch.setOn(false, animated: true)
                                  self.user?.setObject(0, forKey: "VaccinationProgramIndicator")
                                  self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
                              }
-                              else if cell2.yesNoSegmentControl == sender {
-                                 cell1.yesNoSegmentControl.selectedSegmentIndex = 1
-                                 cell3.yesNoSegmentControl.selectedSegmentIndex = 1
+                              else if cell2.yesNoSwitch == sender {
+                                cell1.yesNoSwitch.setOn(false, animated: true)
                                  self.user?.setObject(1, forKey: "VaccinationProgramIndicator")
                                  
                                  self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
 
 
                              }
-                             else if cell3.yesNoSegmentControl == sender {
-                                 cell2.yesNoSegmentControl.selectedSegmentIndex = 1
-                                 cell1.yesNoSegmentControl.selectedSegmentIndex = 1
-                                 self.user?.setObject(2, forKey: "VaccinationProgramIndicator")
-                                 self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
-
-                             }
+                             
                          }
                          else {
                              self.user?.setObject(2, forKey: "VaccinationProgramIndicator")
@@ -216,12 +210,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                 }
                          
         }, completionWithCancel: { () in
-            if sender.selectedSegmentIndex == 1 {
-                sender.selectedSegmentIndex = 0
+            if !sender.isOn {
+                sender.setOn(true, animated: true)
 
             }
             else {
-                sender.selectedSegmentIndex = 1
+                sender.setOn(false, animated: true)
 
             }
         })

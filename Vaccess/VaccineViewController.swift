@@ -573,10 +573,12 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
             vaccinationTabBarController.vaccinationsNotTakenInTime.append(vaccination!)
         }
             vaccinationTabBarController.locallyModified = true
+        //vaccinationTabBarController.save()
         
         if vaccination?.vaccine.protection(amountOfDosesTaken: Int(dosTextruta.text!)) != Protection.lifeLong {
         makeNotification(identifier: comingVaccination!.vaccine.simpleDescription() + datumsFormat.string(from: comingVaccination!.startDate), deliveryDate: comingVaccination!.startDate, vaccination: comingVaccination!)
         }
+        
     }
     
     //MARK: Private Methods
@@ -593,7 +595,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
         case .lifeLong:
             slutdatumTextruta.text = "Du är skyddad för resten av livet!"
         case .unknown:
-            slutdatumTextruta.text = "Skyddstiden inte bestämd ännu. Fråga din läkare och fyll i själv."
+            slutdatumTextruta.text = ""
         }
         return nil
     }
@@ -610,6 +612,14 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                     textBool = slutdatumTextruta.text ?? ""
                     if !textBool.isEmpty {
                     bool = true
+                    }
+                    else {
+                        textBool = nästaDosDatumTextruta.text ?? ""
+                        if !textBool.isEmpty {
+                            bool = true
+                        }
+                        
+                    }
                     /*let vaccine = Vaccine(rawValue: vaccintypTextruta.text!)
                     let amountOfDosesTaken = Int(dosTextruta.text!) ?? 1
                     switch vaccine!.protection(amountOfDosesTaken: amountOfDosesTaken) {
@@ -637,7 +647,7 @@ class VaccineViewController: UIViewController, UITextFieldDelegate, UIPickerView
                         
                         
                     }
-                    }
+                    
                 }
             }
         }

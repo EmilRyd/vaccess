@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MaterialComponents
+import MaterialComponents.MaterialTextFields
 import Parse
 
 class ChangePersonalInformationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
@@ -75,6 +75,10 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         
         genderTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
         genderTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        
+        
+        //Unenable email text field
+        emailTextField.isEnabled = false
         
         birthDatePicker.datePickerMode = .date
         
@@ -283,11 +287,11 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
             
             if !firstNameTextField.text!.isEmpty && !lastNameTextField.text!.isEmpty && !birthDateTextField.text!.isEmpty {
                 let user = PFUser.current()
-                user!.username = emailTextField.text!
-                user!.email = emailTextField.text!
+                //user!.username = emailTextField.text!
+                //user!.email = emailTextField.text!
                 let name = firstNameTextField.text! + " " + lastNameTextField.text!
                 user!.setObject(name, forKey: "Name")
-                user!.setObject(emailTextField.text!, forKey: "User")
+                //user!.setObject(emailTextField.text!, forKey: "User")
                 user!.setObject(dateFormatter.date(from: birthDateTextField.text!)!, forKey: "birthDate")
                 user!.setObject(genderTextField.text!, forKey: "Gender")
                 let sv = UIViewController.displaySpinner(onView: self.view)

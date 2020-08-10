@@ -11,7 +11,7 @@ import UIKit
 class SettingsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var subjectLabel: UILabel!
-    @IBOutlet weak var yesNoSegmentControl: UISegmentedControl!
+    @IBOutlet weak var yesNoSwitch: UISwitch!
     
     override func awakeFromNib() {
         super.awakeFromNib()

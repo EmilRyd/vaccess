@@ -270,7 +270,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
             user.signUpInBackground { (success, error) in
                 UIViewController.removeSpinner(spinner: sv)
                 if success {
-                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", buttonTitle: "Ok", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", button1Title: "Ok", button2Title: nil, alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
                     
                     
                     self.present(alertViewController, animated: true)                   // self.loadHomeScreen()
@@ -303,7 +303,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     
     func displayErrorMessage(message: String) {
         
-        let alertViewController = alertService.alert(title: "Error!", message: message, buttonTitle: "Ok", alertType: .error, completionWithAction: { ()in}, completionWithCancel: { ()in})
+        let alertViewController = alertService.alert(title: "Error!", message: message, button1Title: "Ok", button2Title: nil, alertType: .error, completionWithAction: { ()in}, completionWithCancel: { ()in})
         
         let alertView = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in

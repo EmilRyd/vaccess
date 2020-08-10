@@ -12,7 +12,7 @@ import UIKit
 class AlertService {
     
     
-    func alert(title: String, message: String, buttonTitle: String, alertType: AlertViewController.AlertType, completionWithAction: @escaping () -> Void, completionWithCancel: @escaping () -> Void) -> AlertViewController {
+    func alert(title: String, message: String, button1Title: String, button2Title: String?, alertType: AlertViewController.AlertType, completionWithAction: @escaping () -> Void, completionWithCancel: @escaping () -> Void) -> AlertViewController {
         
         let storyBoard = UIStoryboard(name: "AlertStoryBoard", bundle: .main)
         
@@ -22,7 +22,9 @@ class AlertService {
         
         alertViewController.alertMessage = message
         
-        alertViewController.actionButtontitle = buttonTitle
+        alertViewController.actionButtontitle = button1Title
+        
+        alertViewController.cancelButtonTitle = button2Title ?? ""
         
         alertViewController.buttonAction = completionWithAction
         

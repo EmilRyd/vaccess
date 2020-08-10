@@ -59,6 +59,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         
         signInPasswordTextField.delegate = self
         signInEmailTextField.delegate = self
+    
         
         
         
@@ -97,7 +98,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
             emptyView.backgroundColor = .red
             print("Emptyview:  \(emptyView.frame)")
             self.view.addSubview(emptyView)
-            //loadHomeScreen()
+            loadHomeScreen()
             emptyView.removeFromSuperview()
 
         }
@@ -153,15 +154,47 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         PFUser.logInWithUsername(inBackground: signInEmailTextField.text!, password: signInPasswordTextField.text!) { (user, error) in
             UIViewController.removeSpinner(spinner: sv)
             if user != nil {
-                if (user!["emailVerified"] as? Bool ?? true) == true {
-                    self.loadHomeScreen()
-
+                if (user!["emailVerified"] as? Bool ?? true) == true  {
+                    if user?.value(forKey: "VaccinationProgramIndicator") == nil {
+                        self.loadVaccinationProgramScreen()
+                    }
+                    else {
+                        self.loadHomeScreen()
+                    }
                     
                 } else {
                     // User needs to verify email address before continuing
                     
                     
-                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", buttonTitle: "Ok", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", button1Title: "Ok", button2Title: "Skicka om", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in
+                        let sv = UIViewController.displaySpinner(onView: self.view)
+                        user?.signUpInBackground { (success, error) in
+                            UIViewController.removeSpinner(spinner: sv)
+                            if success {
+                                let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", button1Title: "Ok", button2Title: "Skicka om", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                                
+                                
+                                self.present(alertViewController, animated: true)                   // self.loadHomeScreen()
+                            }
+                            else {
+                                if var descrip = error?.localizedDescription {
+                                    if descrip == "Email address format is invalid." {
+                                        descrip = "Email-addressen är i felaktigt format."
+                                    }
+                                    else if descrip == "bad or missing username" {
+                                        descrip = "Alla fält måste fyllas i."
+                                    }
+                                    //else if descrip == "Account already exists for this username." {
+                                      //  descrip = "Ett konto med denna email-address finns redan."
+                                    //}
+                                    
+                                    self.displayErrorMessage(message: descrip)
+                                }
+                            }
+                        }
+                        
+                        
+                    })
                     
                     
                     self.present(alertViewController, animated: true)
@@ -224,6 +257,14 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
     func loadHomeScreen() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController = storyBoard.instantiateViewController(withIdentifier: "VaccinationTabBarController")
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
+        
+    }
+    
+    func loadVaccinationProgramScreen() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController = storyBoard.instantiateViewController(withIdentifier: "VaccinationProgramViewController")
         tabBarController.modalPresentationStyle = .fullScreen
         self.present(tabBarController, animated: true, completion: nil)
         

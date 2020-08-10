@@ -25,13 +25,13 @@ class ProtectionVaccine: CustomStringConvertible {
     enum TotalProtection: String {
         case
         Alla = "Alla",
-        Ingen = "Ingen",
+        Inget = "Inget",
         Partiellt = "Partiellt",
         Fullt = "Fullt"
         
         
         static let allCases = [
-        Alla, Ingen, Partiellt, Fullt
+        Alla, Inget, Partiellt, Fullt
         ]
         
         

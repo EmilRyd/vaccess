@@ -29,6 +29,8 @@ class ProtectionTableTableViewController: UITableViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             
+            self.modalPresentationStyle = .fullScreen
+
             
             for i in Vaccine.allValues {
                 allVaccines.append(i.simpleDescription())
@@ -82,7 +84,7 @@ class ProtectionTableTableViewController: UITableViewController {
             
             for i in Vaccine.allValues {
                 
-                var protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Ingen")
+                var protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Inget")
                 let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
                 if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
                     protVacc.totalProtection = .Fullt
@@ -104,7 +106,7 @@ class ProtectionTableTableViewController: UITableViewController {
         allVaccinesAsProtectedVaccines = []
         for i in Vaccine.allValues {
             
-            var protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Ingen")
+            var protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Inget")
             let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
             if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
                 protVacc.totalProtection = .Fullt
@@ -181,7 +183,7 @@ class ProtectionTableTableViewController: UITableViewController {
                 }
                 
                 else {
-                    allVaccinesAsProtectedVaccines[indexPath.row].totalProtection = .Ingen
+                    allVaccinesAsProtectedVaccines[indexPath.row].totalProtection = .Ingene
 
                 }
                 
@@ -227,6 +229,9 @@ class ProtectionTableTableViewController: UITableViewController {
             
             
                 cell.countryLabel.font = UIFont(name: "Futura-Medium", size: 17.0)
+            if indexPath.row == 3 {
+                cell.countryLabel.text = "Haemophilus influenzae typ b"
+            }
             
             
             return cell
@@ -279,6 +284,21 @@ class ProtectionTableTableViewController: UITableViewController {
             let indexPath = tableView.indexPathForSelectedRow
             //let destinationViewController = segue.destination as! ViewController
             //destinationViewController.font = UIFont(name: array[indexPath!.row], size: 17.0)
+            
+            var vaccine = allVaccines[indexPath!.row]
+            
+            vaccine = vaccine.lowercased()
+            
+            var NC = segue.destination as! UINavigationController
+            var VC = NC.viewControllers[0] as! VaccineInformationViewController
+            
+            VC.currentVaccine = makeStringURLCompatible(string: vaccine)
+            
+            segue.destination.modalPresentationStyle = .fullScreen
+
+            
+            
+            
         }
         
         
@@ -350,6 +370,37 @@ class ProtectionTableTableViewController: UITableViewController {
                 return "Yeeeeeeeeeeeeeeeeet"
             }
         }*/
+    
+    //MARK: Special functions
+    func makeStringURLCompatible(string: String) -> String {
+        let newString = string.lowercased()
+        if newString.localizedStandardContains("meningokocker") {
+            return "meningokocker"
+        }
+        if newString.localizedStandardContains("encephalitis") {
+            return "tick-borne-encefalitis-tbe"
+        }
+        var array = Array(newString)
+        var iter = 0
+        while iter < array.count {
+            switch array[iter] {
+            case "å", "ä":
+                array[iter] = "a"
+            case "ö":
+                array[iter] = "o"
+            case " ":
+                array[iter] = "-"
+            case "(", ")":
+                array.remove(at: iter)
+            default:
+                break
+            }
+            iter += 1
+        }
+        
+        return String(array)
+    }
+    
     }
 
     extension ProtectionTableTableViewController: UISearchResultsUpdating {

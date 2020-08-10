@@ -8,28 +8,34 @@
 
 import UIKit
 import Parse
+
 class LoadingScreenViewController: UIViewController {
+    
+    var isLoggedIn = false
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*let currentUser = PFUser.current()
+        self.appDelegate?.requestNotificationAuthorization()
+        let currentUser = PFUser.current()
         if currentUser != nil {
-            loadHomeScreen()
+            isLoggedIn = true
+            
         }
         else {
-            loadLoginScreen()
-        }*/
+            isLoggedIn = false
+            
+        }
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("We're checking")
-        let currentUser = PFUser.current()
-        if currentUser != nil {
+        
+        if isLoggedIn {
             print("Home screen should load")
-            //loadHomeScreen()
-        loadLoginScreen()
+            loadHomeScreen()
 
         
         }

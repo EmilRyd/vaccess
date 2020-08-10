@@ -25,7 +25,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     var arrayOfArrayOfComingVaccinations = [[Vaccination]]()
     var unwindingFromVaccineList: Bool = false
     let titlar = ["Nästa vaccin du ska ta:"]
-    var addButton1: FloatingActionButton = FloatingActionButton()
+   // var addButton1: FloatingActionButton = FloatingActionButton()
     var user = PFUser.current()
     var sectionHeaderHeight: CGFloat = 0.0
     var arrayOfYears: [Int] = []
@@ -33,7 +33,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
 
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var addButton: UIButton!
+    //@IBOutlet weak var addButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         datumsFormat.dateFormat = "dd/MM - yyyy"
         let height: CGFloat = 56
         //Fix font layout
-        addButton.backgroundColor = UIColor(displayP3Red: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+        /*addButton.backgroundColor = UIColor(displayP3Red: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
         addButton.layer.cornerRadius = addButton.frame.height / 2
         addButton.layer.shadowOpacity = 0.25
         addButton.layer.shadowRadius = 5
@@ -50,7 +50,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         addButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
         addButton.imageView?.tintColor = .white
         
-        print(addButton.frame)
+        print(addButton.frame)*/
         
         
         self.navigationController?.navigationBar.titleTextAttributes =
@@ -68,7 +68,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         ongoingVaccinations = vaccinationTabBarController.ongoingVaccinations
         
         let longTitleLabel = UILabel()
-        longTitleLabel.text = "Mina Vaccin"
+        longTitleLabel.text = "Kommande"
         longTitleLabel.font = UIFont(name: "Futura-Medium", size: 30)
         longTitleLabel.sizeToFit()
         
@@ -98,7 +98,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if unwindingFromVaccineList {
-            let alertViewController = alertService.alert(title: "Vaccination sparad!", message: "Din vaccination är sparad. Gå till 'Historik' för att se på och modifiera den", buttonTitle: "Ok", alertType: .success, completionWithAction: {
+            let alertViewController = alertService.alert(title: "Vaccination sparad!", message: "Din vaccination är sparad. Gå till 'Historik' för att se på och modifiera den", button1Title: "Ok", button2Title: nil, alertType: .success, completionWithAction: {
                 () in
                 
             }, completionWithCancel: {
@@ -130,7 +130,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         let bounds = self.navigationController!.navigationBar.bounds
         self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height + height)
         
-        addButton.alpha = 1.0
+        //addButton.alpha = 1.0
 
         
         
@@ -333,7 +333,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
            if editingStyle == .delete {
                
                
-            let alertViewController = alertService.alert(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", buttonTitle: "Radera", alertType: .error, completionWithAction: { ()  in
+            let alertViewController = alertService.alert(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", button1Title: "Radera", button2Title: nil, alertType: .warning, completionWithAction: { ()  in
                 
                 // Make sure the general vaccinations array is updated and informed after this change
                 let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
@@ -664,6 +664,17 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
+    override func canPerformUnwindSegueAction(_ action: Selector, from fromViewController: UIViewController, sender: Any?) -> Bool {
+        if self.tableView?.indexPathsForSelectedRows != nil {
+            return true
+        } else {
+            return false
+
+        }
+        
+        
+    }
+    
     
     // Private Methods
     
@@ -681,7 +692,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         //- offSet.y
     }*/
     
-    private func loadArrayOfYears() {
+     func loadArrayOfYears() {
         let years = Set([Calendar.Component.year])
         arrayOfYears = []
         for i in comingVaccinations {

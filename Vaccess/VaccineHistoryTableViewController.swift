@@ -37,6 +37,8 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         sectionsArray = getArrayWithVaccinationsOfRightType()
         groupVaccinations(sectionsArray: sectionsArray)
         
+       
+        
                 // Hej Emil! Den 3:e Oktober ska du få in logike nsom bestämmer hur många rader det ska vara i denna tablieView och vad de ska fyllas med! Lycka till, och kom ihåg vad som står på spel! Njut inte bort tiden, utan arbeta!
         
         // Uncomment the following line to preserve selection between presentations
@@ -44,7 +46,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,7 +144,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             // Delete the row from the data source
             let index = returnPositionForThisIndexPath(indexPath: indexPath, insideThisTable: self.tableView)
             
-            let alertController = alertService.alert(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", buttonTitle: "Radera", alertType: .error, completionWithAction: { () in
+            let alertController = alertService.alert(title: "Vill du ta bort denna vaccinering?", message: "Denna åtgärd kan inte ångras.", button1Title: "Radera", button2Title: nil, alertType: .warning, completionWithAction: { () in
                 self.sectionsArray = self.getArrayWithVaccinationsOfRightType()
                     
                 let vaccinationTabBarController = self.sourceViewController?.tabBarController as! VaccinationTabBarController

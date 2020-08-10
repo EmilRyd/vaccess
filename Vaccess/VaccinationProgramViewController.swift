@@ -11,31 +11,17 @@ import Parse
 
 class VaccinationProgramViewController: UIViewController {
 
-    @IBOutlet weak var HasNotButWantsToButton: UIButton!
-    @IBOutlet weak var hasDoneItButton: UIButton!
-    @IBOutlet weak var hasNotDoneItButDoesNotWantToButton: UIButton!
+    @IBOutlet weak var switch1: UISwitch!
+    @IBOutlet weak var switch2: UISwitch!
+    
+    @IBOutlet weak var switch2Label: UILabel!
     
     override func viewDidLoad() {
+        switch2.isHidden = true
+        switch2Label.isHidden = true
         super.viewDidLoad()
 
-        HasNotButWantsToButton.titleLabel?.numberOfLines = 5
-        hasDoneItButton.titleLabel?.numberOfLines = 4
-        hasNotDoneItButDoesNotWantToButton.titleLabel?.numberOfLines = 4
         
-        HasNotButWantsToButton.layer.cornerRadius = HasNotButWantsToButton.frame.height/5;
-        HasNotButWantsToButton.layer.borderColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
-        HasNotButWantsToButton.layer.borderWidth = 5
-        HasNotButWantsToButton.layer.masksToBounds = true;
-        
-        hasDoneItButton.layer.cornerRadius = HasNotButWantsToButton.frame.height/5;
-        hasDoneItButton.layer.borderColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
-        hasDoneItButton.layer.borderWidth = 5
-        hasDoneItButton.layer.masksToBounds = true;
-        
-        hasNotDoneItButDoesNotWantToButton.layer.cornerRadius = HasNotButWantsToButton.frame.height/5;
-        hasNotDoneItButDoesNotWantToButton.layer.borderColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
-        hasNotDoneItButDoesNotWantToButton.layer.borderWidth = 5
-        hasNotDoneItButDoesNotWantToButton.layer.masksToBounds = true;
         
         // Do any additional setup after loading the view.
     }
@@ -57,53 +43,57 @@ class VaccinationProgramViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    @IBAction func button1Tapped(_ sender: UIButton) {
+    
+    @IBAction func switch1ChangedValue(_ sender: UISwitch) {
+        if !switch1.isOn {
+            switch2.isHidden = false
+            switch2Label.isHidden = false
+        }
+        else {
+            switch2.isHidden = true
+            switch2Label.isHidden = true
+        }
         
-        let user = PFUser.current()
-       
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let tabBarController = storyBoard.instantiateViewController(withIdentifier: "VaccinationTabBarController") as! VaccinationTabBarController
-        let vaccination = Vaccination(vaccine: .Difteri, startDate: Date(), amountOfDosesTaken: 1)
-        tabBarController.comingVaccinations.append(vaccination!)
-        loadHomeScreen()
     }
     
-    @IBAction func button2Tapped(_ sender: UIButton) {
-        PFUser.current()?.setValue(2, forKey: "VaccinationProgramIndicator")
-        loadHomeScreen()
-
-    }
     
-    @IBAction func button3Tapped(_ sender: UIButton) {
-        PFUser.current()?.setObject(3, forKey: "VaccinationProgramIndicator")
-        loadHomeScreen()
-
-    }
     
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        switch (segue.identifier ?? "") {
-        case "button1Tapped":
+        if switch1.isOn && switch2.isHidden {
             print("button1Tapped")
             
             guard let vaccinationTabBarController = segue.destination as? VaccinationTabBarController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             
-            PFUser.current()?.setObject(1, forKey: "VaccinationProgramIndicator")
+            PFUser.current()?.setObject(0, forKey: "VaccinationProgramIndicator")
             
             vaccinationTabBarController.setVaccinationProgramVaccinations()
 
             vaccinationTabBarController.modalPresentationStyle = .fullScreen
             
-             
-            
-            
-        case "button2Tapped":
+        }
+        else if switch2.isOn {
             print("button2Tapped")
+                       
+                       guard let vaccinationTabBarController = segue.destination as? VaccinationTabBarController else {
+                           fatalError("Unexpected destination: \(segue.destination)")
+                       }
+                       
+                       PFUser.current()?.setObject(1, forKey: "VaccinationProgramIndicator")
+                       
+                       vaccinationTabBarController.setVaccinationProgramComingVaccinations()
+
+                       vaccinationTabBarController.modalPresentationStyle = .fullScreen
+        }
+        
+        else if !switch2.isOn {
+            print("Another button tapped")
+
             
             guard let vaccinationTabBarController = segue.destination as? VaccinationTabBarController else {
                 fatalError("Unexpected destination: \(segue.destination)")
@@ -114,14 +104,17 @@ class VaccinationProgramViewController: UIViewController {
             vaccinationTabBarController.setVaccinationProgramComingVaccinations()
 
             vaccinationTabBarController.modalPresentationStyle = .fullScreen
+        }
+            
+            
+        
+           
             
             
             
        
-        default:
-            print("Another button tapped")
+        
             
-        }
         
         PFUser.current()?.saveInBackground {
             (success: Bool, error: Error?) in

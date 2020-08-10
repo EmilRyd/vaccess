@@ -95,7 +95,9 @@ class CircularLoaderView: UIView {
     }
 
     func circlePath() -> UIBezierPath {
-        return UIBezierPath(ovalIn: circleFrame())
+        //var path = UIBezierPath(ovalIn: circleFrame())
+        let path = UIBezierPath(arcCenter: CGPoint(x: circleFrame().midX, y: circleFrame().midY), radius: circleFrame().width/2, startAngle: 3*CGFloat.pi/2, endAngle: 7*CGFloat.pi/2, clockwise: true)
+        return path
     }
     
     override func layoutSubviews() {
@@ -106,13 +108,14 @@ class CircularLoaderView: UIView {
         circleTrackLayer.path = circlePath().cgPath
     }
     
-    func handleTap(toValue: Double) {
+    func handleTap(numerator: Double, denominator: Double) {
         print("Lägg den")
-        if toValue.isNaN {
+        let toValue = numerator/denominator
+        if (toValue).isNaN {
             progressLabel.text = "0%"
         }
         else {
-            progressLabel.text = "\(Int(100 * toValue))%"
+            progressLabel.text = "\(Int(numerator))/\(Int(denominator))"
         }
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         

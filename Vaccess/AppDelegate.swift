@@ -26,6 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         Parse.initialize(with: configuration)
         
+        
+        
+        
+        
+        
+        notificationCenter.delegate = self
+        
+        
+        //APP-ID
+        return true
+    }
+    
+    
+    func requestNotificationAuthorization() {
+        // Code here
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         
         notificationCenter.requestAuthorization(options: options, completionHandler: {
@@ -34,18 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 print("User has declined notifications :(")
             }
         })
+        
         notificationCenter.getNotificationSettings(completionHandler: {
             (settings) in
             if settings.authorizationStatus != .authorized {
-                //Notifications not allowed
+                print("No loco.")
             }
         })
-        
-        notificationCenter.delegate = self
-        
-        
-        //APP-ID
-        return true
     }
     
     
@@ -87,10 +97,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
      // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 
         
-        let rootViewController = window?.rootViewController
+        /*let rootViewController = window?.rootViewController
         let tabBarController = rootViewController?.storyboard?.instantiateViewController(identifier: "VaccinationTabBarController") as! VaccinationTabBarController
         
-        tabBarController.save()
+        tabBarController.save()*/
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -101,12 +111,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let tabBarController = rootViewController?.storyboard?.instantiateViewController(identifier: "VaccinationTabBarController") as! VaccinationTabBarController
         
         tabBarController.save()*/
+
     }
     
     
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        let rootViewController = window?.rootViewController
+        let tabBarController = rootViewController?.storyboard?.instantiateViewController(identifier: "VaccinationTabBarController") as! VaccinationTabBarController
+         let defaults = UserDefaults.standard
+        tabBarController.loadFrom(defaults: defaults)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -173,7 +188,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     
     //RayWenderlich
-     func registerForPushNotifications() {
+    /* func registerForPushNotifications() {
          UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
              [weak self] granted, error in
              print("Permission granted: \(granted)")
@@ -208,7 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
              UIApplication.shared.registerForRemoteNotifications()
              
          })
-     }*/
+     }*/*/
 
 
 }

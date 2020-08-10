@@ -27,6 +27,8 @@ class AlertViewController: UIViewController {
     
     var actionButtontitle = String()
     
+    var cancelButtonTitle = String()
+    
     var successOrWarning: AlertType = .error
     
     var buttonAction: (() -> Void)?
@@ -57,9 +59,14 @@ class AlertViewController: UIViewController {
         switch successOrWarning {
         case .error:
             imageView.image = UIImage(named: "ErrorIcon")
+            cancelButton.removeFromSuperview()
         case .success:
             imageView.image = UIImage(named: "SuccessIcon")
             cancelButton.removeFromSuperview()
+        case .warning:
+            imageView.image = UIImage(named: "ErrorIcon")
+        case .twobuttonsuccess:
+            imageView.image = UIImage(named: "SuccessIcon")
              
             // Pin the leading edge of myView to the margin's leading edge
             
@@ -72,6 +79,8 @@ class AlertViewController: UIViewController {
     enum AlertType {
         case success
         case error
+        case warning
+        case twobuttonsuccess
     }
     
 

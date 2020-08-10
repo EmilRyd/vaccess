@@ -30,6 +30,7 @@ class VaccineTableViewCell: UITableViewCell {
         timeView.layer.cornerRadius = timeView.frame.size.width/2
         namnEtikett.numberOfLines = 1
         namnEtikett.adjustsFontSizeToFitWidth = true
+        
         //namnEtikett.font = UIFont(name: "Futura-Medium", size: 22.0)
         //tidsEtikett.font = UIFont(name: "Futura-Medium", size: 17.0)
         

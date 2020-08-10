@@ -8,7 +8,6 @@
 
 import Foundation
 import Parse
-
 enum Vaccine: String, Codable, Comparable {
     
     
