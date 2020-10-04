@@ -53,21 +53,26 @@ class BarChartView: UIView {
         func configure() {
             progress = 0
             
-            
+            self.layer.cornerRadius = barWidth/2
+
             
             barTrackLayer.frame = bounds
             barTrackLayer.lineWidth = barWidth
             barTrackLayer.fillColor = UIColor.clear.cgColor
             barTrackLayer.lineCap = CAShapeLayerLineCap.square
             barTrackLayer.strokeColor = UIColor.clear.cgColor
+            barTrackLayer.lineCap = CAShapeLayerLineCap.round
+
             
             barPathLayer.frame = bounds
             barPathLayer.lineWidth = barWidth
             barPathLayer.fillColor = UIColor.clear.cgColor
             barPathLayer.lineCap = CAShapeLayerLineCap.square
-            
+            barPathLayer.lineCap = CAShapeLayerLineCap.round
 
-            barPathLayer.strokeColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+
+            barPathLayer.strokeColor = Theme.primaryCG
+            
             
             layer.addSublayer(barTrackLayer)
             layer.addSublayer(barPathLayer)
@@ -86,8 +91,10 @@ class BarChartView: UIView {
 
         func circlePath() -> UIBezierPath {
             var path: UIBezierPath = UIBezierPath()
+            
             path.move(to: CGPoint(x: circleFrame().midX, y: circleFrame().maxY))
-            path.addLine(to: CGPoint(x: circleFrame().midX, y: circleFrame().minY))
+           path.addLine(to: CGPoint(x: circleFrame().midX, y: circleFrame().minY))
+            
             return path
         }
         
@@ -96,6 +103,7 @@ class BarChartView: UIView {
             barPathLayer.frame = bounds
             barTrackLayer.frame = bounds
             barPathLayer.path = circlePath().cgPath
+            
             barTrackLayer.path = circlePath().cgPath
         }
         
@@ -110,6 +118,7 @@ class BarChartView: UIView {
             
             basicAnimation.fillMode = CAMediaTimingFillMode.forwards
             basicAnimation.isRemovedOnCompletion = false
+            
             self.barPathLayer.add(basicAnimation, forKey: "urSoBASIC")
             
         }

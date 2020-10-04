@@ -82,10 +82,17 @@ enum Vaccine: String, Codable, Comparable {
         if self == .Tick_Borne_Encephalitis_TBE {
             return "TBE"
         }
+        if self == .Tuberkulos_TB {
+            return "Tuberkulos"
+        }
+        if self == .Meningokocker_B || self == .Meningokocker_C || self == .Meningokocker_A_C_Y_W {
+            return "Meningokocker"
+        }
         else {
             return self.simpleDescription()
         }
     }
+    
     
     func simpleHistoryTableDescription() -> String {
         

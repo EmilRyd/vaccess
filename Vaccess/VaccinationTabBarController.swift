@@ -412,7 +412,8 @@ class VaccinationTabBarController: UITabBarController  {
          let StelkrampVaccination4 = Vaccination(vaccine: .Stelkramp, startDate: date + 155520000, amountOfDosesTaken: 4)!
          let KikhostaVaccination4 = Vaccination(vaccine: .Kikhosta, startDate: date + 155520000, amountOfDosesTaken: 4)!
          let PolioVaccination4 = Vaccination(vaccine: .Polio, startDate: date + 155520000, amountOfDosesTaken: 4)!
-         
+         let PneumokockerVaccination4 = Vaccination(vaccine: .Pneumokocker, startDate: date + 155520000, amountOfDosesTaken: 4)!
+
          
          
         let MässlingVaccination1 = Vaccination(vaccine: .Mässling, startDate: date + 27475200, amountOfDosesTaken: 1)!
@@ -475,6 +476,7 @@ class VaccinationTabBarController: UITabBarController  {
             allVaccinations.append(DifteriVaccination4)
             allVaccinations.append(StelkrampVaccination4)
             allVaccinations.append(PolioVaccination4)
+            allVaccinations.append(PneumokockerVaccination4)
             
             
             
@@ -714,6 +716,30 @@ class VaccinationTabBarController: UITabBarController  {
         }
         else {
             return 0
+        }
+    }
+    
+    func timeTillNextComingVaccination() -> VaccinationTimeLeft? {
+        var comingVaccination: Vaccination!
+        var index = 0
+        if comingVaccinations.count != 0 {
+            
+            for i in comingVaccinations {
+                if index == 0 {
+                    comingVaccination = i
+                }
+                else if i.startDate < comingVaccination.startDate {
+                    comingVaccination = i
+                }
+                
+                index += 1
+            }
+            
+            return comingVaccination.getVaccinationTimeLeft(atDate: Date(), amountOfDosesTaken: comingVaccination.amountOfDosesTaken)
+        }
+        else {
+            return nil
+            
         }
     }
     //MARK: Push Notifications

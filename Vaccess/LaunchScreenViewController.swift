@@ -19,7 +19,7 @@ class LaunchScreenViewController: UIViewController {
 
         let currentUser = PFUser.current()
         if currentUser != nil {
-            isLoggedIn = true
+            isLoggedIn = false
             
         }
         // Do any additional setup after loading the view.
@@ -28,7 +28,8 @@ class LaunchScreenViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
            super.viewDidAppear(animated)
            if isLoggedIn {
-               loadHomeScreen()
+               //loadHomeScreen()
+            
 
            }
            isLoggedIn = false

@@ -14,6 +14,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     let alertService = AlertService()
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backgroundview: UIView!
     var previousVaccinationProgramIndicator: Int!
     
     var vaccinationProgramIndicatorWasInSettingsChangedThisSession: Bool?
@@ -25,21 +26,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var user = PFUser.current()
     let titles = ["Har genomgått hela vaccinationsprgrammet för barn", "Vill genomgå vaccinationsprogrammet för barn", "Har inte genomgått vaccinationsprogrammet och vill inte göra det"]
     
-    let sectionTitles = ["Vaccinationsprogrammet", "Mina uppgifter"]
+    
+    
+    let sectionTitles = ["Vaccinationsprogrammet", "Mina uppgifter", "Kontakt"]
     
     var sectionHeaderHeight: CGFloat = 0.0
     
     //MARK: UITableViewDataSource and Delegate
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        
+        switch section {
+        case 0, 1:
             return 2
-        }
-        else {
+        case 2:
             return 1
+        default:
+            return 0
         }
     }
     
@@ -95,7 +101,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             let cellIdentifierare = "SettingsTableViewCell"
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? SettingsTableViewCell else {
@@ -120,21 +127,52 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 cell.yesNoSwitch.setOn(false, animated: true)
             }
             return cell
-
-        }
-        
-        if indexPath.section == 1 {
+        case 1:
             let cellIdentifierare = "SettingsPersonalInformationTableViewCell"
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? SettingsPersonalInformationTableViewCell else {
                 fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
             }
+            
+            switch indexPath.row {
+            case 0:
+                cell.titleLabel.text = "Min information"
+            case 1:
+             cell.titleLabel.text = "Datahantering"
+            default:
+             cell.titleLabel.text = "Inte klar"
+
+
+            }
+            
+
+            return cell
+        case 2:
+           let cellIdentifierare = "SettingsPersonalInformationTableViewCell"
+
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? SettingsPersonalInformationTableViewCell else {
+                fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
+            }
+           cell.titleLabel.text = "circlevaccess@gmail.com"
+           cell.arrowView.isHidden = true
+           cell.isUserInteractionEnabled = false
+           
+
+           
+           
+           
+           return cell
+        default:
+            let cell = UITableViewCell()
+
+            
+            
+            
             return cell
         }
         
-        let cell = UITableViewCell()
-        return cell
         
+       
     }
     
 
@@ -146,13 +184,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         
         vaccinationProgramIndicatorWasInSettingsChangedThisSession = false
-        self.view.backgroundColor = .clear
+        self.view.backgroundColor = .white
         
         sectionHeaderHeight = tableView.dequeueReusableCell(withIdentifier: "SettingsHeaderTableViewCell")?.contentView.bounds.height ?? 0
 
+        backgroundview.backgroundColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 0.5)
         
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
     }
     
     @IBAction func valueForCellChanged(_ sender: UISwitch) {
@@ -227,6 +271,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
             
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && indexPath.row == 0 {
+            let CPIVC = storyboard?.instantiateViewController(identifier: "ChangePersonalInformationNavigationController") as! UINavigationController
+            CPIVC.modalPresentationStyle = .fullScreen
+            //CPIVC.navigationController?.modalPresentationStyle = .fullScreen
+            self.present(CPIVC, animated: true, completion: nil)
+        }
+        else if indexPath.section == 1 && indexPath.row == 1 {
+            let CIVC = storyboard?.instantiateViewController(identifier: "CompanyInformationNavigationController") as! UINavigationController
+            CIVC.modalPresentationStyle = .fullScreen
+            //CPIVC.navigationController?.modalPresentationStyle = .fullScreen
+            self.present(CIVC, animated: true, completion: nil)
+        }
+    }
     
     
     
@@ -243,6 +301,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             changePersonalInformationViewController.modalPresentationStyle = .fullScreen
         }
         
+        
+
         //let loggedInViewController = segue.destination as! LoggedInViewController
        // loggedInViewController.vaccinationProgramIndicatorWasChangedInSettingsThisSession = self.vaccinationProgramIndicatorWasInSettingsChangedThisSession!
         
@@ -250,11 +310,27 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func unwindToSettingsViewController(for segue: UIStoryboardSegue, sender: Any?) {
         //Don´t really know what to do here yet
-        let changePersonalInformationViewController = segue.source as! ChangePersonalInformationViewController
+        var i = 0
+        while i < tableView.numberOfSections {
+           var x = 0
+            while x < tableView.numberOfRows(inSection: i) {
+                tableView.cellForRow(at: IndexPath(row: x, section: i))?.isSelected = false
+                x += 1
+            }
+            i += 1
+        }
+        
+        
+        guard let changePersonalInformationViewController = segue.source as? ChangePersonalInformationViewController else {
+            return
+        }
         if changePersonalInformationViewController.informationWasChanged {
             personalInformationWasChanged = true
         }
-        self.tableView.cellForRow(at: IndexPath(row: 0, section: 1))?.isSelected = false
+        
+        
+
+
         
     }
     

@@ -49,7 +49,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         //Fix some layout
         signUpButton.layer.cornerRadius = signUpButton.frame.height/2
         signInButton.layer.borderWidth = 5
-        signInButton.layer.borderColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+        signInButton.layer.borderColor = Theme.primaryCG
         signInButton.layer.cornerRadius = signInButton.frame.height/2
         
         firstNameTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
@@ -68,26 +68,26 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
          birthDateTextFieldController = MDCTextInputControllerFilled(textInput: birthDateTextField)// Hold on as a property
         genderTextFieldController = MDCTextInputControllerFilled(textInput: genderTextField)// Hold on as a property
         
-        lastNameTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        lastNameTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        lastNameTextFieldController?.activeColor = Theme.secondary
+        lastNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        firstNameTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        firstNameTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        firstNameTextFieldController?.activeColor = Theme.secondary
+        firstNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        emailTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        emailTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        emailTextFieldController?.activeColor = Theme.secondary
+        emailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        passwordTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        passwordTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        passwordTextFieldController?.activeColor = Theme.secondary
+        passwordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        confirmPasswordTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        confirmPasswordTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        confirmPasswordTextFieldController?.activeColor = Theme.secondary
+        confirmPasswordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        birthDateTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        birthDateTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        birthDateTextFieldController?.activeColor = Theme.secondary
+        birthDateTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        genderTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        genderTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        genderTextFieldController?.activeColor = Theme.secondary
+        genderTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
         
         birthDatePicker.datePickerMode = .date

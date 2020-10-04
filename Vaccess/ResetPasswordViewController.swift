@@ -13,11 +13,15 @@ import Parse
 class ResetPasswordViewController: UIViewController {
     
     
+    @IBOutlet weak var resetButton: UIButton!
     let alertService = AlertService()
 
     @IBOutlet weak var emailTextField: MDCTextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        resetButton.layer.cornerRadius = resetButton.frame.height/2;
+
 
         // Do any additional setup after loading the view.
     }

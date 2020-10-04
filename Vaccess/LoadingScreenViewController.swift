@@ -8,14 +8,18 @@
 
 import UIKit
 import Parse
+import GhostTypewriter
+
 
 class LoadingScreenViewController: UIViewController {
     
+    
+    @IBOutlet weak var vaccessLabel: TypewriterLabel!
     var isLoggedIn = false
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+         super.viewDidLoad()
         self.appDelegate?.requestNotificationAuthorization()
         let currentUser = PFUser.current()
         if currentUser != nil {
@@ -32,18 +36,32 @@ class LoadingScreenViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("We're checking")
-        
-        if isLoggedIn {
-            print("Home screen should load")
-            loadHomeScreen()
-
-        
+        if !UserDefaults.standard.bool(forKey: "hasWatchedWalkthrough")
+        {
+            // let storyboard = UIStoryboard(name: "OnBoarding", bundle: nil)
+            if let walkthroughViewController = storyboard?.instantiateViewController(identifier: "OnBoardingViewController") as? OnBoardingViewController {
+                walkthroughViewController.modalPresentationStyle = .fullScreen
+                present(walkthroughViewController, animated: true, completion: nil)
+            }
+            
+            
         }
-        else {
-            print("Log in screen should load")
-
-            loadLoginScreen()
+        vaccessLabel.startTypewritingAnimation {
+            if self.isLoggedIn {
+                print("Home screen should load")
+                self.loadHomeScreen()
+                
+                
+            }
+            else {
+                print("Log in screen should load")
+                
+                self.loadLoginScreen()
+            }
         }
+        
+        
+        
     }
     
     func loadHomeScreen() {

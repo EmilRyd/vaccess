@@ -8,16 +8,30 @@
 
 import Foundation
 import UIKit
+import Lottie
 extension UIViewController {
  class func displaySpinner(onView : UIView) -> UIView {
-     let spinnerView = UIView.init(frame: onView.bounds)
-     spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-    let ai = UIActivityIndicatorView.init(style: .whiteLarge)
-     ai.startAnimating()
-     ai.center = spinnerView.center
+    
+    let spinnerView = UIView.init(frame: onView.bounds)
+    spinnerView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.7)
+    
+    var animationView: AnimationView? = .init(name: "890-loading-animation")
+    animationView?.frame = onView.bounds
+    animationView?.layer.bounds = CGRect(x: 0, y: 0, width: 200, height: 80
+    )
+    animationView?.loopMode = .loop
+    
+    spinnerView.addSubview(animationView!)
+    animationView?.play()
+    
+     
+    //let ai = UIActivityIndicatorView.init(style: .whiteLarge)
+    // ai.startAnimating()
+    // ai.center = spinnerView.center
 
      DispatchQueue.main.async {
-         spinnerView.addSubview(ai)
+         //spinnerView.addSubview(ai)
+        spinnerView.addSubview(animationView!)
          onView.addSubview(spinnerView)
      }
 
@@ -100,4 +114,35 @@ extension UITableView {
         
     }
     
+}
+
+extension UIView: CoachMarkSkipView {
+    public var skipControl: UIControl? {
+        return self as? UIControl
+    }
+    
+    
+}
+
+public protocol CoachMarkSkipView: AnyObject {
+    var skipControl: UIControl? { get }
+}
+
+
+extension UILabel {
+
+    func animate(newText: String, characterDelay: TimeInterval) {
+
+        DispatchQueue.main.async {
+
+            self.text = ""
+
+            for (index, character) in newText.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
+                    self.text?.append(character)
+                }
+            }
+        }
+    }
+
 }

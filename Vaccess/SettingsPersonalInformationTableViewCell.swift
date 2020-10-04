@@ -10,6 +10,8 @@ import UIKit
 
 class SettingsPersonalInformationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var arrowView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

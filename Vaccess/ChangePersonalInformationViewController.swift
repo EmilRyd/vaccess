@@ -17,6 +17,7 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     @IBOutlet weak var emailTextField: MDCTextField!
     @IBOutlet weak var birthDateTextField: MDCTextField!
     @IBOutlet weak var genderTextField: MDCTextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var informationWasChanged: Bool = false
     
@@ -43,6 +44,8 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        saveButton.isEnabled = false
         
         dateFormatter.dateFormat = "dd/MM - yyyy"
         
@@ -207,6 +210,8 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     }
     
     
+    
+    
     //MARK: UIPickerViewDelegate
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -241,7 +246,51 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     
     //MARK: UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField){
+        var string: String = ""
+        switch textField.tag {
+        case 0:
+            string = firstName
+            case 1:
+            string = lastName
+            case 2:
+            string = email
+            case 3:
+            string = birthDate
+            case 4:
+            string = gender
+        default:
+            break
+        }
+        if string != textField.text {
+            saveButton.isEnabled = true
+        }
+        else {
+            saveButton.isEnabled = false
+        }
         
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        var string: String = ""
+        switch textField.tag {
+        case 0:
+            string = firstName
+            case 1:
+            string = lastName
+            case 2:
+            string = email
+            case 3:
+            string = birthDate
+            case 4:
+            string = gender
+        default:
+            break
+        }
+        if string != textField.text {
+            saveButton.isEnabled = true
+        }
+        else {
+            saveButton.isEnabled = false
+        }
         
     }
     
@@ -327,9 +376,16 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         
             // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
             
+
+        
+        
+        if let owningNavigationController = navigationController{
+            owningNavigationController.popViewController(animated: true)
+        }
+       else {
             dismiss(animated: true, completion: nil)
 
-        //navigationController!.popViewController(animated: true)
+        }
             
             
         

@@ -16,43 +16,211 @@
 
 import UIKit
 import Parse
-
-class LoggedInViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate /*UITableViewDelegate, UITableViewDataSource*/ {
-   /* func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Vaccine.allValues.count
+import AnalogClock
+import Lottie
+class LoggedInViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    
+    
+    //MARK: UITableViewDataSource and Delegate
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        switch section {
+        case 0, 1:
+            return 2
+        case 2:
+            return 1
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsHeaderTableViewCell") as! SettingsHeaderTableViewCell
+        
+        cell.setUp(title: sectionTitles[section])
+        return cell.contentView
+        
+   
+        
+        /*let view = UIView()
+        view.backgroundColor = UIColor(cgColor: CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 0.0))
+        
+        
+        let icon = UIImageView(image: UIImage(named: "MinaVaccinationerImage"))
+        icon.frame = CGRect(x: 5, y: 5, width: 35, height: 35)
+        view.addSubview(icon)
+        
+        let label = UILabel()
+        
+        label.text = sectionTitles[section]
+        label.font = UIFont(name: "Futura-Medium", size: 12)
+        label.sizeToFit()
+        label.frame = CGRect(x: 45, y: 5, width: 200, height: 35)
+        view.addSubview(label)
+        
+        
+        
+        return view*/
         
     }
     
+     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return sectionHeaderHeight
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifierare = "ProtectionTableViewCell"
         
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? ProtectionTableViewCell else {
-            fatalError("The dequeued cell is not an instance of VaccineTableViewCell.")
-        }
-        let vaccine = Vaccine.allValues[indexPath.row]
+        switch indexPath.section {
+        case 0:
+            let cellIdentifierare = "SettingsTableViewCell"
 
-        cell.namnEtikett.text = vaccine.simpleDescription()
-        let vaccinationtabBarController = tabBarController as! VaccinationTabBarController
-        if vaccinationtabBarController.coverageForThisVaccine(vaccine: Vaccine.allValues[indexPath.row]) == 2 {
-            cell.timeView.backgroundColor = .green
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? SettingsTableViewCell else {
+                fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
+            }
+            cell.subjectLabel.text = titles[indexPath.row]
+            
+            cell.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+            /*switch user?.value(forKey: "VacciantionProgramIndicator") as! Int {
+            case 1:
+                switch indexPath.row {
+                case 0:
+                    cell.yesNoSegmentControl
+                }
+                cell.yesNoSegmentControl
+            }*/
+            
+            let value = user?.value(forKey: "VaccinationProgramIndicator") as? Int
+            if value == indexPath.row {
+                cell.yesNoSwitch.setOn(true, animated: true)
+            }
+            else {
+                cell.yesNoSwitch.setOn(false, animated: true)
+            }
+            if cell.yesNoSwitch.isOn {
+                cell.yesNoSwitch.backgroundColor = Theme.secondary
+            }
+            else {
+                
+                cell.yesNoSwitch.backgroundColor = .white
+                
 
-        }
-        else if vaccinationtabBarController.coverageForThisVaccine(vaccine: Vaccine.allValues[indexPath.row]) == 0{
-            cell.timeView.backgroundColor = .red
+            }
+            
+            return cell
+        case 1:
+            if indexPath.row == 0 {
+                let cellIdentifierare = "SettingsPersonalInformationTableViewCell"
 
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? SettingsPersonalInformationTableViewCell else {
+                    fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
+                }
+
+                cell.titleLabel.text = "Min information"
+
+                cell.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+
+                cell.selectionStyle = .none
+                return cell
+            }
+            else {
+                let cellIdentifierare = "DataHandlingInformationTableViewCell"
+
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? DataHandlingInformationTableViewCell else {
+                    fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
+                }
+
+                cell.titleLabel.text = "Datahantering"
+
+                cell.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+
+                cell.selectionStyle = .none
+                return cell
+            }
+            
+            
+            
+
+            
+        case 2:
+           let cellIdentifierare = "SettingsPersonalInformationTableViewCell"
+
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifierare, for: indexPath) as? SettingsPersonalInformationTableViewCell else {
+                fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
+            }
+           cell.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+
+           cell.titleLabel.text = "circlevaccess@gmail.com"
+           cell.arrowView.isHidden = true
+           cell.isUserInteractionEnabled = false
+           
+
+           
+           
+           
+           return cell
+        default:
+            let cell = UITableViewCell()
+            cell.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+
+            
+            
+            
+            return cell
         }
         
-        if vaccine.isRecommended()
-        {
-            cell.contentView.backgroundColor = UIColor(displayP3Red: 0.35, green: 0.78, blue: 0.98, alpha: 0.2)
-        }
-        else {
-            cell.contentView.backgroundColor = .white
+        
+       
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+          let cell = tableView.cellForRow(at: indexPath)
+        if (tableView.cellForRow(at: indexPath) as? SettingsTableViewCell) != nil {
+            return
         }
         
-        return cell
-    }*/
+        cell?.backgroundColor = Theme.primary
+
+        
+        
+        
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if (tableView.cellForRow(at: indexPath) as? SettingsTableViewCell) != nil {
+            return
+        }
+        
+        cell?.backgroundColor = Theme.primary
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if (tableView.cellForRow(at: indexPath) as? SettingsTableViewCell) != nil {
+            return
+        }
+        
+        cell?.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)   }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if (tableView.cellForRow(at: indexPath) as? SettingsTableViewCell) != nil {
+            return
+        }
+        
+        cell?.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+    }
     
     
     //MARK: Properties
@@ -60,14 +228,24 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var statisticsWheel1: CircularLoaderView!
+  //  @IBOutlet weak var moreButton: UIButton!
+   // @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var clockView: AnalogClockView!
     
+    @IBOutlet weak var animationView: AnimationView!
+    @IBOutlet weak var clockViewLabel: UILabel!
     @IBOutlet weak var barChartStackViewProgressLabel1: UILabel!
     @IBOutlet weak var barChartStackView1: BarChartStackView!
     @IBOutlet weak var statisticsWheel3: CircularLoaderView!
     @IBOutlet weak var statisticsWheel1Label: UILabel!
     @IBOutlet weak var statisticsWheel3Label: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var settingsTableView: UITableView!
+    
+   // var settingsButtonCenter: CGPoint!
+    var logoutButtonCenter: CGPoint!
+    var shouldRenderAnimation = true
     let shapeLayer = CAShapeLayer()
     
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
@@ -75,12 +253,109 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
     var statisticsWheel2: CircularLoaderView? = nil
     var statisticsWheel3: CircularLoaderView? = nil*/
     
+    //MARK: Settings and Table View variables
+    let sectionTitles = ["Vaccinationsprogrammet", "Mina uppgifter", "Kontakt"]
+    let titles = ["Har genomgått hela vaccinationsprgrammet för barn", "Vill genomgå vaccinationsprogrammet för barn", "Har inte genomgått vaccinationsprogrammet och vill inte göra det"]
+    var previousVaccinationProgramIndicator: Int!
+    
+    var vaccinationProgramIndicatorWasInSettingsChangedThisSession: Bool?
+    var personalInformationWasChanged = false
+    
+    var changeWasSelected = false
+    
+    var sectionHeaderHeight: CGFloat = 0.0
+
+    
+    let alertService = AlertService()
+    
+    var user = PFUser.current()
+
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Table view and Settings stuff
+        settingsTableView.delegate = self
+        settingsTableView.dataSource = self
+        
+        
+        settingsTableView.backgroundColor = .clear
+        
+        vaccinationProgramIndicatorWasInSettingsChangedThisSession = false
+        
+        sectionHeaderHeight = settingsTableView.dequeueReusableCell(withIdentifier: "SettingsHeaderTableViewCell")?.contentView.bounds.height ?? 0
+        
+        //Set up animation
+        //animationView = .init(name: "hourglass")
+        //animationView?.frame = clockView.bounds
+        
+        //animationView?.loopMode = .playOnce
+        //animationView.animationSpeed = 0.5
+        //animationView.sizeToFit()
+        //animationView.contentMode = .scaleToFill
+        //contentView.addSubview(animationView!)
+       // animationView.backgroundColor = .blue
+       // animationView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        //contentView.bringSubviewToFront(animationView!)
+       // animationView?.play()
         //Load data
         self.loadUserDefaults()
+        
+        
+        
+        //Fix moreButton
+        /*let height: CGFloat = 56.0
+        moreButton.backgroundColor = Theme.accent
+        moreButton.layer.cornerRadius = moreButton.frame.height / 2
+        moreButton.layer.shadowOpacity = 0.25
+        moreButton.layer.shadowRadius = 5
+        moreButton.layer.shadowOffset = CGSize(width: 0, height: 10)
+        moreButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
+        moreButton.imageView?.tintColor = .black
+        
+        //Fix settingsButton
+       
+        settingsButton.backgroundColor = .lightGray
+        settingsButton.layer.cornerRadius = height / 2
+        settingsButton.layer.shadowOpacity = 0.25
+        settingsButton.layer.shadowRadius = 5
+        settingsButton.layer.shadowOffset = CGSize(width: 0, height: 10)
+        settingsButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49) - height - 24, width: height, height: height)
+        settingsButton.imageView?.tintColor = .darkGray
+        
+        
+        settingsButtonCenter = settingsButton.center
+        
+        settingsButton.center = moreButton.center*/
+        
+        //Fix logoutButton
+        let height: CGFloat = 56
+        logoutButton.backgroundColor = Theme.secondary
+        logoutButton.imageView?.frame = logoutButton.frame
+        
+        logoutButton.layer.cornerRadius = height / 2
+        logoutButton.layer.shadowOpacity = 0.25
+        logoutButton.layer.shadowRadius = 5
+        logoutButton.layer.shadowOffset = CGSize(width: 0, height: 10)
+        //logoutButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
+        logoutButton.imageView?.tintColor = .white
+        
+        //logoutButtonCenter = logoutButton.center
+        
+        //logoutButton.center = moreButton.center
+        
+        //Fix navBar
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        //self.navigationController?.navigationBar.backgroundColor = Theme.primary
+        //self.navigationController?.navigationBar.barTintColor = Theme.primary
 
+        
+
+
+        
+        
         
         //Checking if first time viewer has logged in to app
         
@@ -118,7 +393,13 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         
         
        
-        statisticsWheel1!.handleTap(numerator: Double(vaccinationTabBarController.vaccinationsTakenInTime.count), denominator: Double(vaccinationTabBarController.allVaccinations.count))
+       // statisticsWheel1!.handleTap(numerator: Double(vaccinationTabBarController.vaccinationsTakenInTime.count), denominator: Double(vaccinationTabBarController.allVaccinations.count))
+        
+        //clockView.bringSubviewToFront(clockViewLabel)
+        //clockViewLabel.adjustsFontSizeToFitWidth = true
+    
+        fixClockLabels()
+         
         
         self.view.bringSubviewToFront(barChartStackViewProgressLabel1)
         
@@ -138,24 +419,31 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         super.viewDidAppear(animated)
         
         //appDelegate?.startPushNotifications()
+
+
         
         
         if let image = UserDefaults.standard.object(forKey: "ProfileImage") as? UIImage {
             profileImage.image = image
         }
        // loadStatisticsWheels()
-        
-        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        statisticsWheel1!.handleTap(numerator: Double(vaccinationTabBarController.vaccinationsTakenInTime.count), denominator: Double(vaccinationTabBarController.allVaccinations.count))
-        
-        barChartStackView1!.handleTap(increase: true)
-barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVaccinations.count)
-        
-        let allVPVs = Double(vaccinationTabBarController.getAllVaccinationProgramVaccinations().count)
-        let takenVPVs = vaccinationTabBarController.getPercentageOfVaccinationProgramTaken() * allVPVs
-        statisticsWheel3!.handleTap(numerator: takenVPVs, denominator: allVPVs)
+        if shouldRenderAnimation {
+            let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+                 //   statisticsWheel1!.handleTap(numerator: Double(vaccinationTabBarController.vaccinationsTakenInTime.count), denominator: Double(vaccinationTabBarController.allVaccinations.count))
+                    
+                    barChartStackView1!.handleTap(increase: true)
+            barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVaccinations.count)
+                    
+                    let allVPVs = Double(vaccinationTabBarController.getAllVaccinationProgramVaccinations().count)
+                    let takenVPVs = vaccinationTabBarController.getPercentageOfVaccinationProgramTaken() * allVPVs
+                    statisticsWheel3!.handleTap(numerator: takenVPVs, denominator: allVPVs)
+        }
+        animationView?.play()
 
+        shouldRenderAnimation = true
         
+        fixClockLabels()
+
         //Fixing based on settings changes
 
         
@@ -164,11 +452,23 @@ barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVac
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        statisticsWheel1!.handleTap(numerator: 0, denominator: 0)
+       // statisticsWheel1!.handleTap(numerator: 0, denominator: 0)
         barChartStackView1!.handleTap(increase: false)
         
-
+        
         statisticsWheel3!.handleTap(numerator: 0, denominator: 0)
+        shouldRenderAnimation = true
+
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+       // returnButtonsToOrigin()
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        settingsTableView.reloadData()
+
     }
     
     
@@ -192,7 +492,7 @@ barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVac
         self.present(viewController, animated: true, completion: nil)
     }
     
-    @IBAction func logoutOfApp(_ sender: UIBarButtonItem) {
+    @IBAction func logoutOfApp(_ sender: UIButton) {
         let sv = UIViewController.displaySpinner(onView: self.view)
         self.saveUserDefaults()
         
@@ -209,15 +509,56 @@ barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVac
                 
             }
         }
-    }    /*
+    }
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+         // Get the new view controller using segue.destination.
+         // Pass the selected object to the new view controller.
+         /*if segue.identifier == "presentPersonalInformationViewController" {
+             let changePersonalInformationViewControllerNavigationController = segue.destination as! UINavigationController
+             let changePersonalInformationViewController = changePersonalInformationViewControllerNavigationController.viewControllers[0] as! ChangePersonalInformationViewController
+             changePersonalInformationViewControllerNavigationController.modalPresentationStyle = .fullScreen
+             changePersonalInformationViewController.modalPresentationStyle = .fullScreen
+         }*/
+         
+         
+
+         //let loggedInViewController = segue.destination as! LoggedInViewController
+        // loggedInViewController.vaccinationProgramIndicatorWasChangedInSettingsThisSession = self.vaccinationProgramIndicatorWasInSettingsChangedThisSession!
+         
      }
-     */
+    
+    @IBAction func unwindToSettingsViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        //Don´t really know what to do here yet
+        var i = 0
+        while i < settingsTableView.numberOfSections {
+           var x = 0
+            while x < settingsTableView.numberOfRows(inSection: i) {
+                settingsTableView.cellForRow(at: IndexPath(row: x, section: i))?.isSelected = false
+                x += 1
+            }
+            i += 1
+        }
+        
+        
+        guard let changePersonalInformationViewController = segue.source as? ChangePersonalInformationViewController else {
+            settingsTableView.reloadData()
+
+            return
+        }
+        if changePersonalInformationViewController.informationWasChanged {
+            //loadUserInformation()
+        }
+        
+        settingsTableView.reloadData()
+
+
+        
+    }
+     
+    
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -286,7 +627,7 @@ barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVac
             
             trackLayer.strokeColor = UIColor.lightGray.cgColor
             trackLayer.lineWidth = 10
-            trackLayer.fillColor = UIColor.clear.cgColor
+            trackLayer.fillColor = Theme.secondaryLight.withAlphaComponent(0.2).cgColor
             
             
             trackLayer.lineCap = kCALineCapRound
@@ -301,7 +642,7 @@ barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVac
             
             shapeLayer.strokeColor = UIColor.red.cgColor
             shapeLayer.lineWidth = 5
-            shapeLayer.fillColor = UIColor.clear.cgColor
+            shapeLayer.fillColor = Theme.secondaryLight.withAlphaComponent(0.2).cgColor
             
             
             shapeLayer.lineCap = kCALineCapRound
@@ -418,7 +759,6 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
     @IBAction func unwindToLoggedInViewController(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? SettingsViewController, let vaccinationProgramIndicatorWasChangedBool = sourceViewController.vaccinationProgramIndicatorWasInSettingsChangedThisSession, let previousVaccinationProgramIndicator = sourceViewController.previousVaccinationProgramIndicator {
             if vaccinationProgramIndicatorWasChangedBool {
-                changeVaccinationProgramStatus(previousVaccinationProgramIndicator: previousVaccinationProgramIndicator)
                 
                 
             }
@@ -498,4 +838,182 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
             }
         })
     }*/
+   /* @IBAction func moreButtonPressed(_ sender: UIButton) {
+        print("Svina")
+        if settingsButton.center == moreButton.center {
+            UIView.animate(withDuration: 0.3) {
+                self.settingsButton.alpha = 1
+                self.logoutButton.alpha = 1
+                
+                self.settingsButton.center = self.settingsButtonCenter
+                self.logoutButton.center = self.logoutButtonCenter
+                //self.moreButton.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2))
+                self.moreButton.imageView?.tintColor = .white
+                self.moreButton.backgroundColor = .black
+            }
+            
+
+        }
+        else {
+            returnButtonsToOrigin()
+        }
+    }
+    func returnButtonsToOrigin() {
+        UIView.animate(withDuration: 0.3) {
+            //self.settingsButton.alpha = 0
+            self.logoutButton.alpha = 0
+            //self.settingsButton.center = self.moreButton.center
+            self.logoutButton.center = self.moreButton.center
+            //self.moreButton.transform = CGAffineTransform(rotationAngle: 0)
+            
+            self.moreButton.imageView?.tintColor = .black
+            self.moreButton.backgroundColor =  Theme.accent
+
+        }
+    }*/
+    func fixClockLabels() {
+        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+        let timeTillNextVaccination = vaccinationTabBarController.timeTillNextComingVaccination()
+        if timeTillNextVaccination == nil {
+            clockViewLabel.text = "0"
+            statisticsWheel1Label.text = "Kommande vaccinationer"
+        }
+        else {
+            switch timeTillNextVaccination!.days {
+            
+            case 0...31:
+                clockViewLabel.text = "\(timeTillNextVaccination!.days)"
+                if timeTillNextVaccination!.days == 1 {
+                    statisticsWheel1Label.text = "Dag till nästa vaccin kan tas"
+
+                }
+                else {
+                    statisticsWheel1Label.text = "Dagar till nästa vaccin kan tas"
+
+                }
+
+            case (-31)...(-1):
+                clockViewLabel.text = "0"
+                statisticsWheel1Label.text = "Dagar till nästa vaccin kan tas"
+
+            default:
+                switch timeTillNextVaccination!.months {
+                case let x where x >= 12:
+                    
+                    clockViewLabel.text = "\(timeTillNextVaccination!.years)"
+                    statisticsWheel1Label.text = "År till nästa vaccin kan tas"
+                case let x where x <= -12:
+                    clockViewLabel.text = "0"
+                    statisticsWheel1Label.text = "Dagar till nästa vaccin kan tas"
+                case 1...12:
+                    clockViewLabel.text = "\(timeTillNextVaccination!.months)"
+                    if timeTillNextVaccination!.months == 1 {
+                        statisticsWheel1Label.text = "Månad till nästa vaccin kan tas"
+
+                    }
+                    else {
+                        statisticsWheel1Label.text = "Månader till nästa vaccin kan tas"
+
+                    }
+                case (-11)...0:
+                    clockViewLabel.text = "0"
+                    statisticsWheel1Label.text = "Dagar till nästa vaccin kan tas"
+                default:
+                    fatalError("Inconsistent time left")
+                }
+                
+            }
+        }
+    }
+    
+    //MARK: Actions
+    @IBAction func valueForCellChanged(_ sender: UISwitch) {
+    
+        if sender.isOn {
+            sender.backgroundColor = Theme.secondaryDark
+        }
+        else {
+            
+            sender.backgroundColor = .white
+            
+
+        }
+       
+        
+        let alertViewController = alertService.alert(title: "Vill du göra denna ändring?", message: "Denna åtgärd kan orsaka att vaccin du lagt till tidigare tas bort, och att du sedan måste lägga till dem igen om du byter tillbaka.", button1Title: "Ja", button2Title: "Avbryt", alertType: .warning, completionWithAction: { ()  in
+         
+        
+             
+             self.previousVaccinationProgramIndicator = (self.user?.object(forKey: "VaccinationProgramIndicator") as? Int) ?? 2
+             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+             let tabBarController = storyBoard.instantiateViewController(withIdentifier: "VaccinationTabBarController") as! VaccinationTabBarController
+             
+                         let cell1 = self.settingsTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SettingsTableViewCell
+                         let cell2 = self.settingsTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! SettingsTableViewCell
+                         
+
+                         if sender.isOn {
+                             if cell1.yesNoSwitch == sender {
+                                cell2.yesNoSwitch.setOn(false, animated: true)
+                                 self.user?.setObject(0, forKey: "VaccinationProgramIndicator")
+                                 self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
+                                
+                                
+                                cell2.yesNoSwitch.backgroundColor = .white
+                                    
+                                    
+
+                                
+                             }
+                              else if cell2.yesNoSwitch == sender {
+                                cell1.yesNoSwitch.setOn(false, animated: true)
+                                 self.user?.setObject(1, forKey: "VaccinationProgramIndicator")
+                                 
+                                 self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
+                                cell1.yesNoSwitch.backgroundColor = .white
+
+                             }
+                             
+                         }
+                         else {
+                             self.user?.setObject(2, forKey: "VaccinationProgramIndicator")
+                             self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
+                            sender.backgroundColor = .white
+
+                             
+                         }
+             
+            self.changeVaccinationProgramStatus(previousVaccinationProgramIndicator: self.previousVaccinationProgramIndicator)
+
+          
+             
+                         PFUser.current()?.saveInBackground {
+                                    (success: Bool, error: Error?) in
+                                      if (success) {
+                                        // The object has been saved.
+                                      } else {
+                                        print (error?.localizedDescription as Any)
+                                      }
+                                    
+                                }
+                         
+        }, completionWithCancel: { () in
+            if !sender.isOn {
+                sender.setOn(true, animated: true)
+                sender.backgroundColor = Theme.secondaryDark
+            }
+            else {
+                sender.setOn(false, animated: true)
+                sender.backgroundColor = .white
+
+            }
+        })
+        present(alertViewController, animated: true)
+        
+        
+        
+        
+        
+            
+    }
 }

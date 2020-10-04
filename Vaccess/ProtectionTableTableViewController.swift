@@ -9,7 +9,10 @@
 import UIKit
 
 class ProtectionTableTableViewController: UITableViewController {
-        let searchController = UISearchController(searchResultsController: nil)
+    
+    //MARK: Outlets and variables
+    
+    let searchController = UISearchController(searchResultsController: nil)
         var currentVaccineArray = [String]()
         let allContinents = ["Alla", "Fullt", "Partiellt", "Inget"]
         let allScopeTitles = ["Alla", "Fullt", "Partiellt", "Inget"]
@@ -28,6 +31,7 @@ class ProtectionTableTableViewController: UITableViewController {
         
         override func viewDidLoad() {
             super.viewDidLoad()
+            
             
             self.modalPresentationStyle = .fullScreen
 
@@ -139,7 +143,7 @@ class ProtectionTableTableViewController: UITableViewController {
             }
         }
         
-        
+    
         
         
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

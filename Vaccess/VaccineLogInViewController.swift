@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import MaterialComponents
+import Lottie
+
 
 class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
 
@@ -25,33 +27,36 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
     
     
     var isLoggedIn = false
+    var animationView: AnimationView?
     
     override func viewDidLoad() {
         self.modalPresentationStyle = .fullScreen
 
         super.viewDidLoad()
         
+        
+        
         navigationItem.title = "Logga in"
         
         signUpButton.layer.cornerRadius = signUpButton.frame.height/2;
-        signUpButton.layer.borderColor = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+        signUpButton.layer.borderColor = Theme.primaryCG
         signUpButton.layer.borderWidth = 5
         signUpButton.layer.masksToBounds = true;
         signInButton.layer.cornerRadius = signInButton.frame.height/2;
         signInButton.layer.masksToBounds = true;
         print(signUpButton.titleLabel?.font.fontName)
         
-        signInEmailTextField.font = UIFont(name: "Futura-CondensedMedium", size: 17.0)
-        signInPasswordTextField.font = UIFont(name: "Futura-CondensedMedium", size: 17.0)
+        signInEmailTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        signInPasswordTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
         
         signInEmailTextFieldController = MDCTextInputControllerFilled(textInput: signInEmailTextField)// Hold on as a property
         signInPasswordTextFieldController = MDCTextInputControllerFilled(textInput: signInPasswordTextField)// Hold on as a property
         
-        signInEmailTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        signInEmailTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        signInEmailTextFieldController?.activeColor = Theme.secondary
+        signInEmailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
                
-        signInPasswordTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        signInPasswordTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        signInPasswordTextFieldController?.activeColor = Theme.secondary
+        signInPasswordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         //Listen for keyboard events
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -98,7 +103,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
             emptyView.backgroundColor = .red
             print("Emptyview:  \(emptyView.frame)")
             self.view.addSubview(emptyView)
-            loadHomeScreen()
+            //loadHomeScreen()
             emptyView.removeFromSuperview()
 
         }

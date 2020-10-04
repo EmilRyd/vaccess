@@ -8,12 +8,70 @@
 
 import UIKit
 import os.log
-class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+import Instructions
+class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CoachMarksControllerDelegate, CoachMarksControllerDataSource {
     
-    var vaccinations = [Vaccine]()
+    
+    
+    //MARK: CoachMarksControllerDataSource
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: (UIView & CoachMarkBodyView), arrowView: (UIView & CoachMarkArrowView)?) {
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
+        coachViews.bodyView.hintLabel.text = walkthroughTitles[index]
+        coachViews.bodyView.background.innerColor = Theme.primary
+        coachViews.arrowView?.background.innerColor = Theme.primary
+        coachViews.bodyView.hintLabel.font = UIFont(name: "Futura-medium", size: 15)
+        coachViews.bodyView.hintLabel.textColor = .white
+        coachViews.bodyView.separator.isHidden = true
+        coachViews.bodyView.nextLabel.isHidden = true
+
+        if index == walkthroughTitles.count - 1 {
+            coachViews.bodyView.nextLabel.text = ""
+
+        }
+        else {
+            coachViews.bodyView.nextLabel.text = ""
+
+        }
+        
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkAt index: Int) -> CoachMark {
+        
+        
+        return coachMarksController.helper.makeCoachMark(for: pointsOfInterest[index])
+    }
+    
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        return pointsOfInterest.count
+    }
+    
+    
+    
+    
+    
+    //MARK: Outlets
+    
+    
+    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tutorialButton: UIButton!
     
     @IBOutlet weak var addButton: UIButton!
+    
+    //MARK: Variables and properties
+    
+    var vaccinations = [Vaccine]()
+    var datumsFormat = DateFormatter() {
+        didSet {
+            datumsFormat.dateFormat = "dd/MM - yyyy"
+        }
+    }
+
+    var pointsOfInterest = [UIView(), UIView()]
+    let coachMarksController = CoachMarksController()
+    var walkthroughTitles = ["Här ser du dem vaccin du tagit. Om du klickar på dem kan du se vilka vaccinationer du tagit.", "Titeln berättar vilket vaccin du tagit."]
     
     
     //MARK: Table View Data Source andDeleate Protocol Stubs
@@ -65,9 +123,25 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
         cell.VaccineLabel.text = vaccine.simpleDescription()
         cell.VaccineImage = nil
+        if indexPath.row == 0 {
+            pointsOfInterest[0] = cell
+            pointsOfInterest[1] = cell.VaccineLabel
+        }
+        
+        
+        if tableView.numberOfSections != 0 {
+            tutorialButton.isHidden = false
+        }
+        else {
+            tutorialButton.isHidden = true
+
+        }
+        
+        
         
         return cell
     }
+    
     
 
     /*
@@ -120,12 +194,30 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         
         tableView.delegate = self
-        tableView.dataSource = self 
+        tableView.dataSource = self
+        
+        //Configure tutorialButton
+        tutorialButton.isHidden = true
+        let height: CGFloat = 56
+
+        coachMarksController.dataSource = self
+        //pointsOfInterest[0] = tableView
+        coachMarksController.overlay.isUserInteractionEnabled = true
+        datumsFormat.dateFormat = "dd/MM - yyyy"
+        //Fix font layout
+        tutorialButton.backgroundColor = Theme.secondaryLight
+        tutorialButton.layer.cornerRadius = tutorialButton.frame.height / 2
+        tutorialButton.layer.shadowOpacity = 0.25
+        tutorialButton.layer.shadowRadius = 5
+        tutorialButton.layer.shadowOffset = CGSize(width: 0, height: 10)
+        tutorialButton.imageView?.tintColor = .white
+        
+        
+        tutorialButton.frame = CGRect(x: 24, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
         
         //Configure the add button a bit
-        let height: CGFloat = 56
         //Fix font layout
-        addButton.backgroundColor = UIColor(displayP3Red: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+        addButton.backgroundColor = Theme.secondaryDark
         addButton.layer.cornerRadius = addButton.frame.height / 2
         addButton.layer.shadowOpacity = 0.25
         addButton.layer.shadowRadius = 5
@@ -300,6 +392,13 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
+    @IBAction func startWalkthourgh(_ sender: UIButton) {
+        if tableView.numberOfSections == 0 {
+            //pointsOfInterest = [UIView(frame: (self.navigationController?.navigationBar.frame)!)]
+            walkthroughTitles = ["Du har för tillfället inga kommande vaccinationer. När du har det kan du klicka på frågetecknet för mer information."]
+        }
+        self.coachMarksController.start(in: .window(over: self))
+    }
     
     
     

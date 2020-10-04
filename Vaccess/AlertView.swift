@@ -77,7 +77,7 @@ class AlertView: UIView {
         switch alertType {
         case .success:
             image.image = UIImage(named: "SuccessIcon")
-            doneButton.backgroundColor = UIColor(red: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
+            doneButton.backgroundColor = Theme.primary
             deterButton.removeFromSuperview()
             let margins = alertView.layoutMarginsGuide
              

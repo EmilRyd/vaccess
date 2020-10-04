@@ -37,8 +37,8 @@ class BarChartStackView: UIStackView {
             self.distribution = .equalSpacing
 
             self.layer.borderWidth = 5
-            self.layer.borderColor = UIColor.red.cgColor
-
+            //self.layer.borderColor = UIColor.red.cgColor
+            self.layer.borderColor = UIColor.clear.cgColor
             setupBars()
         }
 
@@ -47,7 +47,8 @@ class BarChartStackView: UIStackView {
             self.alignment = .center
             self.distribution = .equalSpacing
             self.layer.borderWidth = 5
-            self.layer.borderColor = UIColor.red.cgColor
+            //self.layer.borderColor = UIColor.red.cgColor
+            self.layer.borderColor = UIColor.clear.cgColor
 
             setupBars()
         }

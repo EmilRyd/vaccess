@@ -10,8 +10,44 @@ import os.log
 import UIKit
 import Parse
 import UserNotifications
+import Instructions
 
-class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CoachMarksControllerDataSource, CoachMarksControllerDelegate {
+    
+    //MARK: CoachMarksControllerDataSource
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkViewsAt index: Int, madeFrom coachMark: CoachMark) -> (bodyView: (UIView & CoachMarkBodyView), arrowView: (UIView & CoachMarkArrowView)?) {
+        let coachViews = coachMarksController.helper.makeDefaultCoachViews(withArrow: true, arrowOrientation: coachMark.arrowOrientation)
+        coachViews.bodyView.hintLabel.text = walkthroughTitles[index]
+        coachViews.bodyView.background.innerColor = Theme.primary
+        coachViews.arrowView?.background.innerColor = Theme.primary
+        coachViews.bodyView.hintLabel.font = UIFont(name: "Futura-medium", size: 15)
+        coachViews.bodyView.hintLabel.textColor = .white
+        coachViews.bodyView.separator.isHidden = true
+        coachViews.bodyView.nextLabel.isHidden = true
+
+        if index == walkthroughTitles.count - 1 {
+            coachViews.bodyView.nextLabel.text = ""
+
+        }
+        else {
+            coachViews.bodyView.nextLabel.text = ""
+
+        }
+        
+        return (bodyView: coachViews.bodyView, arrowView: coachViews.arrowView)
+    }
+    
+    func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkAt index: Int) -> CoachMark {
+        
+        
+        return coachMarksController.helper.makeCoachMark(for: pointsOfInterest[index])
+    }
+    
+    func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
+        return pointsOfInterest.count
+    }
+    
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     let center = UNUserNotificationCenter.current()
@@ -25,12 +61,21 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     var arrayOfArrayOfComingVaccinations = [[Vaccination]]()
     var unwindingFromVaccineList: Bool = false
     let titlar = ["Nästa vaccin du ska ta:"]
-   // var addButton1: FloatingActionButton = FloatingActionButton()
+    // var addButton1: FloatingActionButton = FloatingActionButton()
     var user = PFUser.current()
     var sectionHeaderHeight: CGFloat = 0.0
     var arrayOfYears: [Int] = []
     let datumsFormat = DateFormatter()
-
+    var pointsOfInterest = [UIView(), UIView(), UIView(), UIView(), UIView(), UIView()]
+    let coachMarksController = CoachMarksController()
+    var walkthroughTitles = ["Här ser du dina kommande vaccinationer. Klicka på och lägg till dem som tagna när du avklarat dem.", "Här ser du vilket vaccin det rör sig om", "Färgen visar hur långt det är tills du kan ta ditt vaccin. Rött innebär långt kvar, grönt innebär att det är dags.", "Tiden syns också här.", "Här ser du vilken dos det rör sig om.", "Om vaccinet tillhör vaccinationsprogrammet för barn visas här en liten ikon på ett barn."]
+/*pointsOfInterest[0] = cell
+pointsOfInterest[1] = cell.namnEtikett
+pointsOfInterest[2] = cell.colorView
+pointsOfInterest[3] = cell.tidsEtikett
+pointsOfInterest[4] = cell.doseLabel
+pointsOfInterest[5] = cell.vaccinationProgramImageView*/
+    @IBOutlet weak var tutorialButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var addButton: UIButton!
@@ -39,19 +84,26 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         super.viewDidLoad()
         
         
+        tutorialButton.isHidden = true
+        
+        coachMarksController.dataSource = self
+        pointsOfInterest[0] = tableView
+        coachMarksController.overlay.isUserInteractionEnabled = true
+        let view = UIView()
+        //coachMarksController.skipView = (UIView() & ())
         datumsFormat.dateFormat = "dd/MM - yyyy"
         let height: CGFloat = 56
         //Fix font layout
-        /*addButton.backgroundColor = UIColor(displayP3Red: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
-        addButton.layer.cornerRadius = addButton.frame.height / 2
-        addButton.layer.shadowOpacity = 0.25
-        addButton.layer.shadowRadius = 5
-        addButton.layer.shadowOffset = CGSize(width: 0, height: 10)
-        addButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
-        addButton.imageView?.tintColor = .white
+        tutorialButton.backgroundColor = Theme.secondaryLight
+        tutorialButton.layer.cornerRadius = tutorialButton.frame.height / 2
+        tutorialButton.layer.shadowOpacity = 0.25
+        tutorialButton.layer.shadowRadius = 5
+        tutorialButton.layer.shadowOffset = CGSize(width: 0, height: 10)
+        tutorialButton.imageView?.tintColor = .white
         
-        print(addButton.frame)*/
         
+        tutorialButton.frame = CGRect(x: 24, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
+
         
         self.navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedString.Key.foregroundColor: UIColor.black,
@@ -134,6 +186,8 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
 
         
         
+        
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         vaccinations = vaccinationTabBarController.vaccinations
@@ -146,6 +200,10 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
 
         tableView.reloadData()
         
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.coachMarksController.stop(immediately: true)
     }
     
     
@@ -196,7 +254,14 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
            }
            // Hämtar rätt vaccin
            let vaccin: Vaccination
-           
+        cell.selectionStyle = .none
+        
+        cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+        cell.doseLabel.numberOfLines = 0;
+        cell.doseLabel.sizeToFit()
+        
+        
+
            
        
         
@@ -204,8 +269,10 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
             vaccin = arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row]
 
         
-           if vaccin.vaccine.getTotalAmountOfDoses() == 17 {
+           if vaccin.amountOfDosesTaken == 17 {
                cell.namnEtikett.text = vaccin.vaccine.simpleDescription() + " (Booster)"
+            cell.doseLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            cell.doseLabel!.text = "Booster"
 
            }
         else if vaccin.vaccine.getTotalAmountOfDoses() > 1  {
@@ -236,7 +303,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
            let today = Date()
            
            switch (vaccin.vaccine.protection(amountOfDosesTaken: vaccin.amountOfDosesTaken)) {
-           case .time(_), .unknown:
+           case .time(_), .unknown, Protection.lifeLong:
                let timeLeft = vaccin.getVaccinationTimeLeft(atDate: today, amountOfDosesTaken: vaccin.amountOfDosesTaken)
                
                /*switch (timeLeft.status) {
@@ -270,20 +337,26 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
                
                cell.timeView.backgroundColor = color
                switch timeLeft.days {
-               case 0:
+               case (-31)...0:
                    cell.tidsEtikett.text = "Kan tas nu!"
-               case 1...31:
+               case 2...31:
                    cell.tidsEtikett.text = "Kan tas om \(timeLeft.days) dagar"
-               case (-31)...(-1):
-                   cell.tidsEtikett.text = "Kan tas nu!"
+               case 1:
+                cell.tidsEtikett.text = "Kan tas om \(timeLeft.days) dag"
+
                default:
                    switch timeLeft.months {
                    case let x where x >= 12:
                        cell.tidsEtikett.text = "Kan tas om \(timeLeft.years) år och \(timeLeft.months - (timeLeft.years * 12)) månader"
+                       if (timeLeft.months - (timeLeft.years * 12)) == 1 {
+                        cell.tidsEtikett.text = "Kan tas om \(timeLeft.years) år och \(timeLeft.months - (timeLeft.years * 12)) månad"
+                    }
                    case let x where x <= -12:
                        cell.tidsEtikett.text = "Kan tas nu!"
-                   case 1...12:
+                   case 2...12:
                        cell.tidsEtikett.text = "Kan tas om \(timeLeft.months) månader"
+                   case 1:
+                    cell.tidsEtikett.text = "Kan tas om \(timeLeft.months) månad"
                    case (-11)...0:
                        cell.tidsEtikett.text = "Kan tas nu!"
                    default:
@@ -291,27 +364,43 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
                    }
                    
                }
-           case Protection.lifeLong:
+          /* case :
                cell.timeView.backgroundColor = .green
-               cell.tidsEtikett.text = "Livslångt"
+               cell.tidsEtikett.text = "Livslångt"*/
                
            }
         
         
         
-           
+        pointsOfInterest[0] = cell
+        pointsOfInterest[1] = cell.namnEtikett
+        pointsOfInterest[2] = cell.colorView
+        pointsOfInterest[3] = cell.tidsEtikett
+        pointsOfInterest[4] = cell.doseLabel
+        pointsOfInterest[5] = cell.vaccinationProgramImageView
+        
+        if tableView.numberOfSections != 0 {
+            tutorialButton.isHidden = false
+        }
+        else {
+            tutorialButton.isHidden = true
+
+        }
+
+        
            return cell
         
        }
        
        
-       
+    
        
        
        
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell") as? SectionHeaderTableViewCell
             cell?.setUp(year: String(arrayOfYears[section]))
+            //pointsOfInterest[1] = cell!
             return cell
        }
        
@@ -456,6 +545,13 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
                
                 tableView.reloadData()
 
+                if self.tableView.numberOfSections != 0 {
+                    self.tutorialButton.isHidden = false
+                }
+                else {
+                    self.tutorialButton.isHidden = true
+
+                }
                 
             }, completionWithCancel: {() in})
             
@@ -534,7 +630,23 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         return true
         }
         */
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! VaccineTableViewCell
+        cell.cardView.backgroundColor = Theme.secondaryLight
+    }
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! VaccineTableViewCell
+        cell.cardView.backgroundColor = Theme.secondaryLight
+    }
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! VaccineTableViewCell
+        cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! VaccineTableViewCell
+        cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+    }
 
 
 
@@ -593,7 +705,9 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
             
+            
         }
+        segue.destination.hidesBottomBarWhenPushed = true
     }
     
     
@@ -609,11 +723,11 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow, let comingVaccination = sourceViewController.comingVaccination {
                 
-                if arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].amountOfDosesTaken! < sourceViewController.comingVaccination!.amountOfDosesTaken! {
+                //if arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].amountOfDosesTaken! < sourceViewController.comingVaccination!.amountOfDosesTaken! {
                     comingVaccinations.remove(arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row])
                     comingVaccinations.append(comingVaccination)
                     
-                }
+                //}
                 
                 
                 
@@ -741,6 +855,15 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
             
             self.appDelegate?.scheduleNotifications(notificationType: "default", identifier: "testNotification")
         }
+    }
+    
+    @IBAction func startWalkthrough(_ sender: UIButton) {
+        //Walkthrough
+        if tableView.numberOfSections == 0 {
+            pointsOfInterest = [UIView(frame: (self.navigationController?.navigationBar.frame)!)]
+            walkthroughTitles = ["Du har för tillfället inga kommande vaccinationer. När du har det kan du klicka på frågetecknet för mer information."]
+        }
+        self.coachMarksController.start(in: .window(over: self))
     }
     
         

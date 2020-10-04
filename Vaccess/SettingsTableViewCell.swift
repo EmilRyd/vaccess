@@ -11,7 +11,12 @@ import UIKit
 class SettingsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var subjectLabel: UILabel!
-    @IBOutlet weak var yesNoSwitch: UISwitch!
+    @IBOutlet weak var yesNoSwitch: UISwitch! {
+        didSet {
+            yesNoSwitch.layer.cornerRadius = yesNoSwitch.frame.height/2
+
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

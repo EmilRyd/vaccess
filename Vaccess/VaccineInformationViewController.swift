@@ -29,7 +29,7 @@ class VaccineInformationViewController: UIViewController {
         print(url
         )
         let request = URLRequest(url: url)
-        var webView = WKWebView()
+        let webView = WKWebView()
         webView.load(request)
         
         

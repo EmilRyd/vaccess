@@ -21,8 +21,8 @@ class CountryTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
 //27    G: 171    B: 89
-        let color = CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0)
-        cellStyler.backgroundColor = UIColor(cgColor: color)
+        
+        cellStyler.backgroundColor = Theme.primary
         countryLabel.font = UIFont(name: "Proxima Nova", size: 17.0)
         
         
