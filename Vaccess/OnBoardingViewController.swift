@@ -24,7 +24,7 @@ class OnBoardingViewController: UIViewController, PaperOnboardingDataSource, Pap
     let backgroundColors = [UIColor(red: 115/255, green: 201/255, blue: 47/255, alpha: 1),
                          UIColor(red: 4/255, green: 71/255, blue: 182/255, alpha: 1),
                            UIColor(red: 229/255, green: 1/255, blue: 81/255, alpha: 1),
-                            UIColor(red: 250/255, green: 101/255, blue: 29/255, alpha: 1)]
+                            UIColor(red: 250/255, green: 101/255, blue: 29/255, alpha: 1), Theme.primaryLight ]
     //let backgroundColors: [UIColor] = [Theme.primaryLight, Theme.primary, Theme.primaryDark, Theme.secondary, Theme.secondaryDark]
     
     @IBOutlet weak var getStartButton: UIButton!
@@ -37,19 +37,8 @@ class OnBoardingViewController: UIViewController, PaperOnboardingDataSource, Pap
         
         
         
-        return (OnboardingItemInfo(informationImage: UIImage(named: pageImages[index])!, title: pageHeadings[index], description: pageSubHeadings[index], pageIcon: UIImage(), color: backgroundColors[index], titleColor: .white, descriptionColor: .white, titleFont: titleFont, descriptionFont: descriptionFont))
+        return (OnboardingItemInfo(informationImage: UIImage(named: pageImages[index])!, title: pageHeadings[index], description: pageSubHeadings[index], pageIcon: UIImage(), color: backgroundColors[index], titleColor: .white, descriptionColor: .white, titleFont: titleFont, descriptionFont: descriptionFont, descriptionLabelPadding: 20, titleLabelPadding: 20))
         
-        return [OnboardingItemInfo(informationImage: UIImage(named: "onboardingPic1")!, title: "Håll ordning!", description: "Yeet yett yeet yeet yyeeetye yiheureyteadfgsdflnb", pageIcon: UIImage(), color: backgroundColorOne, titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
-            
-            OnboardingItemInfo(informationImage: UIImage(named: "undraw_new_notifications_fhvw")!, title: "Håll ordning på dina vaccin!", description: "Yeet yett yeet yeet yyeeetye yiheureyteadfgsdflnb", pageIcon: UIImage(), color: backgroundColorTwo, titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
-            
-            OnboardingItemInfo(informationImage: UIImage(named: "undraw_new_notifications_fhvw")!, title: "Håll ordning på dina vaccin!", description: "Yeet yett yeet yeet yyeeetye yiheureyteadfgsdflnb", pageIcon: UIImage(), color: backgroundColorThree, titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
-            
-            OnboardingItemInfo(informationImage: UIImage(named: "undraw_new_notifications_fhvw")!, title: "Håll ordning på dina vaccin!", description: "Yeet yett yeet yeet yyeeetye yiheureyteadfgsdflnb", pageIcon: UIImage(), color: backgroundColorOne, titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
-            
-            OnboardingItemInfo(informationImage: UIImage(named: "undraw_new_notifications_fhvw")!, title: "Håll ordning på dina vaccin!", description: "Yeet yett yeet yeet yyeeetye yiheureyteadfgsdflnb", pageIcon: UIImage(), color: backgroundColorThree, titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont)][index]
-        
-        //return [("undraw_new_notifications_fhvw", "Håll ordning på dina vaccin!", "Yeet yett yeet yeet yyeeetye yiheureyteadfgsdflnb", "", backgroundColorOne, UIColor.white, UIColor.white, titleFont, descriptionFont)][index]
     }
     func onboardingItemsCount() -> Int {
         return 5

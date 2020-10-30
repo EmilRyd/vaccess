@@ -45,6 +45,7 @@
 		209EA4A723DE45BD0077F6AA /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209EA4A623DE45BD0077F6AA /* Image.swift */; };
 		209EA4A923DF54CD0077F6AA /* StatisticsWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209EA4A823DF54CD0077F6AA /* StatisticsWheel.swift */; };
 		209EA4AB23DF77980077F6AA /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209EA4AA23DF77980077F6AA /* CircularLoaderView.swift */; };
+		20C7DB29252E39CD007669ED /* 5081-empty-box.json in Resources */ = {isa = PBXBuildFile; fileRef = 20C7DB28252E39CC007669ED /* 5081-empty-box.json */; };
 		20C86DD92419594A00BEDD94 /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20C86DD82419594A00BEDD94 /* CustomAlertView.xib */; };
 		20C86DDB24195E6C00BEDD94 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C86DDA24195E6C00BEDD94 /* AlertView.swift */; };
 		20C86DDD241AC03D00BEDD94 /* AlertStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C86DDC241AC03D00BEDD94 /* AlertStoryBoard.storyboard */; };
@@ -151,6 +152,7 @@
 		209EA4A623DE45BD0077F6AA /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		209EA4A823DF54CD0077F6AA /* StatisticsWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsWheel.swift; sourceTree = "<group>"; };
 		209EA4AA23DF77980077F6AA /* CircularLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
+		20C7DB28252E39CC007669ED /* 5081-empty-box.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "5081-empty-box.json"; path = "../../../Downloads/5081-empty-box.json"; sourceTree = "<group>"; };
 		20C86DD82419594A00BEDD94 /* CustomAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlertView.xib; sourceTree = "<group>"; };
 		20C86DDA24195E6C00BEDD94 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		20C86DDC241AC03D00BEDD94 /* AlertStoryBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertStoryBoard.storyboard; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				6F5FD6832329912F00D45E20 /* AppDelegate.swift */,
 				1E8280362348AB71006CBE4E /* ArrayExtension.swift */,
 				6F5FD68C2329912F00D45E20 /* Assets.xcassets */,
+				20C7DB28252E39CC007669ED /* 5081-empty-box.json */,
 				20834777250A3EED00CBEDEA /* hourglassBad4.json */,
 				20834775250A3D3A00CBEDEA /* hourglass.json */,
 				209AA91224B9051500E469B5 /* BarChart.swift */,
@@ -486,6 +489,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C7DB29252E39CD007669ED /* 5081-empty-box.json in Resources */,
 				20C86DD92419594A00BEDD94 /* CustomAlertView.xib in Resources */,
 				20834778250A3EED00CBEDEA /* hourglassBad4.json in Resources */,
 				6F5FD6902329912F00D45E20 /* LaunchScreen.storyboard in Resources */,
@@ -840,7 +844,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YD4PQ9B62;
 				INFOPLIST_FILE = Vaccess/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Circle.Vaccess;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=*]" = Circle.Vaccess;
@@ -860,7 +864,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5YD4PQ9B62;
 				INFOPLIST_FILE = Vaccess/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Circle.Vaccess;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=*]" = Circle.Vaccess;

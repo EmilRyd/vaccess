@@ -56,6 +56,10 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     }
     
     // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Radera"
+    }
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -89,8 +93,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
         // Fetches the appropriate vaccine for the data source layout.
         
-        var i = 0
-        var index = 0
+        
         if amountOfVaccinationsLoaded >= sectionsArray.count {
             return cell
         }
@@ -184,6 +187,14 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             
             
                 vaccinationTabBarController.locallyModified = true
+                if !vaccinationTabBarController.save() {
+                    let alertViewController = self.alertService.alert(title: "Varning!", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {
+                        
+                    } completionWithCancel: {
+                        
+                    }
+                    self.present(alertViewController, animated: true, completion: nil)
+                }
             //else if editingStyle == .insert {
                     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
                 
@@ -301,7 +312,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             x += 1
         }
 
-        if true //!vaccine.takenOnce()
+        if !vaccine.takenOnce()
         {
             
             var x = 0
@@ -324,9 +335,9 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             while x < sectionsArray.count - 1 {
                 
                     amountOfSections += 1
-                    rowsInEachSection[i] = x + 1
+                    rowsInEachSection[i] = 1
                     i += 1
-                    rowsInEachSection[i] = sectionsArray.count - (x + 1)
+                    rowsInEachSection[i] = 1
 
                 
                 x += 1
@@ -360,7 +371,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
         tableViewWasEdited = true
         for index in 0...(sectionsArray.count - 1){
-            let indexPath = tableView.index
+            //let indexPath = tableView.index
             let vaccineHistoryTableViewCell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! VaccineHistoryTableViewCell
             vaccineHistoryTableViewCell.startdateTextField.isEnabled = true
             vaccineHistoryTableViewCell.enddateTextField.isEnabled = true
@@ -394,8 +405,8 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                 vaccinationTabBarController.allVaccinations = allVaccinations
                 
                 if x == 0 {
-                    var ourVaccinations = vaccinationTabBarController.vaccinations
-                    let ourEditedVaccinationIndex = ourVaccinations.firstIndex(of: i)
+                    let ourVaccinations = vaccinationTabBarController.vaccinations
+                    //let ourEditedVaccinationIndex = ourVaccinations.firstIndex(of: i)
                     //ourVaccinations[ourEditedVaccinationIndex!] = newVaccination
                     vaccinationTabBarController.vaccinations = ourVaccinations
                 }

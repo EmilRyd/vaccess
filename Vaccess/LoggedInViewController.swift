@@ -96,7 +96,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
                 cell.yesNoSegmentControl
             }*/
             
-            let value = user?.value(forKey: "VaccinationProgramIndicator") as? Int
+            let value = user1?.value(forKey: "VaccinationProgramIndicator") as? Int
             if value == indexPath.row {
                 cell.yesNoSwitch.setOn(true, animated: true)
             }
@@ -104,14 +104,17 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
                 cell.yesNoSwitch.setOn(false, animated: true)
             }
             if cell.yesNoSwitch.isOn {
-                cell.yesNoSwitch.backgroundColor = Theme.secondary
+                cell.yesNoSwitch.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
+                
             }
             else {
                 
-                cell.yesNoSwitch.backgroundColor = .white
+                cell.yesNoSwitch.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
                 
 
             }
+            
+            
             
             return cell
         case 1:
@@ -136,7 +139,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
                     fatalError("The dequeued cell is not an instance of SettingsTableViewCell.")
                 }
 
-                cell.titleLabel.text = "Datahantering"
+                cell.titleLabel.text = "Integritetspolicy"
 
                 cell.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
 
@@ -187,7 +190,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
             return
         }
         
-        cell?.backgroundColor = Theme.primary
+        cell?.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
 
         
         
@@ -202,7 +205,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
             return
         }
         
-        cell?.backgroundColor = Theme.primary
+        cell?.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
     }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
@@ -268,7 +271,8 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
     
     let alertService = AlertService()
     
-    var user = PFUser.current()
+    var user1 = PFUser.current()
+
 
 
     
@@ -301,7 +305,9 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         //contentView.bringSubviewToFront(animationView!)
        // animationView?.play()
         //Load data
-        self.loadUserDefaults()
+        
+        
+        //self.loadUserDefaults()
         
         
         
@@ -339,8 +345,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         logoutButton.layer.shadowOpacity = 0.25
         logoutButton.layer.shadowRadius = 5
         logoutButton.layer.shadowOffset = CGSize(width: 0, height: 10)
-        //logoutButton.frame = CGRect(x: UIScreen.main.bounds.width - 24 - height, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
-        logoutButton.imageView?.tintColor = .white
+                logoutButton.imageView?.tintColor = .white
         
         //logoutButtonCenter = logoutButton.center
         
@@ -362,7 +367,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
 
         if let VC = (self.presentingViewController as? VaccinationProgramViewController) {
-            self.changeVaccinationProgramStatus(previousVaccinationProgramIndicator: nil)
+            vaccinationTabBarController.changeVaccinationProgramStatus(previousVaccinationProgramIndicator: nil)
         }
         
         
@@ -442,7 +447,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
 
         shouldRenderAnimation = true
         
-        fixClockLabels()
+          fixClockLabels()
 
         //Fixing based on settings changes
 
@@ -467,6 +472,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         settingsTableView.reloadData()
 
     }
@@ -549,7 +555,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
             return
         }
         if changePersonalInformationViewController.informationWasChanged {
-            //loadUserInformation()
+            loadUserInformation()
         }
         
         settingsTableView.reloadData()
@@ -757,12 +763,12 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
     
     
     @IBAction func unwindToLoggedInViewController(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? SettingsViewController, let vaccinationProgramIndicatorWasChangedBool = sourceViewController.vaccinationProgramIndicatorWasInSettingsChangedThisSession, let previousVaccinationProgramIndicator = sourceViewController.previousVaccinationProgramIndicator {
-            if vaccinationProgramIndicatorWasChangedBool {
+        if let sourceViewController = sender.source as? ChangePersonalInformationViewController {
+            let personalInfoWasChanged = sourceViewController.informationWasChanged
+            if personalInfoWasChanged {
                 
-                
+                loadUserInformation()
             }
-            sourceViewController.vaccinationProgramIndicatorWasInSettingsChangedThisSession = false
             
         }
         /*if let sourceViewController = sender.source as? SettingsViewController {
@@ -786,38 +792,6 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
         nameLabel.text = user?.object(forKey: "Name") as? String
     }
     
-    
-    private func changeVaccinationProgramStatus(previousVaccinationProgramIndicator: Int?) {
-        let user = PFUser.current()
-        let vaccinationProgramIndicator = user?.object(forKey: "VaccinationProgramIndicator") as! Int
-        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        switch vaccinationProgramIndicator {
-        case 0:
-            vaccinationTabBarController.setVaccinationProgramVaccinations()
-        case 1:
-            vaccinationTabBarController.setVaccinationProgramComingVaccinations()
-        case 2:
-            print("Yeeet")
-        default:
-            return
-            
-        }
-        
-        if previousVaccinationProgramIndicator != nil {
-            switch previousVaccinationProgramIndicator {
-            case 0:
-                vaccinationTabBarController.deleteAllVaccinationProgramVaccinations()
-            case 1:
-                vaccinationTabBarController.deleteAllVaccinationProgramComingVaccinations()
-            case 2:
-                return
-            default:
-                return
-            }
-        }
-        
-        
-    }
     
     
 
@@ -902,6 +876,9 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
                     
                     clockViewLabel.text = "\(timeTillNextVaccination!.years)"
                     statisticsWheel1Label.text = "År till nästa vaccin kan tas"
+                    if timeTillNextVaccination!.years > 99 {
+                        clockViewLabel.adjustsFontSizeToFitWidth = true
+                    }
                 case let x where x <= -12:
                     clockViewLabel.text = "0"
                     statisticsWheel1Label.text = "Dagar till nästa vaccin kan tas"
@@ -928,13 +905,14 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
     
     //MARK: Actions
     @IBAction func valueForCellChanged(_ sender: UISwitch) {
-    
+        let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
+
         if sender.isOn {
             sender.backgroundColor = Theme.secondaryDark
         }
         else {
             
-            sender.backgroundColor = .white
+            sender.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
             
 
         }
@@ -944,7 +922,7 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
          
         
              
-             self.previousVaccinationProgramIndicator = (self.user?.object(forKey: "VaccinationProgramIndicator") as? Int) ?? 2
+             self.previousVaccinationProgramIndicator = (self.user1?.object(forKey: "VaccinationProgramIndicator") as? Int) ?? 2
              let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
              let tabBarController = storyBoard.instantiateViewController(withIdentifier: "VaccinationTabBarController") as! VaccinationTabBarController
              
@@ -955,11 +933,11 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
                          if sender.isOn {
                              if cell1.yesNoSwitch == sender {
                                 cell2.yesNoSwitch.setOn(false, animated: true)
-                                 self.user?.setObject(0, forKey: "VaccinationProgramIndicator")
+                                 self.user1?.setObject(0, forKey: "VaccinationProgramIndicator")
                                  self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
                                 
                                 
-                                cell2.yesNoSwitch.backgroundColor = .white
+                                cell2.yesNoSwitch.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
                                     
                                     
 
@@ -967,23 +945,23 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
                              }
                               else if cell2.yesNoSwitch == sender {
                                 cell1.yesNoSwitch.setOn(false, animated: true)
-                                 self.user?.setObject(1, forKey: "VaccinationProgramIndicator")
+                                 self.user1?.setObject(1, forKey: "VaccinationProgramIndicator")
                                  
                                  self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
-                                cell1.yesNoSwitch.backgroundColor = .white
+                                cell1.yesNoSwitch.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
 
                              }
                              
                          }
                          else {
-                             self.user?.setObject(2, forKey: "VaccinationProgramIndicator")
+                             self.user1?.setObject(2, forKey: "VaccinationProgramIndicator")
                              self.vaccinationProgramIndicatorWasInSettingsChangedThisSession = true
-                            sender.backgroundColor = .white
+                            sender.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
 
                              
                          }
              
-            self.changeVaccinationProgramStatus(previousVaccinationProgramIndicator: self.previousVaccinationProgramIndicator)
+            vaccinationTabBarController.changeVaccinationProgramStatus(previousVaccinationProgramIndicator: self.previousVaccinationProgramIndicator)
 
           
              
@@ -996,7 +974,22 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
                                       }
                                     
                                 }
-                         
+            
+            if !vaccinationTabBarController.save() {
+                let alertViewController = self.alertService.alert(title: "Misslyckad uppladdning", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {
+                    
+                } completionWithCancel: {
+                    
+                }
+                self.present(alertViewController, animated: true, completion: nil)
+            }
+            
+            self.barChartStackView1!.handleTap(increase: true)
+            self.barChartStackViewProgressLabel1.text = String(vaccinationTabBarController.allVaccinations.count)
+            
+            let allVPVs = Double(vaccinationTabBarController.getAllVaccinationProgramVaccinations().count)
+            let takenVPVs = vaccinationTabBarController.getPercentageOfVaccinationProgramTaken() * allVPVs
+            self.statisticsWheel3!.handleTap(numerator: takenVPVs, denominator: allVPVs)
         }, completionWithCancel: { () in
             if !sender.isOn {
                 sender.setOn(true, animated: true)
@@ -1004,7 +997,7 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
             }
             else {
                 sender.setOn(false, animated: true)
-                sender.backgroundColor = .white
+                sender.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.3)
 
             }
         })

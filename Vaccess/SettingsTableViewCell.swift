@@ -22,6 +22,7 @@ class SettingsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         subjectLabel.adjustsFontSizeToFitWidth = true
+        yesNoSwitch.backgroundColor = Theme.secondary
         
         // Initialization code
     }

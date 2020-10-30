@@ -122,12 +122,7 @@ class ProtectionViewController: UIViewController, UITableViewDelegate, UITableVi
                
                
                definesPresentationContext = true
-               UIFont.familyNames.forEach({ familyName in
-                   let fontNames = UIFont.fontNames(forFamilyName: familyName)
-                   array.append(familyName)
-                   array = array.sorted()
-                   print(familyName)
-               })
+               
                
                
                
@@ -157,7 +152,7 @@ class ProtectionViewController: UIViewController, UITableViewDelegate, UITableVi
                
                for i in Vaccine.allValues {
                    
-                   var protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Inget")
+                let protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Inget")
                    let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
                    if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
                        protVacc.totalProtection = .Fullt
@@ -190,7 +185,7 @@ class ProtectionViewController: UIViewController, UITableViewDelegate, UITableVi
            allVaccinesAsProtectedVaccines = []
            for i in Vaccine.allValues {
                
-               var protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Inget")
+            let protVacc = ProtectionVaccine(name: i.simpleDescription(), protection: "Inget")
                let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
                if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
                    protVacc.totalProtection = .Fullt
@@ -260,7 +255,7 @@ class ProtectionViewController: UIViewController, UITableViewDelegate, UITableVi
                
                cell.layer.cornerRadius = 20;
                cell.layer.masksToBounds = true;*/
-               let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
+               
 
                
                
@@ -394,8 +389,8 @@ class ProtectionViewController: UIViewController, UITableViewDelegate, UITableVi
                
                vaccine = vaccine.lowercased()
                
-               var NC = segue.destination as! UINavigationController
-               var VC = NC.viewControllers[0] as! VaccineInformationViewController
+               let NC = segue.destination as! UINavigationController
+               let VC = NC.viewControllers[0] as! VaccineInformationViewController
                
                VC.currentVaccine = makeStringURLCompatible(string: vaccine)
                

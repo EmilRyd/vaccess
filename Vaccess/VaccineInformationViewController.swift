@@ -51,7 +51,6 @@ class VaccineInformationViewController: UIViewController {
                 let doc = try SwiftSoup.parse(contents)
                 //let mainText = try doc.getElementsByClass("content-3-1 rs-listen").text()
                 let mainText = try doc.getElementsByTag("p").text()
-                let headlines = try doc.getElementsByTag("h1").text()
 
                 let ingress = try doc.getElementsByClass("intro").text()
                 //let title = try doc.getElementsByClass("content-2 rs-listen ").text()

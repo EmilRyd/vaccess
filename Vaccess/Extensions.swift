@@ -52,56 +52,76 @@ extension UITableView {
         let image = UIImage(named: image)
         let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
         
-        let imageView = UIImageView()
+        let animationView = AnimationView(name: "5081-empty-box")
         let titleLabel = UILabel()
         let messageLabel = UILabel()
         
-        imageView.backgroundColor = .clear
+        //animationView.backgroundColor = .clear
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        //animationView.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        titleLabel.font = UIFont(name: "Futura-Bold", size: 21)
         
         messageLabel.textColor = UIColor.lightGray
-        messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 17)
+        messageLabel.font = UIFont(name: "Futura-Medium", size: 17)
         
         emptyView.addSubview(titleLabel)
-        emptyView.addSubview(imageView)
+        emptyView.addSubview(animationView)
         emptyView.addSubview(messageLabel)
         
-        imageView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor, constant: -20).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        /*animationView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        animationView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+        animationView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        animationView.heightAnchor.constraint(equalToConstant: 100).isActive = true*/
+        animationView.frame = emptyView.bounds
         
-        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        let height: CGFloat = 30
         
-        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: emptyView.bottomAnchor, constant: -(49 + height + 20)).isActive = true
         messageLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 16).isActive = true
+        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -16).isActive = true
         
-        imageView.image = image
+        titleLabel.bottomAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 16).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -16).isActive = true
+        
+        messageLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
+        titleLabel.textAlignment = .center
+        messageLabel.textAlignment = .center
+        
+        emptyView.bringSubviewToFront(messageLabel)
+        emptyView.bringSubviewToFront(titleLabel)
+        
+        print("Här är dem: \(messageLabel.frame)")
+        print(titleLabel.frame)
+        
+        animationView.play()
+        //animationView.image = image
         titleLabel.text = title
         messageLabel.text = message
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
         
-        UIView.animate(withDuration: 1, animations: {
+        /*UIView.animate(withDuration: 1, animations: {
             
-            imageView.transform = CGAffineTransform(rotationAngle: .pi / 10)
+            animationView.transform = CGAffineTransform(rotationAngle: .pi / 10)
         }, completion: { (finish) in
             UIView.animate(withDuration: 1, animations: {
-                imageView.transform = CGAffineTransform(rotationAngle: -1 * (.pi / 10))
+                animationView.transform = CGAffineTransform(rotationAngle: -1 * (.pi / 10))
             }, completion: { (finishh) in
                 UIView.animate(withDuration: 1, animations: {
-                    imageView.transform = CGAffineTransform.identity
+                    animationView.transform = CGAffineTransform.identity
                 })
             })
             
-        })
+        })*/
         
         self.backgroundView = emptyView
         self.separatorStyle = .none

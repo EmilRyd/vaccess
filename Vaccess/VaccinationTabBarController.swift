@@ -37,6 +37,7 @@ class VaccinationTabBarController: UITabBarController  {
         .Röda_hund,
         .Rotavirus,
         .Hepatit_B,
+        .Humant_papillomvirus_HPV
     ]
     
     let arrayOfVaccinesInVaccinationProgramForGirls: [Vaccine] = [
@@ -110,9 +111,10 @@ class VaccinationTabBarController: UITabBarController  {
     
     //MARK: Data Loading and Saving
     
-    func save() {
+    func save() -> Bool {
         
-        
+        var bool: Bool = true
+
         let defaults = UserDefaults.standard
         
         /*var dictionary = defaults.dictionary(forKey: "users")
@@ -167,7 +169,10 @@ class VaccinationTabBarController: UITabBarController  {
         catch {
             
         }
-        if !objects!.isEmpty {
+        if objects == nil {
+            return false
+        }
+        else if !objects!.isEmpty {
             objects![0]["vaccinations"] = jsonV
             objects![0]["allVaccinations"] = jsonAV
             objects![0]["comingVaccinations"] = jsonOV
@@ -175,7 +180,11 @@ class VaccinationTabBarController: UITabBarController  {
                 (success: Bool, error: Error?) in
                   if (success) {
                     // The object has been saved.
+                    bool = true
                   } else {
+                    bool = true
+                    
+
                     print (error?.localizedDescription)
                   }
                 
@@ -187,16 +196,22 @@ class VaccinationTabBarController: UITabBarController  {
             (success: Bool, error: Error?) in
               if (success) {
                 // The object has been saved.
+                bool = true
               } else {
+                bool = true
+                
+                
+                
                 print (error?.localizedDescription)
               }
-            
         }
+
         }
 
         
         
-        
+        return bool
+
         locallyModified = false
     }
     
@@ -328,7 +343,7 @@ class VaccinationTabBarController: UITabBarController  {
                 }
             
         
-    func getPercentageOfCurrentTreatmentsFinsihed() -> Double {
+  /*  func getPercentageOfCurrentTreatmentsFinsihed() -> Double {
         var vaccines = [Vaccine]()
         for i in allVaccinations {
             vaccines.append(i.vaccine)
@@ -378,47 +393,62 @@ class VaccinationTabBarController: UITabBarController  {
         return Double(totalOfLastTakens)/Double(totalOfDoseCapacities)
         
         
-    }
+    }*/
     
     func setVaccinationProgramVaccinationsFromDate(_ date: Date, setComingVaccinations vaccBool: Bool) {
-         let RotaVirusVaccination1 = Vaccination(vaccine: .Rotavirus, startDate: Date(), amountOfDosesTaken: 1)!
+         let RotaVirusVaccination1 = Vaccination(vaccine: .Rotavirus, startDate: date + 3628800, amountOfDosesTaken: 1)!
          
          
-         let DifteriVaccination1 = Vaccination(vaccine: .Difteri, startDate: date + 7776000, amountOfDosesTaken: 1)!
-         let StelkrampVaccination1 = Vaccination(vaccine: .Stelkramp, startDate: date + 7776000, amountOfDosesTaken: 1)!
-         let KikhostaVaccination1 = Vaccination(vaccine: .Kikhosta, startDate: date + 7776000, amountOfDosesTaken: 1)!
-         let PolioVaccination1 = Vaccination(vaccine: .Polio, startDate: date + 7776000, amountOfDosesTaken: 1)!
-         let HibVaccination1 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: date + 7776000, amountOfDosesTaken: 1)!
-         let HepatitBVaccination1 = Vaccination(vaccine: .Hepatit_B, startDate: date + 7776000, amountOfDosesTaken: 1)!
-         let PneumokockerVaccination1 = Vaccination(vaccine: .Pneumokocker, startDate: date + 7776000, amountOfDosesTaken: 1)!
+         let DifteriVaccination1 = Vaccination(vaccine: .Difteri, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let StelkrampVaccination1 = Vaccination(vaccine: .Stelkramp, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let KikhostaVaccination1 = Vaccination(vaccine: .Kikhosta, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let PolioVaccination1 = Vaccination(vaccine: .Polio, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let HibVaccination1 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let HepatitBVaccination1 = Vaccination(vaccine: .Hepatit_B, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let PneumokockerVaccination1 = Vaccination(vaccine: .Pneumokocker, startDate: date + 7905600, amountOfDosesTaken: 1)!
+         let RotaVirusVaccination2 = Vaccination(vaccine: .Rotavirus, startDate: date + 7905600, amountOfDosesTaken: 2)!
+
+        
+         let DifteriVaccination2 = Vaccination(vaccine: .Difteri, startDate: date + 13176000, amountOfDosesTaken: 2)!
+         let StelkrampVaccination2 = Vaccination(vaccine: .Stelkramp, startDate: date + 13176000, amountOfDosesTaken: 2)!
+         let KikhostaVaccination2 = Vaccination(vaccine: .Kikhosta, startDate: date + 13176000, amountOfDosesTaken: 2)!
+         let PolioVaccination2 = Vaccination(vaccine: .Polio, startDate: date + 13176000, amountOfDosesTaken: 2)!
+         let HibVaccination2 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: date + 13176000, amountOfDosesTaken: 2)!
+         let HepatitBVaccination2 = Vaccination(vaccine: .Hepatit_B, startDate: date + 13176000, amountOfDosesTaken: 2)!
+         let PneumokockerVaccination2 = Vaccination(vaccine: .Pneumokocker, startDate: date + 13176000, amountOfDosesTaken: 2)!
          
-         let DifteriVaccination2 = Vaccination(vaccine: .Difteri, startDate: date + 12960000, amountOfDosesTaken: 2)!
-         let StelkrampVaccination2 = Vaccination(vaccine: .Stelkramp, startDate: date + 12960000, amountOfDosesTaken: 2)!
-         let KikhostaVaccination2 = Vaccination(vaccine: .Kikhosta, startDate: date + 12960000, amountOfDosesTaken: 2)!
-         let PolioVaccination2 = Vaccination(vaccine: .Polio, startDate: date + 12960000, amountOfDosesTaken: 2)!
-         let HibVaccination2 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: date + 12960000, amountOfDosesTaken: 2)!
-         let HepatitBVaccination2 = Vaccination(vaccine: .Hepatit_B, startDate: date + 12960000, amountOfDosesTaken: 2)!
-         let PneumokockerVaccination2 = Vaccination(vaccine: .Pneumokocker, startDate: date + 12960000, amountOfDosesTaken: 2)!
+         let DifteriVaccination3 = Vaccination(vaccine: .Difteri, startDate: date + 31557600, amountOfDosesTaken: 3)!
+         let StelkrampVaccination3 = Vaccination(vaccine: .Stelkramp, startDate: date + 31557600, amountOfDosesTaken: 3)!
+         let KikhostaVaccination3 = Vaccination(vaccine: .Kikhosta, startDate: date + 31557600, amountOfDosesTaken: 3)!
+         let PolioVaccination3 = Vaccination(vaccine: .Polio, startDate: date + 31557600, amountOfDosesTaken: 3)!
+         let HibVaccination3 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: date + 31557600, amountOfDosesTaken: 3)!
+         let HepatitBVaccination3 = Vaccination(vaccine: .Hepatit_B, startDate: date + 31557600, amountOfDosesTaken: 3)!
+         let PneumokockerVaccination3 = Vaccination(vaccine: .Pneumokocker, startDate: date + 31557600, amountOfDosesTaken: 3)!
          
-         let DifteriVaccination3 = Vaccination(vaccine: .Difteri, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         let StelkrampVaccination3 = Vaccination(vaccine: .Stelkramp, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         let KikhostaVaccination3 = Vaccination(vaccine: .Kikhosta, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         let PolioVaccination3 = Vaccination(vaccine: .Polio, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         let HibVaccination3 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         let HepatitBVaccination3 = Vaccination(vaccine: .Hepatit_B, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         let PneumokockerVaccination3 = Vaccination(vaccine: .Pneumokocker, startDate: date + 31104000, amountOfDosesTaken: 3)!
-         
-         let DifteriVaccination4 = Vaccination(vaccine: .Difteri, startDate: date + 155520000, amountOfDosesTaken: 4)!
-         let StelkrampVaccination4 = Vaccination(vaccine: .Stelkramp, startDate: date + 155520000, amountOfDosesTaken: 4)!
-         let KikhostaVaccination4 = Vaccination(vaccine: .Kikhosta, startDate: date + 155520000, amountOfDosesTaken: 4)!
-         let PolioVaccination4 = Vaccination(vaccine: .Polio, startDate: date + 155520000, amountOfDosesTaken: 4)!
-         let PneumokockerVaccination4 = Vaccination(vaccine: .Pneumokocker, startDate: date + 155520000, amountOfDosesTaken: 4)!
+         let DifteriVaccination4 = Vaccination(vaccine: .Difteri, startDate: date + 157788000, amountOfDosesTaken: 4)!
+         let StelkrampVaccination4 = Vaccination(vaccine: .Stelkramp, startDate: date + 157788000, amountOfDosesTaken: 4)!
+         let KikhostaVaccination4 = Vaccination(vaccine: .Kikhosta, startDate: date + 157788000, amountOfDosesTaken: 4)!
+         let PolioVaccination4 = Vaccination(vaccine: .Polio, startDate: date + 157788000, amountOfDosesTaken: 4)!
+         let PneumokockerVaccination4 = Vaccination(vaccine: .Pneumokocker, startDate: date + 157788000, amountOfDosesTaken: 4)!
 
          
          
-        let MässlingVaccination1 = Vaccination(vaccine: .Mässling, startDate: date + 27475200, amountOfDosesTaken: 1)!
-        let PåssjukaVaccination1 = Vaccination(vaccine: .Påssjuka, startDate: date + 27475200, amountOfDosesTaken: 1)!
-        let RödaHundVaccination1 = Vaccination(vaccine: .Röda_hund, startDate: date + 27475200, amountOfDosesTaken: 1)!
+        let MässlingVaccination1 = Vaccination(vaccine: .Mässling, startDate: date + 47336400, amountOfDosesTaken: 1)!
+        let PåssjukaVaccination1 = Vaccination(vaccine: .Påssjuka, startDate: date + 47336400, amountOfDosesTaken: 1)!
+        let RödaHundVaccination1 = Vaccination(vaccine: .Röda_hund, startDate: date + 47336400, amountOfDosesTaken: 1)!
+        
+        let MässlingVaccination2 = Vaccination(vaccine: .Mässling, startDate: date + 220903200, amountOfDosesTaken: 2)!
+        let PåssjukaVaccination2 = Vaccination(vaccine: .Påssjuka, startDate: date + 220903200, amountOfDosesTaken: 2)!
+        let RödaHundVaccination2 = Vaccination(vaccine: .Röda_hund, startDate: date + 220903200, amountOfDosesTaken: 2)!
+        
+        
+        let DifteriVaccination5 = Vaccination(vaccine: .Difteri, startDate: date + 473040000, amountOfDosesTaken: 5)!
+        let StelkrampVaccination5 = Vaccination(vaccine: .Stelkramp, startDate: date + 473040000, amountOfDosesTaken: 5)!
+        let KikhostaVaccination5 = Vaccination(vaccine: .Kikhosta, startDate: date + 473040000, amountOfDosesTaken: 5)!
+        
+        let HPVVaccination1 = Vaccination(vaccine: .Humant_papillomvirus_HPV, startDate: date + 378691200, amountOfDosesTaken: 1)!
+        let HPVVaccination2 = Vaccination(vaccine: .Humant_papillomvirus_HPV, startDate: date + 378691200 + 15789600, amountOfDosesTaken: 2)!
+
         
         if vaccBool {
             comingVaccinations.append(RotaVirusVaccination1)
@@ -434,6 +464,7 @@ class VaccinationTabBarController: UITabBarController  {
             comingVaccinations.append(RödaHundVaccination1)
             comingVaccinations.append(HepatitBVaccination1)
             comingVaccinations.append(KikhostaVaccination1)
+            comingVaccinations.append(HPVVaccination1)
             
             
         }
@@ -446,12 +477,16 @@ class VaccinationTabBarController: UITabBarController  {
             allVaccinations.append(PolioVaccination1)
             allVaccinations.append(HibVaccination1)
             allVaccinations.append(PneumokockerVaccination1)
+            allVaccinations.append(RotaVirusVaccination2)
+
             
             allVaccinations.append(MässlingVaccination1)
             allVaccinations.append(PåssjukaVaccination1)
             allVaccinations.append(RödaHundVaccination1)
             allVaccinations.append(HepatitBVaccination1)
             allVaccinations.append(KikhostaVaccination1)
+            allVaccinations.append(HPVVaccination1)
+
             
             allVaccinations.append(DifteriVaccination2)
             allVaccinations.append(StelkrampVaccination2)
@@ -481,6 +516,20 @@ class VaccinationTabBarController: UITabBarController  {
             
             
             allVaccinations.append(KikhostaVaccination4)
+            
+            allVaccinations.append(MässlingVaccination2)
+            allVaccinations.append(PåssjukaVaccination2)
+            allVaccinations.append(RödaHundVaccination2)
+
+            allVaccinations.append(HPVVaccination2)
+
+            
+            allVaccinations.append(DifteriVaccination5)
+            allVaccinations.append(StelkrampVaccination5)
+            allVaccinations.append(KikhostaVaccination5)
+            
+
+            
         }
     }
     
@@ -528,44 +577,58 @@ class VaccinationTabBarController: UITabBarController  {
         let hourInterval = Calendar.current.dateComponents(hours, from: birthDay, to: Date()).hour!
         let weekInterval = hourInterval / 168
         
-        let RotaVirusVaccination1 = Vaccination(vaccine: .Rotavirus, startDate: Date(), amountOfDosesTaken: 1)!
+        let RotaVirusVaccination1 = Vaccination(vaccine: .Rotavirus, startDate: birthDay + 3628800, amountOfDosesTaken: 1)!
         
         
-        let DifteriVaccination1 = Vaccination(vaccine: .Difteri, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
-        let StelkrampVaccination1 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
-        let KikhostaVaccination1 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
-        let PolioVaccination1 = Vaccination(vaccine: .Polio, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
-        let HibVaccination1 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
-        let HepatitBVaccination1 = Vaccination(vaccine: .Hepatit_B, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
-        let PneumokockerVaccination1 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 7776000, amountOfDosesTaken: 1)!
+        let DifteriVaccination1 = Vaccination(vaccine: .Difteri, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let StelkrampVaccination1 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let KikhostaVaccination1 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let PolioVaccination1 = Vaccination(vaccine: .Polio, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let HibVaccination1 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let HepatitBVaccination1 = Vaccination(vaccine: .Hepatit_B, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let PneumokockerVaccination1 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 7905600, amountOfDosesTaken: 1)!
+        let RotaVirusVaccination2 = Vaccination(vaccine: .Rotavirus, startDate: birthDay + 7905600, amountOfDosesTaken: 2)!
+
         
-        let DifteriVaccination2 = Vaccination(vaccine: .Difteri, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
-        let StelkrampVaccination2 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
-        let KikhostaVaccination2 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
-        let PolioVaccination2 = Vaccination(vaccine: .Polio, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
-        let HibVaccination2 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
-        let HepatitBVaccination2 = Vaccination(vaccine: .Hepatit_B, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
-        let PneumokockerVaccination2 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 12960000, amountOfDosesTaken: 2)!
+        let DifteriVaccination2 = Vaccination(vaccine: .Difteri, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
+        let StelkrampVaccination2 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
+        let KikhostaVaccination2 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
+        let PolioVaccination2 = Vaccination(vaccine: .Polio, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
+        let HibVaccination2 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
+        let HepatitBVaccination2 = Vaccination(vaccine: .Hepatit_B, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
+        let PneumokockerVaccination2 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 13176000, amountOfDosesTaken: 2)!
         
-        let DifteriVaccination3 = Vaccination(vaccine: .Difteri, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
-        let StelkrampVaccination3 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
-        let KikhostaVaccination3 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
-        let PolioVaccination3 = Vaccination(vaccine: .Polio, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
-        let HibVaccination3 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
-        let HepatitBVaccination3 = Vaccination(vaccine: .Hepatit_B, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
-        let PneumokockerVaccination3 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 31104000, amountOfDosesTaken: 3)!
+        let DifteriVaccination3 = Vaccination(vaccine: .Difteri, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
+        let StelkrampVaccination3 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
+        let KikhostaVaccination3 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
+        let PolioVaccination3 = Vaccination(vaccine: .Polio, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
+        let HibVaccination3 = Vaccination(vaccine: .Haemophilus_influenzae_typ_b_Hib, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
+        let HepatitBVaccination3 = Vaccination(vaccine: .Hepatit_B, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
+        let PneumokockerVaccination3 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 31557600, amountOfDosesTaken: 3)!
         
-        let DifteriVaccination4 = Vaccination(vaccine: .Difteri, startDate: birthDay + 155520000, amountOfDosesTaken: 4)!
-        let StelkrampVaccination4 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 155520000, amountOfDosesTaken: 4)!
-        let KikhostaVaccination4 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 155520000, amountOfDosesTaken: 4)!
-        let PolioVaccination4 = Vaccination(vaccine: .Polio, startDate: birthDay + 155520000, amountOfDosesTaken: 4)!
-        let PneumokockerVaccination4 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 155520000, amountOfDosesTaken: 4)!
+        let DifteriVaccination4 = Vaccination(vaccine: .Difteri, startDate: birthDay + 157788000, amountOfDosesTaken: 4)!
+        let StelkrampVaccination4 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 157788000, amountOfDosesTaken: 4)!
+        let KikhostaVaccination4 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 157788000, amountOfDosesTaken: 4)!
+        let PolioVaccination4 = Vaccination(vaccine: .Polio, startDate: birthDay + 157788000, amountOfDosesTaken: 4)!
+        let PneumokockerVaccination4 = Vaccination(vaccine: .Pneumokocker, startDate: birthDay + 157788000, amountOfDosesTaken: 4)!
         
         
         
-        let MässlingVaccination1 = Vaccination(vaccine: .Mässling, startDate: birthDay + 27475200, amountOfDosesTaken: 1)!
-        let PåssjukaVaccination1 = Vaccination(vaccine: .Påssjuka, startDate: birthDay + 27475200, amountOfDosesTaken: 1)!
-        let RödaHundVaccination1 = Vaccination(vaccine: .Röda_hund, startDate: birthDay + 27475200, amountOfDosesTaken: 1)!
+        let MässlingVaccination1 = Vaccination(vaccine: .Mässling, startDate: birthDay + 47336400, amountOfDosesTaken: 1)!
+        let PåssjukaVaccination1 = Vaccination(vaccine: .Påssjuka, startDate: birthDay + 47336400, amountOfDosesTaken: 1)!
+        let RödaHundVaccination1 = Vaccination(vaccine: .Röda_hund, startDate: birthDay + 47336400, amountOfDosesTaken: 1)!
+        
+        let MässlingVaccination2 = Vaccination(vaccine: .Mässling, startDate: birthDay + 220903200, amountOfDosesTaken: 2)!
+        let PåssjukaVaccination2 = Vaccination(vaccine: .Påssjuka, startDate: birthDay + 220903200, amountOfDosesTaken: 2)!
+        let RödaHundVaccination2 = Vaccination(vaccine: .Röda_hund, startDate: birthDay + 220903200, amountOfDosesTaken: 2)!
+        
+        
+        let DifteriVaccination5 = Vaccination(vaccine: .Difteri, startDate: birthDay + 473040000, amountOfDosesTaken: 5)!
+        let StelkrampVaccination5 = Vaccination(vaccine: .Stelkramp, startDate: birthDay + 473040000, amountOfDosesTaken: 5)!
+        let KikhostaVaccination5 = Vaccination(vaccine: .Kikhosta, startDate: birthDay + 473040000, amountOfDosesTaken: 5)!
+        
+        let HPVVaccination1 = Vaccination(vaccine: .Humant_papillomvirus_HPV, startDate: birthDay + 378691200, amountOfDosesTaken: 1)!
+        let HPVVaccination2 = Vaccination(vaccine: .Humant_papillomvirus_HPV, startDate: birthDay + 378691200 + 15789600, amountOfDosesTaken: 2)!
         
         vaccinationProgramVaccinationsArray.append(RotaVirusVaccination1)
          
@@ -574,12 +637,16 @@ class VaccinationTabBarController: UITabBarController  {
          vaccinationProgramVaccinationsArray.append(PolioVaccination1)
          vaccinationProgramVaccinationsArray.append(HibVaccination1)
          vaccinationProgramVaccinationsArray.append(PneumokockerVaccination1)
-         
+        vaccinationProgramVaccinationsArray.append(RotaVirusVaccination2)
+        
          vaccinationProgramVaccinationsArray.append(MässlingVaccination1)
          vaccinationProgramVaccinationsArray.append(PåssjukaVaccination1)
          vaccinationProgramVaccinationsArray.append(RödaHundVaccination1)
          vaccinationProgramVaccinationsArray.append(HepatitBVaccination1)
          vaccinationProgramVaccinationsArray.append(KikhostaVaccination1)
+        
+         vaccinationProgramVaccinationsArray.append(HPVVaccination1)
+
 
          vaccinationProgramVaccinationsArray.append(DifteriVaccination2)
          vaccinationProgramVaccinationsArray.append(StelkrampVaccination2)
@@ -610,9 +677,53 @@ class VaccinationTabBarController: UITabBarController  {
          
          vaccinationProgramVaccinationsArray.append(KikhostaVaccination4)
         
+        vaccinationProgramVaccinationsArray.append(MässlingVaccination2)
+        vaccinationProgramVaccinationsArray.append(PåssjukaVaccination2)
+        vaccinationProgramVaccinationsArray.append(RödaHundVaccination2)
+        
+        vaccinationProgramVaccinationsArray.append(HPVVaccination2)
+
+
+        vaccinationProgramVaccinationsArray.append(DifteriVaccination5)
+        vaccinationProgramVaccinationsArray.append(StelkrampVaccination5)
+        vaccinationProgramVaccinationsArray.append(KikhostaVaccination5)
+        
         return vaccinationProgramVaccinationsArray
         
     }
+    
+    func changeVaccinationProgramStatus(previousVaccinationProgramIndicator: Int?) {
+        let user = PFUser.current()
+        let vaccinationProgramIndicator = user?.object(forKey: "VaccinationProgramIndicator") as! Int
+        
+        switch vaccinationProgramIndicator {
+        case 0:
+            self.setVaccinationProgramVaccinations()
+        case 1:
+            self.setVaccinationProgramComingVaccinations()
+        case 2:
+            print("Yeeet")
+        default:
+            return
+            
+        }
+        
+        if previousVaccinationProgramIndicator != nil {
+            switch previousVaccinationProgramIndicator {
+            case 0:
+                self.deleteAllVaccinationProgramVaccinations()
+            case 1:
+                self.deleteAllVaccinationProgramComingVaccinations()
+            case 2:
+                return
+            default:
+                return
+            }
+        }
+        
+        self.save()
+    }
+    
     
     func isVaccinePartOfVaccinationProgram(vaccine: Vaccine) -> Bool {
         
@@ -643,6 +754,7 @@ class VaccinationTabBarController: UITabBarController  {
         for i in allVaccinationProgramVaccinations {
             for x in allVaccinations {
                 if i.vaccine == x.vaccine && i.amountOfDosesTaken == x.amountOfDosesTaken {
+                    print(i.vaccine.rawValue)
                     vaccinationProgramVaccinationsTaken += 1
                 }
 
@@ -711,7 +823,12 @@ class VaccinationTabBarController: UITabBarController  {
             }
         }
         
-        if vaccination!.amountOfDosesTaken! >= (vaccination?.vaccine.getTotalAmountOfDoses())! {
+        let user = PFUser.current()
+        let indic = user?.object(forKey: "VaccinationProgramIndicator") as! Int
+        let birthDate = user?.object(forKey: "birthDate") as! Date
+        
+        
+        if vaccination!.amountOfDosesTaken! >= (vaccination?.vaccine.getTotalAmountOfDoses(vaccinationProgramIndicator: indic, birthDay: birthDate))! {
             return 2
         }
         else {

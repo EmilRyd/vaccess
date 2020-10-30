@@ -15,8 +15,13 @@ class AlertService {
     func alert(title: String, message: String, button1Title: String, button2Title: String?, alertType: AlertViewController.AlertType, completionWithAction: @escaping () -> Void, completionWithCancel: @escaping () -> Void) -> AlertViewController {
         
         let storyBoard = UIStoryboard(name: "AlertStoryBoard", bundle: .main)
-        
-        let alertViewController = storyBoard.instantiateViewController(identifier: "AlertViewController") as! AlertViewController
+        var alertViewController: AlertViewController
+        if #available(iOS 13.0, *) {
+            alertViewController = storyBoard.instantiateViewController(identifier: "AlertViewController") as! AlertViewController
+        } else {
+            // Fallback on earlier versions
+            alertViewController = storyBoard.instantiateViewController(withIdentifier: "AlertViewController") as! AlertViewController
+        }
         
         alertViewController.alertTitle = title
         

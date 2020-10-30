@@ -37,6 +37,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     let genderTitlesArray: [String] = ["Man", "Kvinna"]
     
     
+    
     override func viewDidLoad() {
         self.modalPresentationStyle = .fullScreen
         super.viewDidLoad()
@@ -49,7 +50,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         //Fix some layout
         signUpButton.layer.cornerRadius = signUpButton.frame.height/2
         signInButton.layer.borderWidth = 5
-        signInButton.layer.borderColor = Theme.primaryCG
+        
+            signInButton.layer.borderColor = Theme.primaryCG
+    
+            // Fallback on earlier versions
+        
         signInButton.layer.cornerRadius = signInButton.frame.height/2
         
         firstNameTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
@@ -91,6 +96,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         
         
         birthDatePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            birthDatePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         
         // Se till att textrutan påverkas när datumet ändras av användaren
         birthDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
@@ -304,8 +314,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     func displayErrorMessage(message: String) {
         
         let alertViewController = alertService.alert(title: "Error!", message: message, button1Title: "Ok", button2Title: nil, alertType: .error, completionWithAction: { ()in}, completionWithCancel: { ()in})
-        
-        let alertView = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
+        self.present(alertViewController, animated: true)
+        /*let alertView = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
             
         }
@@ -315,7 +325,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
             presenter.sourceView = self.view
             presenter.sourceRect = self.view.bounds
         }
-        self.present(alertView, animated: true, completion: nil)
+        self.present(alertView, animated: true, completion: nil)*/
     }
     
     func processSignOut() {

@@ -50,7 +50,8 @@ class BarChartView: UIView {
           configure()
         }
 
-        func configure() {
+    
+    func configure() {
             progress = 0
             
             self.layer.cornerRadius = barWidth/2
@@ -71,7 +72,11 @@ class BarChartView: UIView {
             barPathLayer.lineCap = CAShapeLayerLineCap.round
 
 
+        
             barPathLayer.strokeColor = Theme.primaryCG
+        
+            // Fallback on earlier versions
+        
             
             
             layer.addSublayer(barTrackLayer)
@@ -90,7 +95,7 @@ class BarChartView: UIView {
         }
 
         func circlePath() -> UIBezierPath {
-            var path: UIBezierPath = UIBezierPath()
+            let path: UIBezierPath = UIBezierPath()
             
             path.move(to: CGPoint(x: circleFrame().midX, y: circleFrame().maxY))
            path.addLine(to: CGPoint(x: circleFrame().midX, y: circleFrame().minY))

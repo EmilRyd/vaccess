@@ -59,38 +59,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        let view = UIView()
-        view.backgroundColor = UIColor(cgColor: CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 0.0))
-        
-        
-        let icon = UIImageView(image: UIImage(named: "MinaVaccinationerImage"))
-        icon.frame = CGRect(x: 5, y: 5, width: 35, height: 35)
-        view.addSubview(icon)
-        
-        let label = UILabel()
-        
-        label.text = sectionTitles[section]
-        label.font = UIFont(name: "Futura-Medium", size: 12)
-        label.sizeToFit()
-        label.frame = CGRect(x: 45, y: 5, width: 200, height: 35)
-        view.addSubview(label)
-        
-        
-        
-        return view
+
         
     }
     
@@ -273,13 +242,27 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 && indexPath.row == 0 {
-            let CPIVC = storyboard?.instantiateViewController(identifier: "ChangePersonalInformationNavigationController") as! UINavigationController
+            let CPIVC: UINavigationController
+            if #available(iOS 13.0, *) {
+                CPIVC = storyboard?.instantiateViewController(identifier: "ChangePersonalInformationNavigationController") as! UINavigationController
+            } else {
+                // Fallback on earlier versions
+                CPIVC = storyboard?.instantiateViewController(withIdentifier: "ChangePersonalInformationNavigationController") as! UINavigationController
+
+            }
             CPIVC.modalPresentationStyle = .fullScreen
             //CPIVC.navigationController?.modalPresentationStyle = .fullScreen
             self.present(CPIVC, animated: true, completion: nil)
         }
         else if indexPath.section == 1 && indexPath.row == 1 {
-            let CIVC = storyboard?.instantiateViewController(identifier: "CompanyInformationNavigationController") as! UINavigationController
+            let CIVC: UINavigationController
+            if #available(iOS 13.0, *) {
+                CIVC = storyboard?.instantiateViewController(identifier: "CompanyInformationNavigationController") as! UINavigationController
+            } else {
+                // Fallback on earlier versions
+                CIVC = storyboard?.instantiateViewController(withIdentifier: "CompanyInformationNavigationController") as! UINavigationController
+
+            }
             CIVC.modalPresentationStyle = .fullScreen
             //CPIVC.navigationController?.modalPresentationStyle = .fullScreen
             self.present(CIVC, animated: true, completion: nil)

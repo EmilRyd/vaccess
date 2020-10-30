@@ -39,13 +39,22 @@ class LoadingScreenViewController: UIViewController {
         if !UserDefaults.standard.bool(forKey: "hasWatchedWalkthrough")
         {
             // let storyboard = UIStoryboard(name: "OnBoarding", bundle: nil)
-            if let walkthroughViewController = storyboard?.instantiateViewController(identifier: "OnBoardingViewController") as? OnBoardingViewController {
-                walkthroughViewController.modalPresentationStyle = .fullScreen
-                present(walkthroughViewController, animated: true, completion: nil)
+            if #available(iOS 13.0, *) {
+                if let walkthroughViewController = storyboard?.instantiateViewController(identifier: "OnBoardingViewController") as? OnBoardingViewController {
+                    walkthroughViewController.modalPresentationStyle = .fullScreen
+                    present(walkthroughViewController, animated: true, completion: nil)
+                }
+            } else {
+                // Fallback on earlier versions
+                if let walkthroughViewController = storyboard?.instantiateViewController(withIdentifier: "OnBoardingViewController") as? OnBoardingViewController {
+                    walkthroughViewController.modalPresentationStyle = .fullScreen
+                    present(walkthroughViewController, animated: true, completion: nil)
+                }
             }
             
             
         }
+        vaccessLabel.typingTimeInterval = 0.2
         vaccessLabel.startTypewritingAnimation {
             if self.isLoggedIn {
                 print("Home screen should load")

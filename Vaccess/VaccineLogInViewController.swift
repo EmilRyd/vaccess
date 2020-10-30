@@ -39,7 +39,11 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = "Logga in"
         
         signUpButton.layer.cornerRadius = signUpButton.frame.height/2;
-        signUpButton.layer.borderColor = Theme.primaryCG
+       
+            signUpButton.layer.borderColor = Theme.primaryCG
+        
+            // Fallback on earlier versions
+        
         signUpButton.layer.borderWidth = 5
         signUpButton.layer.masksToBounds = true;
         signInButton.layer.cornerRadius = signInButton.frame.height/2;

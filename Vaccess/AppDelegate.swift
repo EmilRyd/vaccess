@@ -118,10 +118,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        let rootViewController = window?.rootViewController
-        let tabBarController = rootViewController?.storyboard?.instantiateViewController(identifier: "VaccinationTabBarController") as! VaccinationTabBarController
+        /*let rootViewController = window?.rootViewController
+        let tabBarController: VaccinationTabBarController
+        if #available(iOS 13.0, *) {
+            tabBarController = rootViewController?.storyboard?.instantiateViewController(identifier: "VaccinationTabBarController") as! VaccinationTabBarController
+        } else {
+            // Fallback on earlier versions
+            tabBarController = rootViewController?.storyboard?.instantiateViewController(withIdentifier: "VaccinationTabBarController") as! VaccinationTabBarController
+        }
          let defaults = UserDefaults.standard
-        tabBarController.loadFrom(defaults: defaults)
+        tabBarController.loadFrom(defaults: defaults)*/
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

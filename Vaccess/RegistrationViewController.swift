@@ -42,8 +42,15 @@ class RegistrationViewController: UIViewController {
             displayMessage(userMessage: "Se till att lösenorden matchar")
             return
         }
+        
+        let activityIndicator: UIActivityIndicatorView
         // Fix Activity Indicator
-        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+        if #available(iOS 13.0, *) {
+            activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+        } else {
+            // Fallback on earlier versions
+            activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
+        }
         
         activityIndicator.center = view.center
         

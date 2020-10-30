@@ -45,7 +45,7 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        saveButton.isEnabled = false
+       // saveButton.isEnabled = false
         
         dateFormatter.dateFormat = "dd/MM - yyyy"
         
@@ -62,28 +62,33 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         birthDateTextFieldController = MDCTextInputControllerFilled(textInput: birthDateTextField)// Hold on as a property
         genderTextFieldController = MDCTextInputControllerFilled(textInput: genderTextField)// Hold on as a property
         
-        lastNameTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        lastNameTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        lastNameTextFieldController?.activeColor = Theme.secondary
+        lastNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        firstNameTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        firstNameTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        firstNameTextFieldController?.activeColor = Theme.secondary
+        firstNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        emailTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        emailTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        emailTextFieldController?.activeColor = Theme.secondary
+        emailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
         
         
-        birthDateTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        birthDateTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        birthDateTextFieldController?.activeColor = Theme.secondary
+        birthDateTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
-        genderTextFieldController?.activeColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
-        genderTextFieldController?.floatingPlaceholderActiveColor = UIColor(red: 0.108, green: 0.640, blue: 0.356, alpha: 1.0)
+        genderTextFieldController?.activeColor = Theme.secondary
+        genderTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         
         
         //Unenable email text field
         emailTextField.isEnabled = false
         
         birthDatePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            birthDatePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         
         // Se till att textrutan påverkas när datumet ändras av användaren
         birthDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
@@ -262,10 +267,10 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
             break
         }
         if string != textField.text {
-            saveButton.isEnabled = true
+           // saveButton.isEnabled = true
         }
         else {
-            saveButton.isEnabled = false
+            //saveButton.isEnabled = false
         }
         
     }
@@ -286,10 +291,10 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
             break
         }
         if string != textField.text {
-            saveButton.isEnabled = true
+            //saveButton.isEnabled = true
         }
         else {
-            saveButton.isEnabled = false
+            //saveButton.isEnabled = false
         }
         
     }

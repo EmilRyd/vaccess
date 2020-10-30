@@ -12,7 +12,6 @@
         <!--View Controller-->
         <scene sceneID="iDv-Lv-4Gn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gzP-IW-ROG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="cwa-eM-1e0" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ClY-JJ-SMG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -37,12 +36,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="gmc-33-TJk"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gzP-IW-ROG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3460" y="-13"/>
         </scene>
     </scenes>
     <resources>
-        <image name="finalLaunchscreenImage2" width="512" height="512"/>
+        <image name="finalLaunchscreenImage2" width="367" height="402.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

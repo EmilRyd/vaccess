@@ -60,7 +60,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
        }
     var pointsOfInterest = [UIView(), UIView(), UIView(), UIView()]
     let coachMarksController = CoachMarksController()
-    var walkthroughTitles = ["Här ser du alla vacciner du kan ta. Varje ruta representerar ett specifikt vaccin.", "Till höger i varje ruta kan du se ditt skydd mot vederbörande sjukdom. Det finns tre stadier: Inget, partiellt och fullt.", "Här kan du söka och filtrera för att få fram just den information du vill ha.", "Om du klickar på en ruta får du upp information om sjukdomen och dess vaccin."]
+    var walkthroughTitles = ["Här ser du alla vacciner du kan ta. Varje ruta representerar ett specifikt vaccin.", "Längst ner i varje ruta kan du se ditt skydd mot vederbörande sjukdom. Det finns tre stadier: Inget, partiellt och fullt.", "Här kan du söka och filtrera för att få fram just den information du vill ha.", "Om du klickar på en ruta får du upp information om sjukdomen och dess vaccin."]
     let searchController = UISearchController(searchResultsController: nil)
            var currentVaccineArray = [String]()
            let allContinents = ["Alla", "Fullt", "Partiellt", "Inget"]
@@ -145,22 +145,9 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
             
             
         }
-        if indexPath.row % 5 == 1 {
-            cell.protectionLabel.text = "Partiellt"
-            
-        }
         
-        switch cell.protectionLabel.text! {
-        case "Inget":
-            cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
-        case "Partiellt":
-            cell.cardView.backgroundColor = Theme.primaryLight.withAlphaComponent(0.7)
-        case "Fullt":
-            cell.cardView.backgroundColor = Theme.primary
-        default:
-            break
-
-        }
+        
+        setCorrectBackgroundColor(for: cell)
         
             
         
@@ -182,7 +169,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! TestInformationCollectionViewCell
-        cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+        setCorrectBackgroundColor(for: cell)
     }
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! TestInformationCollectionViewCell
@@ -190,7 +177,8 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
     }
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! TestInformationCollectionViewCell
-        cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+        setCorrectBackgroundColor(for: cell)
+        
     }
 
     override func viewDidLoad() {
@@ -254,12 +242,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         
         
         definesPresentationContext = true
-        UIFont.familyNames.forEach({ familyName in
-            let fontNames = UIFont.fontNames(forFamilyName: familyName)
-            array.append(familyName)
-            array = array.sorted()
-            print(familyName)
-        })
+        
         
         
         
@@ -270,6 +253,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         
         self.navigationController!.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.shadowImage = UIImage()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -289,7 +273,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         
         for i in Vaccine.allValues {
             
-            var protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
+            let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
             let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
             if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
                 protVacc.totalProtection = .Fullt
@@ -301,6 +285,18 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
             allVaccinesAsProtectedVaccines.append(protVacc)
 
         }
+        
+        var protVacc: ProtectionVaccine? = nil
+        var index2 = 0
+        for i in allVaccinesAsProtectedVaccines {
+            if i.name == protVacc?.name ?? "" {
+                allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
+            }
+            protVacc = i
+            index2 += 1
+        }
+        
+        
 
         
     }
@@ -329,7 +325,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
            allVaccinesAsProtectedVaccines = []
            for i in Vaccine.allValues {
                
-               var protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
+               let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
                let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
                if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
                    protVacc.totalProtection = .Fullt
@@ -341,6 +337,16 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
                allVaccinesAsProtectedVaccines.append(protVacc)
 
            }
+        
+        var protVacc: ProtectionVaccine? = nil
+        var index2 = 0
+        for i in allVaccinesAsProtectedVaccines {
+            if i.name == protVacc?.name ?? "" {
+                allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
+            }
+            protVacc = i
+            index2 += 1
+        }
         collectionView.reloadData()
         
        }
@@ -356,13 +362,19 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         let indexPath = collectionView.indexPathsForSelectedItems![0]
         //let destinationViewController = segue.destination as! ViewController
         //destinationViewController.font = UIFont(name: array[indexPath!.row], size: 17.0)
-        
-        var vaccine = allVaccines[indexPath.row]
+        var vaccine: String
+        if isFiltering {
+            vaccine = filteredProtectionVaccines[indexPath.row].name
+        }
+        else {
+            vaccine = allVaccines[indexPath.row]
+
+        }
         
         vaccine = vaccine.lowercased()
         
-        var NC = segue.destination as! UINavigationController
-        var VC = NC.viewControllers[0] as! VaccineInformationViewController
+        let NC = segue.destination as! UINavigationController
+        let VC = NC.viewControllers[0] as! VaccineInformationViewController
         
         VC.currentVaccine = makeStringURLCompatible(string: vaccine)
         
@@ -440,6 +452,20 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         return String(array)
     }
     
+    private func setCorrectBackgroundColor(for cell: TestInformationCollectionViewCell) {
+        switch cell.protectionLabel.text! {
+        case "Inget":
+            cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
+        case "Partiellt":
+            cell.cardView.backgroundColor = Theme.primaryLight.withAlphaComponent(0.7)
+        case "Fullt":
+            cell.cardView.backgroundColor = Theme.primary
+        default:
+            break
+
+        }
+    }
+    
  @IBAction func startWalkthrough(_ sender: UIButton) {
      //Walkthrough
     
@@ -458,8 +484,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         for i in indexPaths {
             collectionView.deselectItem(at: i, animated: true)
             let cell = collectionView.cellForItem(at: i) as! TestInformationCollectionViewCell
-            cell.cardView.backgroundColor = Theme.secondaryLight.withAlphaComponent(0.2)
-
+            setCorrectBackgroundColor(for: cell)
         }
         searchController.hidesBottomBarWhenPushed = false
         

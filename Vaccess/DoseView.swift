@@ -52,7 +52,11 @@ import UIKit
             
             self.spacing = -25
             imageView.backgroundColor = .clear
-            imageView.image?.withTintColor(.blue)
+            if #available(iOS 13.0, *) {
+                imageView.image?.withTintColor(.blue)
+            } else {
+                
+            }
             
              
             

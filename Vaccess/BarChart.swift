@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct BarChart: View {
+/*struct BarChart: View {
     
     var body: some View {
         HStack {
@@ -31,4 +31,4 @@ struct BarChart_Previews: PreviewProvider {
             }
         }.padding(.top, 24)
     }
-}
+}*/

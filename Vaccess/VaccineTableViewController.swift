@@ -203,7 +203,9 @@ class VaccineTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = UIColor(cgColor: CGColor(srgbRed: 0.108, green: 0.684, blue: 0.356, alpha: 1.0))
+        
+        view.backgroundColor = Theme.primary
+        
         
         let icon = UIImageView(image: UIImage(named: "MinaVaccinationerImage"))
         icon.frame = CGRect(x: 5, y: 5, width: 35, height: 35)

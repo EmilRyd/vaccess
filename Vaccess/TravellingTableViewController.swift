@@ -86,12 +86,7 @@ class TravellingTableViewController: UITableViewController{//MARK: Properties
         
         
         definesPresentationContext = true
-        UIFont.familyNames.forEach({ familyName in
-            let fontNames = UIFont.fontNames(forFamilyName: familyName)
-            array.append(familyName)
-            array = array.sorted()
-            print(familyName)
-        })
+        
         
         
         

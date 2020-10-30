@@ -38,14 +38,26 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         }
         
         let storyboard = UIStoryboard(name: "OnBoarding", bundle: nil)
-        if let contentViewController = storyboard.instantiateViewController(identifier: "WalkthroughContentViewController") as? WalkthroughContentViewController {
-            contentViewController.imageFile = pageImages[index]
-            contentViewController.heading = pageHeadings[index]
-            contentViewController.subHeading = pageSubHeadings[index]
-            
-            contentViewController.index = index
-            
-            return contentViewController
+        if #available(iOS 13.0, *) {
+            if let contentViewController = storyboard.instantiateViewController(identifier: "WalkthroughContentViewController") as? WalkthroughContentViewController {
+                contentViewController.imageFile = pageImages[index]
+                contentViewController.heading = pageHeadings[index]
+                contentViewController.subHeading = pageSubHeadings[index]
+                
+                contentViewController.index = index
+                
+                return contentViewController
+            }
+        } else {
+            if let contentViewController = storyboard.instantiateViewController(withIdentifier: "WalkthroughContentViewController") as? WalkthroughContentViewController {
+                contentViewController.imageFile = pageImages[index]
+                contentViewController.heading = pageHeadings[index]
+                contentViewController.subHeading = pageSubHeadings[index]
+                
+                contentViewController.index = index
+                
+                return contentViewController
+            }
         }
         
         return nil

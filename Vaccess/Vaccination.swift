@@ -55,13 +55,7 @@ class Vaccination: Equatable, Comparable, Codable {
             }
             
             return VaccinationTimeLeft(status: status, years: yearInterval, months: monthInterval, days: dayInterval)
-       // }
-        switch vaccine.protection(amountOfDosesTaken: amountOfDosesTaken) {
-        //case Protection.unknown:
-          //  return VaccinationTimeLeft(status: VaccinationStatus.unknown, years: 0, months: 0, days: 0)
-        default:
-            return VaccinationTimeLeft(status: .ok, years: 0, months: 0, days: 0)            
-        }
+       
         
     }
     

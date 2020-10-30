@@ -71,10 +71,12 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     var pointsOfInterest = [UIView(), UIView()]
     let coachMarksController = CoachMarksController()
-    var walkthroughTitles = ["Här ser du dem vaccin du tagit. Om du klickar på dem kan du se vilka vaccinationer du tagit.", "Titeln berättar vilket vaccin du tagit."]
+    var walkthroughTitles = ["Här ser du de vaccin du tagit. Om du klickar på en ruta kan du se din kompletta historik för det vaccinet.", "Här kan du klicka för att lägga till ett vaccin du tagit."]
     
     
-    //MARK: Table View Data Source andDeleate Protocol Stubs
+    //MARK: Table View Data Source and Delegate Protocol Stubs
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
@@ -96,6 +98,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if vaccinations.count == 0 {
         tableView.setEmptyView(title: "Du har inga tagna vaccin.", message: "Dina tagna vaccin visas här.", image: "ColoredSyringe")
+            tutorialButton.isHidden = true
         }
         else {
         tableView.restore()
@@ -125,7 +128,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.VaccineImage = nil
         if indexPath.row == 0 {
             pointsOfInterest[0] = cell
-            pointsOfInterest[1] = cell.VaccineLabel
+            pointsOfInterest[1] = addButton
         }
         
         
@@ -211,7 +214,8 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         tutorialButton.layer.shadowRadius = 5
         tutorialButton.layer.shadowOffset = CGSize(width: 0, height: 10)
         tutorialButton.imageView?.tintColor = .white
-        
+        tutorialButton.tintColor = .white
+        //tutorialButton.imageView?.backgroundColor = .white
         
         tutorialButton.frame = CGRect(x: 24, y: UIScreen.main.bounds.height - 24 - height - (self.tabBarController?.tabBar.frame.height ?? 49), width: height, height: height)
         
@@ -283,7 +287,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
             let destinationViewController = destinationNavigationController.viewControllers[0] as! VaccineHistoryTableViewController
             
             destinationViewController.sourceViewController = self
-
+            destinationViewController.modalPresentationStyle = .fullScreen
         
         guard let selectedCell = sender as? HistoryTableViewCell else {
             fatalError("Unexpected sender: \(String(describing: sender))")
@@ -324,7 +328,13 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func unwindToVaccineList(sender: UIStoryboardSegue) {
         let vaccinationTabBarController = tabBarController as! VaccinationTabBarController
-        let vaccineTableViewController = storyboard?.instantiateViewController(identifier: "TestVaccineTableViewController") as! TestVaccineTableViewController
+        let vaccineTableViewController: TestVaccineTableViewController
+        if #available(iOS 13.0, *) {
+            vaccineTableViewController = storyboard?.instantiateViewController(identifier: "TestVaccineTableViewController") as! TestVaccineTableViewController
+        } else {
+            // Fallback on earlier versions
+            vaccineTableViewController = storyboard?.instantiateViewController(withIdentifier: "TestVaccineTableViewController") as! TestVaccineTableViewController
+        }
         
         
             if let sourceViewController = sender.source as? VaccineViewController, let vaccination = sourceViewController.vaccination {
@@ -356,10 +366,13 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
             }*/
             vaccinationTabBarController.allVaccinations.append(vaccination)
-                vaccinationTabBarController.comingVaccinations.append(sourceViewController.comingVaccination!)
+                if sourceViewController.comingVaccination != nil {
+                    vaccinationTabBarController.comingVaccinations.append(sourceViewController.comingVaccination!)
+
+                }
                 vaccinationTabBarController.vaccinations.append(vaccination)
             vaccinationTabBarController.saveLocally()
-                vaccinationTabBarController.save()
+            vaccinationTabBarController.save()
             //vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             //vaccinationTabBarController.vaccinations = vaccinations
                 /*vaccineTableViewController.comingVaccinations.sort()

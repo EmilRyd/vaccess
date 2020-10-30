@@ -60,6 +60,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     var comingVaccinations = [Vaccination]()
     var arrayOfArrayOfComingVaccinations = [[Vaccination]]()
     var unwindingFromVaccineList: Bool = false
+    var saveFailed: Bool = false
     let titlar = ["Nästa vaccin du ska ta:"]
     // var addButton1: FloatingActionButton = FloatingActionButton()
     var user = PFUser.current()
@@ -68,7 +69,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     let datumsFormat = DateFormatter()
     var pointsOfInterest = [UIView(), UIView(), UIView(), UIView(), UIView(), UIView()]
     let coachMarksController = CoachMarksController()
-    var walkthroughTitles = ["Här ser du dina kommande vaccinationer. Klicka på och lägg till dem som tagna när du avklarat dem.", "Här ser du vilket vaccin det rör sig om", "Färgen visar hur långt det är tills du kan ta ditt vaccin. Rött innebär långt kvar, grönt innebär att det är dags.", "Tiden syns också här.", "Här ser du vilken dos det rör sig om.", "Om vaccinet tillhör vaccinationsprogrammet för barn visas här en liten ikon på ett barn."]
+    var walkthroughTitles = ["Här ser du dina kommande vaccinationer. Klicka på och lägg till dem som tagna när du avklarat dem.", "Här ser du vilket vaccin det rör sig om.", "Färgen visar hur långt det är tills du kan ta ditt vaccin. Rött innebär långt kvar, grönt innebär att det är dags.", "Tiden syns också här.", "Här ser du vilken dos det rör sig om.", "Om vaccinet tillhör vaccinationsprogrammet för barn visas här en liten ikon på ett barn."]
 /*pointsOfInterest[0] = cell
 pointsOfInterest[1] = cell.namnEtikett
 pointsOfInterest[2] = cell.colorView
@@ -83,13 +84,16 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //BACKEND STUFF
+        self.loadUserDefaults()
         
+
         tutorialButton.isHidden = true
         
         coachMarksController.dataSource = self
         pointsOfInterest[0] = tableView
         coachMarksController.overlay.isUserInteractionEnabled = true
-        let view = UIView()
+        
         //coachMarksController.skipView = (UIView() & ())
         datumsFormat.dateFormat = "dd/MM - yyyy"
         let height: CGFloat = 56
@@ -149,7 +153,12 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if unwindingFromVaccineList {
+        if saveFailed {
+            
+        }
+        
+        
+        else if unwindingFromVaccineList {
             let alertViewController = alertService.alert(title: "Vaccination sparad!", message: "Din vaccination är sparad. Gå till 'Historik' för att se på och modifiera den", button1Title: "Ok", button2Title: nil, alertType: .success, completionWithAction: {
                 () in
                 
@@ -177,7 +186,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         //self.tableView.headerView(forSection: 0)?.textLabel?.font = UIFont(name: "Futura-Medium", size: 17.0)
         
         unwindingFromVaccineList = false
-        
+        saveFailed = false
         let height: CGFloat = 100 //whatever height you want to add to the existing height
         let bounds = self.navigationController!.navigationBar.bounds
         self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height + height)
@@ -217,6 +226,10 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
 
 
 //MARK: UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Radera"
+    }
 
      func numberOfSections(in tableView: UITableView) -> Int {
         if arrayOfYears.count > 0 && arrayOfArrayOfComingVaccinations[0].count > 0 {
@@ -225,7 +238,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         }
         else {
             tableView.setEmptyView(title: "Du har inga kommande vaccinationer.", message: "Dina kommande vaccinationer visas här.", image: "Emptiness")
-            
+            tutorialButton.isHidden = true
         }
         return arrayOfYears.count
 
@@ -234,6 +247,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
            if comingVaccinations.count == 0 {
            tableView.setEmptyView(title: "Du har inga kommande vaccinationer.", message: "Dina kommande vaccinationer visas här.", image: "Emptiness")
+            tutorialButton.isHidden = true
            }
            else {
            tableView.restore()
@@ -268,17 +282,22 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         
             vaccin = arrayOfArrayOfComingVaccinations[indexPath.section][indexPath.row]
 
-        
+        let user = PFUser.current()
+        let indic = user?.object(forKey: "VaccinationProgramIndicator") as! Int
+        let birthDate = user?.object(forKey: "birthDate") as! Date
+        let doses = vaccin.vaccine.getTotalAmountOfDoses(vaccinationProgramIndicator: indic, birthDay: birthDate)
            if vaccin.amountOfDosesTaken == 17 {
                cell.namnEtikett.text = vaccin.vaccine.simpleDescription() + " (Booster)"
             cell.doseLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
-            cell.doseLabel!.text = "Booster"
+            cell.doseLabel!.text = "Boost"
 
            }
-        else if vaccin.vaccine.getTotalAmountOfDoses() > 1  {
+           
+        
+        else if doses > 1  {
             cell.namnEtikett.text = vaccin.vaccine.simpleDescription()
             let amountOfDosesTakenString = String(vaccin.amountOfDosesTaken!)
-            cell.doseLabel!.text = amountOfDosesTakenString + "/" + String(vaccin.vaccine.getTotalAmountOfDoses())
+            cell.doseLabel!.text = amountOfDosesTakenString + "/" + String(vaccin.vaccine.getTotalAmountOfDoses(vaccinationProgramIndicator: indic, birthDay: birthDate))
 
             
 
@@ -370,14 +389,16 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
                
            }
         
+        if indexPath.row == 0 && indexPath.section == 0 {
+            pointsOfInterest[0] = cell
+            pointsOfInterest[1] = cell.namnEtikett
+            pointsOfInterest[2] = cell.colorView
+            pointsOfInterest[3] = cell.tidsEtikett
+            pointsOfInterest[4] = cell.doseLabel
+            pointsOfInterest[5] = cell.vaccinationProgramImageView
+        }
         
         
-        pointsOfInterest[0] = cell
-        pointsOfInterest[1] = cell.namnEtikett
-        pointsOfInterest[2] = cell.colorView
-        pointsOfInterest[3] = cell.tidsEtikett
-        pointsOfInterest[4] = cell.doseLabel
-        pointsOfInterest[5] = cell.vaccinationProgramImageView
         
         if tableView.numberOfSections != 0 {
             tutorialButton.isHidden = false
@@ -723,11 +744,11 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow, let comingVaccination = sourceViewController.comingVaccination {
                 
-                //if arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].amountOfDosesTaken! < sourceViewController.comingVaccination!.amountOfDosesTaken! {
+                
                     comingVaccinations.remove(arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row])
                     comingVaccinations.append(comingVaccination)
                     
-                //}
+              
                 
                 
                 
@@ -736,24 +757,44 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
                 
             }
                 
-            else {
-                if let comingVaccination = sourceViewController.comingVaccination {
-                    comingVaccinations.append(comingVaccination)
+            else if let selectedIndexPath = tableView.indexPathForSelectedRow{
+                
+                comingVaccinations.remove(arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row])
                     
                     
 
-                }
+                
                 
             }
             vaccinationTabBarController.allVaccinations.append(vaccination)
             vaccinationTabBarController.comingVaccinations = self.comingVaccinations
-            vaccinationTabBarController.saveLocally()
+            /*if !vaccinationTabBarController.save() {
+                let alertViewController = alertService.alert(title: "Svinan", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {
+                    
+                } completionWithCancel: {
+                    
+                }
+                present(alertViewController, animated: true, completion: nil)
+            }*/
             //vaccinationTabBarController.ongoingVaccinations = ongoingVaccinations
             //vaccinationTabBarController.vaccinations = vaccinations
             comingVaccinations.sort()
             loadArrayOfYears()
             loadArrayOfArrayOfComingVaccinations()
+            if !vaccinationTabBarController.save() {
+                let alertViewController = alertService.alert(title: "Varning!", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {
+                    
+                } completionWithCancel: {
+                    
+                }
+                self.present(alertViewController, animated: true, completion: nil)
+
+            }
             
+            if vaccinationTabBarController.getPercentageOfVaccinationProgramTaken() == 1{
+                let user = PFUser.current()
+                user?.setObject(1, forKey: "VaccinationProgramIndicator")
+            }
             tableView.reloadData()
             
             /*if let selectedIndexPath = tableView.indexPathForSelectedRow {
@@ -850,11 +891,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
     
     @IBAction func sendNotification(_ sender: UIButton) {
         
-        let okAction = UIAlertAction(title: "OK", style: .default) {
-            (action) in
-            
-            self.appDelegate?.scheduleNotifications(notificationType: "default", identifier: "testNotification")
-        }
+        
     }
     
     @IBAction func startWalkthrough(_ sender: UIButton) {
@@ -864,6 +901,16 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
             walkthroughTitles = ["Du har för tillfället inga kommande vaccinationer. När du har det kan du klicka på frågetecknet för mer information."]
         }
         self.coachMarksController.start(in: .window(over: self))
+    }
+    
+    func loadUserDefaults() {
+        let defaults = UserDefaults.standard
+        
+        
+        
+        let vaccinationtabBarController = self.tabBarController as! VaccinationTabBarController
+        
+        vaccinationtabBarController.loadFrom(defaults: defaults)
     }
     
         
