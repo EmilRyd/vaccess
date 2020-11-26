@@ -69,6 +69,7 @@ class TestVaccineTableViewController: UIViewController, UITableViewDelegate, UIT
     let datumsFormat = DateFormatter()
     var pointsOfInterest = [UIView(), UIView(), UIView(), UIView(), UIView(), UIView()]
     let coachMarksController = CoachMarksController()
+    var viewHasAppeared: Bool = false
     var walkthroughTitles = ["Här ser du dina kommande vaccinationer. Klicka på och lägg till dem som tagna när du avklarat dem.", "Här ser du vilket vaccin det rör sig om.", "Färgen visar hur långt det är tills du kan ta ditt vaccin. Rött innebär långt kvar, grönt innebär att det är dags.", "Tiden syns också här.", "Här ser du vilken dos det rör sig om.", "Om vaccinet tillhör vaccinationsprogrammet för barn visas här en liten ikon på ett barn."]
 /*pointsOfInterest[0] = cell
 pointsOfInterest[1] = cell.namnEtikett
@@ -87,7 +88,13 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         //BACKEND STUFF
         self.loadUserDefaults()
         
+        let defaults = UserDefaults.standard
+        let bundle = Bundle.main
 
+        
+
+        // 4.
+        defaults.set(0, forKey: "reviewWorthyActionCount")
         tutorialButton.isHidden = true
         
         coachMarksController.dataSource = self
@@ -138,7 +145,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         
         
         sectionHeaderHeight = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderCell")?.contentView.bounds.height ?? 44
-
+        //sectionHeaderHeight = 44
         
         
         
@@ -152,7 +159,9 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
     
     
     override func viewDidAppear(_ animated: Bool) {
+
         super.viewDidAppear(animated)
+        
         if saveFailed {
             
         }
@@ -161,9 +170,12 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         else if unwindingFromVaccineList {
             let alertViewController = alertService.alert(title: "Vaccination sparad!", message: "Din vaccination är sparad. Gå till 'Historik' för att se på och modifiera den", button1Title: "Ok", button2Title: nil, alertType: .success, completionWithAction: {
                 () in
-                
+                AppStoreReviewManager.requestReviewIfAppropriate()
+
             }, completionWithCancel: {
                 () in
+                AppStoreReviewManager.requestReviewIfAppropriate()
+
             })
             present(alertViewController, animated: true)
             /*var alertView = AlertView()
@@ -183,6 +195,11 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
             self.present(alert, animated: true, completion: nil)*/
             
         }
+        else {
+            viewHasAppeared = true
+        }
+        
+        
         //self.tableView.headerView(forSection: 0)?.textLabel?.font = UIFont(name: "Futura-Medium", size: 17.0)
         
         unwindingFromVaccineList = false
@@ -288,7 +305,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         let doses = vaccin.vaccine.getTotalAmountOfDoses(vaccinationProgramIndicator: indic, birthDay: birthDate)
            if vaccin.amountOfDosesTaken == 17 {
                cell.namnEtikett.text = vaccin.vaccine.simpleDescription() + " (Booster)"
-            cell.doseLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            //cell.doseLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
             cell.doseLabel!.text = "Boost"
 
            }
@@ -389,7 +406,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
                
            }
         
-        if indexPath.row == 0 && indexPath.section == 0 {
+        if indexPath.row == 0 {
             pointsOfInterest[0] = cell
             pointsOfInterest[1] = cell.namnEtikett
             pointsOfInterest[2] = cell.colorView
@@ -574,6 +591,17 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
 
                 }
                 
+                if !self.vaccinationTabBarController.save() {
+                    let alertViewController = self.alertService.alert(title: "Varning!", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {
+                        
+                    } completionWithCancel: {
+                        
+                    }
+                    self.present(alertViewController, animated: true, completion: nil)
+
+                }
+                
+                
             }, completionWithCancel: {() in})
             
             present(alertViewController, animated: true)
@@ -723,6 +751,8 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
             vaccineDetailViewController.presentingComingVaccination = true
             
             vaccineDetailViewController.vaccination = selectedVaccination
+            
+            
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
             
@@ -746,6 +776,35 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
                 
                 
                     comingVaccinations.remove(arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row])
+                
+                
+                
+                let identifier = (arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].vaccine.simpleDescription() + self.datumsFormat.string(from: arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].startDate))
+                    print(identifier)
+                
+
+                    print(self.center.getPendingNotificationRequests(completionHandler:
+                        
+                
+                        {_ in ()
+                        
+                        return
+                        }))
+                    
+                    
+                    self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+                    
+                
+                    print(self.center.getPendingNotificationRequests(completionHandler:
+                            
+                    
+                            {_ in ()
+                            
+                            return
+                            }))
+                
+                
+                
                     comingVaccinations.append(comingVaccination)
                     
               
@@ -761,7 +820,28 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
                 
                 comingVaccinations.remove(arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row])
                     
+                let identifier = (arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].vaccine.simpleDescription() + self.datumsFormat.string(from: arrayOfArrayOfComingVaccinations[selectedIndexPath.section][selectedIndexPath.row].startDate))
+                    print(identifier)
                     
+                    print(self.center.getPendingNotificationRequests(completionHandler:
+                        
+                
+                        {_ in ()
+                        
+                        return
+                        }))
+                    
+                    
+                    self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+                    
+                    
+                    print(self.center.getPendingNotificationRequests(completionHandler:
+                            
+                    
+                            {_ in ()
+                            
+                            return
+                            }))
 
                 
                 
@@ -796,7 +876,10 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
                 user?.setObject(1, forKey: "VaccinationProgramIndicator")
             }
             tableView.reloadData()
-            
+            if !viewHasAppeared {
+                viewDidAppear(true)
+
+            }
             /*if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
             }
@@ -900,6 +983,45 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
             pointsOfInterest = [UIView(frame: (self.navigationController?.navigationBar.frame)!)]
             walkthroughTitles = ["Du har för tillfället inga kommande vaccinationer. När du har det kan du klicka på frågetecknet för mer information."]
         }
+        
+        
+        
+        else {
+            var index = 0
+            if tableView.visibleCells.count % 2 == 0 {
+                for i in tableView.visibleCells {
+                    if index == tableView.visibleCells.count/2 {
+                        let cell = tableView.visibleCells[index] as! VaccineTableViewCell
+                        pointsOfInterest[0] = cell
+                        pointsOfInterest[1] = cell.namnEtikett
+                        pointsOfInterest[2] = cell.colorView
+                        pointsOfInterest[3] = cell.tidsEtikett
+                        pointsOfInterest[4] = cell.doseLabel
+                        pointsOfInterest[5] = cell.vaccinationProgramImageView
+                    }
+                    index += 1
+
+                }
+            }
+            else {
+                for i in tableView.visibleCells {
+                    if index == (tableView.visibleCells.count - 1)/2 {
+                        let cell = tableView.visibleCells[index] as! VaccineTableViewCell
+                        pointsOfInterest[0] = cell
+                        pointsOfInterest[1] = cell.namnEtikett
+                        pointsOfInterest[2] = cell.colorView
+                        pointsOfInterest[3] = cell.tidsEtikett
+                        pointsOfInterest[4] = cell.doseLabel
+                        pointsOfInterest[5] = cell.vaccinationProgramImageView
+                    }
+                    index += 1
+
+                }
+            }
+            
+        }
+        
+        
         self.coachMarksController.start(in: .window(over: self))
     }
     

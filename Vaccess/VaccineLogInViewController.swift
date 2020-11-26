@@ -51,16 +51,34 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
         print(signUpButton.titleLabel?.font.fontName)
         
         signInEmailTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        if #available(iOS 13.0, *) {
+            signInEmailTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
         signInPasswordTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        if #available(iOS 13.0, *) {
+            signInPasswordTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
         
         signInEmailTextFieldController = MDCTextInputControllerFilled(textInput: signInEmailTextField)// Hold on as a property
         signInPasswordTextFieldController = MDCTextInputControllerFilled(textInput: signInPasswordTextField)// Hold on as a property
         
         signInEmailTextFieldController?.activeColor = Theme.secondary
         signInEmailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        signInEmailTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        signInEmailTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
                
         signInPasswordTextFieldController?.activeColor = Theme.secondary
         signInPasswordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        signInPasswordTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        signInPasswordTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
+        
         //Listen for keyboard events
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -175,12 +193,12 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
                     // User needs to verify email address before continuing
                     
                     
-                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", button1Title: "Ok", button2Title: "Skicka om", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in
+                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå dit och verifiera din email-adress", button1Title: "Ok", button2Title: "Skicka om", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in
                         let sv = UIViewController.displaySpinner(onView: self.view)
                         user?.signUpInBackground { (success, error) in
                             UIViewController.removeSpinner(spinner: sv)
                             if success {
-                                let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", button1Title: "Ok", button2Title: "Skicka om", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                                let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå dit och verifiera din email-adress", button1Title: "Ok", button2Title: "Skicka om", alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
                                 
                                 
                                 self.present(alertViewController, animated: true)                   // self.loadHomeScreen()
@@ -188,7 +206,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
                             else {
                                 if var descrip = error?.localizedDescription {
                                     if descrip == "Email address format is invalid." {
-                                        descrip = "Email-addressen är i felaktigt format."
+                                        descrip = "Email-adressen är i felaktigt format."
                                     }
                                     else if descrip == "bad or missing username" {
                                         descrip = "Alla fält måste fyllas i."
@@ -227,7 +245,7 @@ class VaccineLogInViewController: UIViewController, UITextFieldDelegate {
             }else{
                 if var descrip = error?.localizedDescription{
                     if descrip == "username/email is required." {
-                        descrip = "Email-address krävs för att kunna logga in."
+                        descrip = "Email-adress krävs för att kunna logga in."
                     }
                     else if descrip == "password is required." {
                         descrip = "Lösenord krävs."

@@ -245,6 +245,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
     @IBOutlet weak var statisticsWheel3Label: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var settingsTableView: UITableView!
+    @IBOutlet weak var textView: UITextView!
     
    // var settingsButtonCenter: CGPoint!
     var logoutButtonCenter: CGPoint!
@@ -309,7 +310,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         
         //self.loadUserDefaults()
         
-        
+        statisticsWheel3Label.adjustsFontSizeToFitWidth = true
         
         //Fix moreButton
         /*let height: CGFloat = 56.0
@@ -415,6 +416,9 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
         let takenVPVs = vaccinationTabBarController.getPercentageOfVaccinationProgramTaken() * allVPVs
         statisticsWheel3!.handleTap(numerator: takenVPVs, denominator: allVPVs)
         
+        
+        
+        self.updateTextView()
         // Do any additional setup after loading the view.
     }
     
@@ -477,7 +481,18 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
 
     }
     
-    
+    func updateTextView() {
+        let path = "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/vaccinationer/"
+        let path2 = "https://www.1177.se/behandling--hjalpmedel/vaccinationer/"
+        let text = textView.text ?? ""
+        let attributedString = NSAttributedString.makeHyperLink(for: path, in: text, as: "Folkhälsomyndighetens", for2: path2, as2: "1177 Vårdguidens")
+        
+        let font = textView.font
+        let color = textView.textColor
+        textView.attributedText = attributedString
+        textView.font = font
+        textView.textColor = color
+    }
     
     func displayErrorMessage(message:String) {
         let alertView = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
@@ -974,6 +989,8 @@ progressLabel.frame.origin.y = circleTrackLayer.frame.midY - progressLabel.frame
                                       }
                                     
                                 }
+            
+            
             
             if !vaccinationTabBarController.save() {
                 let alertViewController = self.alertService.alert(title: "Misslyckad uppladdning", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {

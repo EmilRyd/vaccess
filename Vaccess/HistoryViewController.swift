@@ -126,10 +126,33 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
         cell.VaccineLabel.text = vaccine.simpleDescription()
         cell.VaccineImage = nil
-        if indexPath.row == 0 {
-            pointsOfInterest[0] = cell
-            pointsOfInterest[1] = addButton
+        
+        var index = 0
+        if tableView.indexPathsForVisibleRows!.count % 2 == 0 {
+            for i in tableView.indexPathsForVisibleRows! {
+                if index == tableView.indexPathsForVisibleRows!.count/2 {
+                    if indexPath == i {
+                        pointsOfInterest[0] = cell
+                        pointsOfInterest[1] = addButton
+                    }
+                }
+                index += 1
+            }
+            
         }
+        else {
+            for i in tableView.indexPathsForVisibleRows! {
+                if index == (tableView.indexPathsForVisibleRows!.count - 1)/2 {
+                    if indexPath == i {
+                        pointsOfInterest[0] = cell
+                        pointsOfInterest[1] = addButton
+                    }
+                }
+                index += 1
+            }
+
+        }
+        
         
         
         if tableView.numberOfSections != 0 {
@@ -144,6 +167,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return cell
     }
+    
     
     
 
@@ -407,8 +431,31 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func startWalkthourgh(_ sender: UIButton) {
         if tableView.numberOfSections == 0 {
-            //pointsOfInterest = [UIView(frame: (self.navigationController?.navigationBar.frame)!)]
             walkthroughTitles = ["Du har för tillfället inga kommande vaccinationer. När du har det kan du klicka på frågetecknet för mer information."]
+        }
+        else {
+            var index = 0
+            if tableView.visibleCells.count % 2 == 0 {
+                for i in tableView.visibleCells {
+                    if index == tableView.visibleCells.count/2 {
+                        pointsOfInterest[0] = tableView.visibleCells[index]
+                        pointsOfInterest[1] = addButton
+                    }
+                    index += 1
+
+                }
+            }
+            else {
+                for i in tableView.visibleCells {
+                    if index == (tableView.visibleCells.count - 1)/2 {
+                        pointsOfInterest[0] = tableView.visibleCells[index]
+                        pointsOfInterest[1] = addButton
+                    }
+                    index += 1
+
+                }
+            }
+            
         }
         self.coachMarksController.start(in: .window(over: self))
     }

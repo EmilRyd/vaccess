@@ -21,7 +21,7 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     
     var informationWasChanged: Bool = false
     
-    let genderTitlesArray: [String] = ["Man", "Kvinna"]
+    let genderTitlesArray: [String] = ["Man", "Kvinna", "Annat", "Vill inte uppge"]
     
     var birthDatePicker = UIDatePicker()
     var genderPicker = UIPickerView()
@@ -50,10 +50,40 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         dateFormatter.dateFormat = "dd/MM - yyyy"
         
         firstNameTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
+        if #available(iOS 13.0, *) {
+            firstNameTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
         lastNameTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            lastNameTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
         emailTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
+        if #available(iOS 13.0, *) {
+            emailTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
         birthDateTextField.font = UIFont(name: "Futura-Medium", size: 15)
-        
+        if #available(iOS 13.0, *) {
+            birthDateTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        genderTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            genderTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
         
         firstNameTextFieldController = MDCTextInputControllerFilled(textInput: firstNameTextField)// Hold on as a property
         lastNameTextFieldController = MDCTextInputControllerFilled(textInput: lastNameTextField)// Hold on as a property
@@ -64,21 +94,29 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         
         lastNameTextFieldController?.activeColor = Theme.secondary
         lastNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        lastNameTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        lastNameTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         firstNameTextFieldController?.activeColor = Theme.secondary
         firstNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        firstNameTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        firstNameTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         emailTextFieldController?.activeColor = Theme.secondary
         emailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
-        
+        emailTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        emailTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         
         birthDateTextFieldController?.activeColor = Theme.secondary
         birthDateTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        birthDateTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        birthDateTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         genderTextFieldController?.activeColor = Theme.secondary
         genderTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
-        
+        genderTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        genderTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         //Unenable email text field
         emailTextField.isEnabled = false
@@ -89,7 +127,9 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
         } else {
             // Fallback on earlier versions
         }
-        
+        birthDatePicker.maximumDate = Date()
+        let loc = Locale(identifier: "sv")
+        birthDatePicker.locale = loc
         // Se till att textrutan påverkas när datumet ändras av användaren
         birthDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
         
@@ -224,7 +264,7 @@ class ChangePersonalInformationViewController: UIViewController, UIPickerViewDel
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 2
+        return genderTitlesArray.count
         
         
     }

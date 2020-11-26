@@ -67,11 +67,8 @@ class CircularLoaderView: UIView {
         circlePathLayer.fillColor = UIColor.clear.cgColor
         circlePathLayer.lineCap = CAShapeLayerLineCap.round
 
-        if #available(iOS 13.0, *) {
             circlePathLayer.strokeColor = Theme.primaryCG
-        } else {
-            // Fallback on earlier versions
-        }
+        
         
         progressLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 2 * circleRadius, height: circleRadius))
         progressLabel.adjustsFontSizeToFitWidth = false

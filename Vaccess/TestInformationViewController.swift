@@ -60,7 +60,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
        }
     var pointsOfInterest = [UIView(), UIView(), UIView(), UIView()]
     let coachMarksController = CoachMarksController()
-    var walkthroughTitles = ["Här ser du alla vacciner du kan ta. Varje ruta representerar ett specifikt vaccin.", "Längst ner i varje ruta kan du se ditt skydd mot vederbörande sjukdom. Det finns tre stadier: Inget, partiellt och fullt.", "Här kan du söka och filtrera för att få fram just den information du vill ha.", "Om du klickar på en ruta får du upp information om sjukdomen och dess vaccin."]
+    var walkthroughTitles = ["Här ser du alla vacciner du kan ta. Varje ruta representerar ett specifikt vaccin.", "Längst ner i varje ruta kan du se ditt skydd mot vederbörande sjukdom. Det finns tre stadier: inget, partiellt och fullt.", "Här kan du söka och filtrera för att få fram just den information du vill ha.", "Om du klickar på en ruta får du upp information om sjukdomen och dess vaccin."]
     let searchController = UISearchController(searchResultsController: nil)
            var currentVaccineArray = [String]()
            let allContinents = ["Alla", "Fullt", "Partiellt", "Inget"]
@@ -180,7 +180,22 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         setCorrectBackgroundColor(for: cell)
         
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footer", for: indexPath) as! SectionHeader
+            sectionHeader.updateTextView()
+            sectionHeader.textView.textAlignment = .left
+            return sectionHeader
+        } else { //No footer in this case but can add option for that
+             return UICollectionReusableView()
+        }
+    }
+   
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 40)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -227,7 +242,6 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
             index += 1
         }
             collectionView.reloadData()
-        allVaccines.sort()
       
         currentVaccineArray = allVaccines
         
@@ -251,7 +265,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
          NSAttributedString.Key.font: UIFont(name: "Futura-Medium", size: 21)!]
         
         
-        self.navigationController!.navigationBar.backgroundColor = .white
+        
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
 
@@ -270,27 +284,54 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         let leftItem = UIBarButtonItem(customView: longTitleLabel)
         self.navigationItem.leftBarButtonItem = leftItem
         
-        
+        var xyz = 0
         for i in Vaccine.allValues {
             
             let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
             let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
-            if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
+            let coverage = vaccinationTabBarController.coverageForThisVaccine(vaccine: i)
+            if coverage == 2 {
                 protVacc.totalProtection = .Fullt
             }
-            else if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 1 {
+            else if coverage == 1 {
                 protVacc.totalProtection = .Partiellt
+            }
+            if i == .Hepatit_A_och_B {
+                if coverage == 2 {
+                    xyz = 2
+                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
+                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
+                        protVacc.totalProtection = .Fullt
+                    }
+                }
+            }
+            if i == .Hepatit_A {
+                if xyz == 2 {
+                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
+                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
+                        protVacc.totalProtection = .Fullt
+                    }
+                }
+            }
+            if i == .Hepatit_B {
+                if xyz == 2 {
+                    protVacc.totalProtection = .Fullt
+                }
             }
             
             allVaccinesAsProtectedVaccines.append(protVacc)
 
         }
         
+        
         var protVacc: ProtectionVaccine? = nil
         var index2 = 0
         for i in allVaccinesAsProtectedVaccines {
             if i.name == protVacc?.name ?? "" {
-                allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
+               
+                    allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
+
+                
             }
             protVacc = i
             index2 += 1
@@ -323,20 +364,44 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
            super.viewDidAppear(animated)
            
            allVaccinesAsProtectedVaccines = []
-           for i in Vaccine.allValues {
-               
-               let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
-               let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
-               if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 2 {
-                   protVacc.totalProtection = .Fullt
-               }
-               else if vaccinationTabBarController.coverageForThisVaccine(vaccine: i) == 1 {
-                   protVacc.totalProtection = .Partiellt
-               }
-               
-               allVaccinesAsProtectedVaccines.append(protVacc)
+        var xyz = 0
+        for i in Vaccine.allValues {
+            
+            let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
+            let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
+            let coverage = vaccinationTabBarController.coverageForThisVaccine(vaccine: i)
+            if coverage == 2 {
+                protVacc.totalProtection = .Fullt
+            }
+            else if coverage == 1 {
+                protVacc.totalProtection = .Partiellt
+            }
+            if i == .Hepatit_A_och_B {
+                if coverage == 2 {
+                    xyz = 2
+                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
+                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
+                        protVacc.totalProtection = .Fullt
+                    }
+                }
+            }
+            if i == .Hepatit_A {
+                if xyz == 2 {
+                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
+                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
+                        protVacc.totalProtection = .Fullt
+                    }
+                }
+            }
+            if i == .Hepatit_B {
+                if xyz == 2 {
+                    protVacc.totalProtection = .Fullt
+                }
+            }
+            
+            allVaccinesAsProtectedVaccines.append(protVacc)
 
-           }
+        }
         
         var protVacc: ProtectionVaccine? = nil
         var index2 = 0
@@ -470,14 +535,68 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
      //Walkthrough
     
     
-    let cell = self.collectionView.cellForItem(at: self.collectionView.indexPathsForVisibleItems[0]) as! TestInformationCollectionViewCell
+    /*let cell = self.collectionView.cellForItem(at: self.collectionView.indexPathsForVisibleItems[0]) as! TestInformationCollectionViewCell
     pointsOfInterest[0] = cell.vaccineLabel
     pointsOfInterest[1] = cell.protectionLabel
     pointsOfInterest[2] = searchController.searchBar
-    pointsOfInterest[3] = cell.cardView
+    pointsOfInterest[3] = cell.cardView*/
+    
+    var index = 0
+    var array: [TestInformationCollectionViewCell] = Array()
+    var x = 0
+    array = collectionView.visibleCells as! [TestInformationCollectionViewCell]
+    while x <= collectionView.visibleCells.count {
+        array = sortArray(array)
+        x += 1
+    }
+    if array.count % 2 == 0 {
+        for i in array {
+            let cellster = i as! TestInformationCollectionViewCell
+            print(cellster.vaccineLabel.text)
+            if index == array.count/2 {
+                let cell = array[index] as! TestInformationCollectionViewCell
+                pointsOfInterest[0] = cell.vaccineLabel
+                pointsOfInterest[1] = cell.protectionLabel
+                pointsOfInterest[2] = searchController.searchBar
+                pointsOfInterest[3] = cell.cardView
+            }
+            index += 1
+
+        }
+    }
+    else {
+        for i in array {
+            if index == (array.count - 1)/2 {
+                let cell = array[index] as! TestInformationCollectionViewCell
+                pointsOfInterest[0] = cell.vaccineLabel
+                pointsOfInterest[1] = cell.protectionLabel
+                pointsOfInterest[2] = searchController.searchBar
+                pointsOfInterest[3] = cell.cardView
+            }
+            index += 1
+
+        }
+    }
      
      self.coachMarksController.start(in: .window(over: self))
  }
+    
+    private func sortArray(_ array: [TestInformationCollectionViewCell]) -> [TestInformationCollectionViewCell] {
+   
+    var index = 0
+    var returnedArray = array
+        while index < (array.count - 1) {
+            let cell1 = array[index]
+            let cell2 = array[index + 1]
+            if (cell1.vaccineLabel.text?.first)! > (cell2.vaccineLabel.text?.first)! {
+                returnedArray[index] = cell2
+                returnedArray[index + 1] = cell1
+            }
+            index += 1
+            
+        }
+        return returnedArray
+    }
     
     @IBAction func unwindToInformationViewController(sender: UIStoryboardSegue) {
         let indexPaths = collectionView.indexPathsForSelectedItems!
@@ -510,4 +629,32 @@ extension TestInformationViewController: UISearchBarDelegate {
         let category = ProtectionVaccine.TotalProtection(rawValue: searchBar.scopeButtonTitles![selectedScope])
         filterContentForSearchText(searchBar.text!, category: category)
     }
+}
+
+
+class SectionHeader: UICollectionReusableView {
+    @IBOutlet weak var textView: UITextView!
+    
+    func updateTextView() {
+        let path = "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/vaccinationer/vacciner-a-o/"
+        
+        let text = textView.text ?? ""
+        let attributedString = NSAttributedString.makeHyperLink(for: path, in: text, as: "Folkhälsomyndighetens hemsida")
+        
+        let font = textView.font
+        let color = textView.textColor
+        textView.attributedText = attributedString
+        textView.font = font
+        textView.textColor = color
+    }
+
+     override init(frame: CGRect) {
+         super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+    }
+
 }

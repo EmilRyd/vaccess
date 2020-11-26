@@ -36,8 +36,8 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         self.navigationItem.rightBarButtonItem = nil
 
         sectionsArray = getArrayWithVaccinationsOfRightType()
-        groupVaccinations(sectionsArray: sectionsArray)
-        
+        //groupVaccinations(sectionsArray: sectionsArray)
+        rowsInEachSection = [sectionsArray.count]
        
         
                 // Hej Emil! Den 3:e Oktober ska du få in logike nsom bestämmer hur många rader det ska vara i denna tablieView och vad de ska fyllas med! Lycka till, och kom ihåg vad som står på spel! Njut inte bort tiden, utan arbeta!
@@ -63,12 +63,14 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return amountOfSections
+        //return amountOfSections
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-            return rowsInEachSection[section]
+            //return rowsInEachSection[section]
+        return sectionsArray.count
         
         /*else {
             return sectionsArray.count
@@ -94,10 +96,11 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         // Fetches the appropriate vaccine for the data source layout.
         
         
-        if amountOfVaccinationsLoaded >= sectionsArray.count {
-            return cell
-        }
-        let vaccination = sectionsArray[amountOfVaccinationsLoaded]
+        //if amountOfVaccinationsLoaded >= sectionsArray.count {
+            //return cell
+       // }
+        
+        let vaccination = sectionsArray[indexPath.row]
         
         // Configure the cell...
         dateFormatter.dateFormat = "dd/MM - yyyy"
@@ -117,7 +120,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             cell.enddateTextField.text = dateFormatter.string(from: vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken)!)
         }
         else {
-            switch vaccination.vaccine.protection(amountOfDosesTaken: nil) {
+            switch vaccination.vaccine.protection(amountOfDosesTaken: vaccination.amountOfDosesTaken) {
             case .unknown:
                 cell.enddateTextField.text = "Obestämt"
             case .lifeLong:
@@ -300,7 +303,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
     }
    
-    private func groupVaccinations(sectionsArray: [Vaccination]) {
+    /*private func groupVaccinations(sectionsArray: [Vaccination]) {
         var x = 0
         while x < sectionsArray.count {
             if x == 0 {
@@ -312,7 +315,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
             x += 1
         }
 
-        if !vaccine.takenOnce()
+        if true //!vaccine.takenOnce()
         {
             
             var x = 0
@@ -328,7 +331,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                 x += 1
             }
         }
-        
+        /*
         else {
             var x = 0
             var i = 0
@@ -342,11 +345,11 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                 
                 x += 1
             }
-        }
+        }*/
         
        
         
-    }
+    }*/
     
     
     func returnPositionForThisIndexPath(indexPath: IndexPath, insideThisTable theTable:UITableView)->Int{

@@ -6,7 +6,29 @@
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "finalLaunchScreenImage2DarkMode.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
       "filename" : "noun_vaccine_2593139-11.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "finalLaunchScreenImage2DarkMode-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -16,7 +38,29 @@
       "scale" : "3x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "finalLaunchScreenImage2DarkMode-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
       "filename" : "noun_vaccine_2593139-13.png",
+      "idiom" : "iphone",
+      "scale" : "1x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "finalLaunchScreenImage2DarkMode-3.png",
       "idiom" : "iphone",
       "scale" : "1x"
     },
@@ -26,7 +70,29 @@
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "finalLaunchScreenImage2DarkMode-4.png",
+      "idiom" : "iphone",
+      "scale" : "2x"
+    },
+    {
       "filename" : "noun_vaccine_2593139-15.png",
+      "idiom" : "iphone",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "finalLaunchScreenImage2DarkMode-5.png",
       "idiom" : "iphone",
       "scale" : "3x"
     }

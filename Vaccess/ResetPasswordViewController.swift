@@ -17,12 +17,24 @@ class ResetPasswordViewController: UIViewController {
     let alertService = AlertService()
 
     @IBOutlet weak var emailTextField: MDCTextField!
+    var emailTextFieldController: MDCTextInputControllerFilled?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        emailTextFieldController = MDCTextInputControllerFilled(textInput: emailTextField)
         resetButton.layer.cornerRadius = resetButton.frame.height/2;
+        emailTextField.font = UIFont(name: "Futura-Medium", size: 17.0)
+        if #available(iOS 13.0, *) {
+            emailTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
 
+        }
 
+        emailTextFieldController?.activeColor = Theme.secondary
+        emailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        emailTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        emailTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         // Do any additional setup after loading the view.
     }
     

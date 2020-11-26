@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaU-Gg-YYx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaU-Gg-YYx">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,7 +16,7 @@
             <objects>
                 <viewController id="eW7-N6-sCI" customClass="VaccineViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b3l-yI-9y7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="W2u-YP-UIe">
@@ -26,81 +26,32 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor">
-                                                <color key="value" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Datum du tog sprutan" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tdK-kd-qPu" customClass="MDCTextField">
                                         <rect key="frame" x="0.0" y="42" width="343" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor">
-                                                <color key="value" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Datum till vilket vaccinet gäller" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eO6-9Y-kCv" customClass="MDCTextField">
                                         <rect key="frame" x="0.0" y="84" width="343" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor">
-                                                <color key="value" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vilken dos det var" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ttx-jy-6wu" customClass="MDCTextField">
                                         <rect key="frame" x="0.0" y="126" width="343" height="34"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" updatesFrequently="YES" adjustable="YES" allowsDirectInteraction="YES"/>
+                                        </accessibility>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor">
-                                                <color key="value" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Datum för nästa spruta" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y43-7w-aho" customClass="MDCTextField">
                                         <rect key="frame" x="0.0" y="168" width="343" height="34"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" updatesFrequently="YES"/>
+                                        </accessibility>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="foregroundColor">
-                                                <color key="value" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -119,7 +70,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Lägg till vaccination">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" systemColor="labelColor"/>
                                             <font key="NSFont" size="21" name="Futura-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -162,7 +113,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aTq-1c-Ybm"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="aTq-1c-Ybm" firstAttribute="trailing" secondItem="juh-Ar-hYP" secondAttribute="trailing" constant="16" id="1PS-pV-mvH"/>
                             <constraint firstItem="juh-Ar-hYP" firstAttribute="top" secondItem="aTq-1c-Ybm" secondAttribute="top" id="7Ju-V4-ysn"/>
@@ -203,14 +154,14 @@
             <objects>
                 <viewController storyboardIdentifier="LoggedInViewController" title="LoggedInViewController" id="9pv-A4-QxB" customClass="LoggedInViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="3000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1113"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owA-oO-139">
-                                <rect key="frame" x="0.0" y="56" width="375" height="2875"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="1008"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sWL-YG-ZPe">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1001"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1009"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ak5-zP-BUs">
                                                 <rect key="frame" x="299" y="33" width="56" height="56"/>
@@ -224,11 +175,12 @@
                                                 </connections>
                                             </button>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="WV8-eF-XO8">
-                                                <rect key="frame" x="0.0" y="511" width="375" height="490"/>
+                                                <rect key="frame" x="0.0" y="452" width="375" height="490"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="490" id="u6M-uj-UtL"/>
                                                 </constraints>
+                                                <color key="separatorColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SettingsTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" rowHeight="90" id="5ko-MS-WAX" customClass="SettingsTableViewCell" customModule="Vaccess" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="55.5" width="343" height="90"/>
@@ -239,12 +191,11 @@
                                                             <subviews>
                                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6M0-PM-Gvk">
                                                                     <rect key="frame" x="278" y="29.5" width="51" height="31"/>
-                                                                    <color key="backgroundColor" red="0.52600002288818359" green="0.60699999332427979" blue="0.6589999794960022" alpha="0.30444670376712329" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <color key="tintColor" red="0.52600002288818359" green="0.60699999332427979" blue="0.6589999794960022" alpha="0.30372431506849318" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <color key="backgroundColor" red="0.5841058112359474" green="0.67169392294152197" blue="0.73575680056199211" alpha="0.3007544948630137" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <color key="tintColor" red="0.5841058112359474" green="0.67169392294152197" blue="0.73575680056199211" alpha="0.3007544948630137" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <color key="onTintColor" name="SecondaryDark"/>
                                                                     <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <connections>
-                                                                        <action selector="valueForCellChanged:" destination="afZ-bJ-Aoo" eventType="valueChanged" id="BE3-0i-Iqy"/>
                                                                         <action selector="valueForCellChanged:" destination="9pv-A4-QxB" eventType="valueChanged" id="WmC-xx-to4"/>
                                                                     </connections>
                                                                 </switch>
@@ -370,7 +321,7 @@
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="Integritetspolicy">
                                                                             <attributes>
-                                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="NSColor" systemColor="labelColor"/>
                                                                                 <font key="NSFont" size="17" name="Futura-Medium"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
@@ -411,14 +362,6 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCS-Mg-2Tp" customClass="AnimationView" customModule="Lottie">
-                                                <rect key="frame" x="8" y="212" width="124" height="100"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="vdc-zq-3ar"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="wM4-xp-Koc"/>
-                                                </constraints>
-                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PG-Pt-XEJ">
                                                 <rect key="frame" x="8" y="212" width="124" height="100"/>
                                                 <constraints>
@@ -459,15 +402,17 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAp-bT-5ND">
-                                                <rect key="frame" x="255" y="327" width="100" height="109"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAp-bT-5ND">
+                                                <rect key="frame" x="255" y="327" width="100" height="47"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="height" constant="47" id="D25-MA-8NN"/>
                                                     <constraint firstAttribute="width" constant="100" id="nBL-Zc-5fs"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="Av vaccinationsprogrammet taget">
+                                                    <fragment content="Av nuvarande vaccinations-programmet taget">
                                                         <attributes>
-                                                            <font key="NSFont" size="15" name="Futura-Medium"/>
+                                                            <color key="NSColor" systemColor="labelColor"/>
+                                                            <font key="NSFont" size="12" name="Futura-Medium"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
@@ -491,7 +436,7 @@
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BpC-YY-ocW">
                                                 <rect key="frame" x="20" y="127" width="335" height="1"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="labelColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="eO8-qs-8l6"/>
                                                 </constraints>
@@ -504,24 +449,9 @@
                                                 <attributedString key="attributedText">
                                                     <fragment content="Label">
                                                         <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="NSColor" systemColor="labelColor"/>
                                                             <font key="NSFont" size="25" name="Futura-Medium"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVk-iA-B86">
-                                                <rect key="frame" x="137" y="327" width="100" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="100" id="myk-ow-qgF"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Vaccin tagna">
-                                                        <attributes>
-                                                            <font key="NSFont" size="15" name="Futura-Medium"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -544,9 +474,10 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAh-yc-S1l">
-                                                <rect key="frame" x="20" y="466" width="204.5" height="35"/>
+                                                <rect key="frame" x="20" y="407" width="204.5" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="NWJ-Il-tIz"/>
+                                                    <constraint firstAttribute="width" constant="204.5" id="zAO-il-9X1"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Mina inställningar">
@@ -562,11 +493,12 @@
                                                 <rect key="frame" x="122.5" y="212" width="130" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="130" id="c7X-Yu-bJc"/>
+                                                    <constraint firstAttribute="height" constant="100" id="oxq-4e-yBd"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment content="29">
                                                         <attributes>
-                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <color key="NSColor" systemColor="labelColor"/>
                                                             <font key="NSFont" size="25" name="Futura-CondensedExtraBold"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
@@ -574,62 +506,95 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVk-iA-B86">
+                                                <rect key="frame" x="137" y="327" width="100" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="cUs-Ql-tJr"/>
+                                                    <constraint firstAttribute="width" constant="100" id="myk-ow-qgF"/>
+                                                </constraints>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Vaccin tagna">
+                                                        <attributes>
+                                                            <font key="NSFont" size="15" name="Futura-Medium"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hNB-5w-VOS">
+                                                <rect key="frame" x="8" y="942" width="359" height="67"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="67" id="7QC-zN-r2f"/>
+                                                </constraints>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="All information i appen angående vaccin och vaccinationer är hämtad från Folkhälsomyndighetens och 1177 Vårdguidens hemsidor.">
+                                                        <attributes>
+                                                            <color key="NSColor" systemColor="labelColor"/>
+                                                            <font key="NSFont" size="12" name="Futura-Medium"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
                                         </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="xVG-JX-0eu" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="20" symbolic="YES" id="2Os-gJ-WxY"/>
+                                            <constraint firstItem="0PG-Pt-XEJ" firstAttribute="top" secondItem="kGo-Dp-KQf" secondAttribute="bottom" constant="20" id="4ce-qY-6sH"/>
                                             <constraint firstItem="DTO-xN-vXE" firstAttribute="width" secondItem="LnE-xQ-8Dh" secondAttribute="width" id="7R2-k8-FUV"/>
-                                            <constraint firstItem="mAh-yc-S1l" firstAttribute="top" secondItem="DAp-bT-5ND" secondAttribute="bottom" constant="30" id="8fD-nQ-eJF"/>
+                                            <constraint firstItem="hNB-5w-VOS" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="8" id="8WW-8g-PQa"/>
                                             <constraint firstItem="bwx-5o-FRJ" firstAttribute="centerX" secondItem="sWL-YG-ZPe" secondAttribute="centerX" id="9K1-sw-sxr"/>
                                             <constraint firstItem="DTO-xN-vXE" firstAttribute="top" secondItem="LnE-xQ-8Dh" secondAttribute="bottom" constant="10" id="B5b-Cz-q1Q"/>
-                                            <constraint firstAttribute="bottom" secondItem="WV8-eF-XO8" secondAttribute="bottom" id="DM2-Fv-NW4"/>
                                             <constraint firstItem="QVk-iA-B86" firstAttribute="leading" secondItem="xVG-JX-0eu" secondAttribute="trailing" constant="17" id="Dtl-c3-UhE"/>
-                                            <constraint firstItem="eCS-Mg-2Tp" firstAttribute="top" secondItem="kGo-Dp-KQf" secondAttribute="bottom" constant="20" id="HVu-Kg-aq6"/>
-                                            <constraint firstItem="0PG-Pt-XEJ" firstAttribute="centerX" secondItem="eCS-Mg-2Tp" secondAttribute="centerX" id="HZJ-Hn-zRs"/>
                                             <constraint firstItem="WV8-eF-XO8" firstAttribute="top" secondItem="mAh-yc-S1l" secondAttribute="bottom" constant="10" id="IKW-zi-5B2"/>
+                                            <constraint firstItem="xVG-JX-0eu" firstAttribute="top" secondItem="0PG-Pt-XEJ" secondAttribute="bottom" constant="15" id="IVf-aH-vKN"/>
                                             <constraint firstItem="DAp-bT-5ND" firstAttribute="leading" secondItem="QVk-iA-B86" secondAttribute="trailing" constant="18" id="J9y-lD-YCW"/>
-                                            <constraint firstItem="mAh-yc-S1l" firstAttribute="top" secondItem="QVk-iA-B86" secondAttribute="bottom" constant="119" id="JG5-8b-nqn"/>
                                             <constraint firstItem="LnE-xQ-8Dh" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="20" symbolic="YES" id="LGT-Ew-aRA"/>
                                             <constraint firstItem="WV8-eF-XO8" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" id="MyY-bf-ce6"/>
+                                            <constraint firstItem="zzw-He-jqz" firstAttribute="top" secondItem="kGo-Dp-KQf" secondAttribute="bottom" constant="20" id="NFP-nT-POb"/>
                                             <constraint firstAttribute="trailing" secondItem="WV8-eF-XO8" secondAttribute="trailing" id="NhL-H0-22P"/>
+                                            <constraint firstAttribute="height" constant="1009" id="OUc-Pi-WN1"/>
                                             <constraint firstItem="ak5-zP-BUs" firstAttribute="leading" secondItem="DTO-xN-vXE" secondAttribute="trailing" constant="16" id="QQr-F1-hj4"/>
                                             <constraint firstItem="mAh-yc-S1l" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="20" symbolic="YES" id="Qj2-1L-9X8"/>
                                             <constraint firstItem="5qw-G4-IcX" firstAttribute="top" secondItem="BpC-YY-ocW" secondAttribute="bottom" constant="84" id="S6O-bD-gzS"/>
                                             <constraint firstItem="DAp-bT-5ND" firstAttribute="top" secondItem="5qw-G4-IcX" secondAttribute="bottom" constant="15" id="S6f-8Y-NpO"/>
                                             <constraint firstItem="LnE-xQ-8Dh" firstAttribute="top" secondItem="sWL-YG-ZPe" secondAttribute="top" constant="10" id="Txo-As-KW8"/>
                                             <constraint firstItem="BpC-YY-ocW" firstAttribute="top" secondItem="DTO-xN-vXE" secondAttribute="bottom" constant="30" id="U93-wF-4AM"/>
-                                            <constraint firstItem="0PG-Pt-XEJ" firstAttribute="height" secondItem="eCS-Mg-2Tp" secondAttribute="height" id="UnX-e3-d3N"/>
                                             <constraint firstItem="0PG-Pt-XEJ" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="8" id="W17-zD-ng0"/>
                                             <constraint firstAttribute="trailing" secondItem="WV8-eF-XO8" secondAttribute="trailing" id="XRa-qN-9lw"/>
+                                            <constraint firstAttribute="bottom" secondItem="hNB-5w-VOS" secondAttribute="bottom" id="Xp4-Pf-qBU"/>
                                             <constraint firstAttribute="trailing" secondItem="DAp-bT-5ND" secondAttribute="trailing" constant="20" symbolic="YES" id="YtJ-SI-8Vs"/>
                                             <constraint firstItem="bwx-5o-FRJ" firstAttribute="top" secondItem="kGo-Dp-KQf" secondAttribute="bottom" constant="20" id="bw0-13-yQd"/>
                                             <constraint firstAttribute="trailing" secondItem="5qw-G4-IcX" secondAttribute="trailing" constant="20" id="eT9-b5-Mpc"/>
-                                            <constraint firstItem="xVG-JX-0eu" firstAttribute="top" secondItem="eCS-Mg-2Tp" secondAttribute="bottom" constant="15" id="fZN-Cq-jIl"/>
                                             <constraint firstItem="BpC-YY-ocW" firstAttribute="top" secondItem="ak5-zP-BUs" secondAttribute="bottom" constant="38" id="gTC-pp-lf5"/>
                                             <constraint firstItem="QVk-iA-B86" firstAttribute="top" secondItem="zzw-He-jqz" secondAttribute="bottom" constant="15" id="gcC-V2-auz"/>
-                                            <constraint firstItem="0PG-Pt-XEJ" firstAttribute="width" secondItem="eCS-Mg-2Tp" secondAttribute="width" id="gmR-dJ-qIx"/>
-                                            <constraint firstItem="bwx-5o-FRJ" firstAttribute="top" secondItem="kGo-Dp-KQf" secondAttribute="bottom" constant="20" id="jUH-Ud-isz"/>
+                                            <constraint firstAttribute="trailing" secondItem="hNB-5w-VOS" secondAttribute="trailing" constant="8" id="hLr-B7-obH"/>
+                                            <constraint firstItem="hNB-5w-VOS" firstAttribute="top" secondItem="WV8-eF-XO8" secondAttribute="bottom" id="hj0-Dv-5aF"/>
                                             <constraint firstItem="kGo-Dp-KQf" firstAttribute="top" secondItem="DTO-xN-vXE" secondAttribute="bottom" constant="60" id="jqM-gU-qxF"/>
                                             <constraint firstAttribute="trailing" secondItem="BpC-YY-ocW" secondAttribute="trailing" constant="20" symbolic="YES" id="otI-Le-pie"/>
                                             <constraint firstItem="WV8-eF-XO8" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" id="pef-Zn-Gw4"/>
                                             <constraint firstAttribute="trailing" secondItem="5qw-G4-IcX" secondAttribute="trailing" constant="20" symbolic="YES" id="qEt-EP-yZl"/>
                                             <constraint firstAttribute="trailing" secondItem="5qw-G4-IcX" secondAttribute="trailing" constant="20" id="rJM-nG-b8v"/>
-                                            <constraint firstItem="0PG-Pt-XEJ" firstAttribute="centerY" secondItem="eCS-Mg-2Tp" secondAttribute="centerY" id="ug9-go-4F3"/>
                                             <constraint firstItem="DTO-xN-vXE" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="20" symbolic="YES" id="wbw-G6-mYK"/>
                                             <constraint firstItem="ak5-zP-BUs" firstAttribute="leading" secondItem="LnE-xQ-8Dh" secondAttribute="trailing" constant="16" id="wvO-qG-JxD"/>
                                             <constraint firstItem="kGo-Dp-KQf" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="20" symbolic="YES" id="xLX-GG-56g"/>
+                                            <constraint firstItem="mAh-yc-S1l" firstAttribute="top" secondItem="QVk-iA-B86" secondAttribute="bottom" constant="60" id="y0t-Y9-qTV"/>
                                             <constraint firstItem="bwx-5o-FRJ" firstAttribute="height" secondItem="zzw-He-jqz" secondAttribute="height" id="yxA-VM-yEY"/>
                                             <constraint firstItem="BpC-YY-ocW" firstAttribute="leading" secondItem="sWL-YG-ZPe" secondAttribute="leading" constant="20" symbolic="YES" id="yxl-Hw-2Yr"/>
-                                            <constraint firstItem="5qw-G4-IcX" firstAttribute="height" secondItem="eCS-Mg-2Tp" secondAttribute="height" id="zHn-gO-GSa"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="sWL-YG-ZPe" firstAttribute="top" secondItem="owA-oO-139" secondAttribute="top" id="1h6-9s-kTd"/>
+                                    <constraint firstAttribute="bottom" secondItem="sWL-YG-ZPe" secondAttribute="bottom" id="FqX-Vc-Evy"/>
                                     <constraint firstItem="sWL-YG-ZPe" firstAttribute="width" secondItem="owA-oO-139" secondAttribute="width" id="JHp-4E-rMe"/>
                                     <constraint firstItem="sWL-YG-ZPe" firstAttribute="leading" secondItem="owA-oO-139" secondAttribute="leading" id="OzJ-P1-LWc"/>
                                     <constraint firstItem="sWL-YG-ZPe" firstAttribute="height" secondItem="owA-oO-139" secondAttribute="height" priority="250" id="PbV-hK-pYi"/>
                                     <constraint firstAttribute="trailing" secondItem="sWL-YG-ZPe" secondAttribute="trailing" id="PwO-DO-UOI"/>
-                                    <constraint firstAttribute="bottom" secondItem="sWL-YG-ZPe" secondAttribute="bottom" id="RoU-Nb-PYP"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -644,9 +609,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="isu-UL-2Ys"/>
-                    <size key="freeformSize" width="375" height="3000"/>
+                    <size key="freeformSize" width="375" height="1133"/>
                     <connections>
-                        <outlet property="animationView" destination="eCS-Mg-2Tp" id="UK5-yo-1cl"/>
                         <outlet property="barChartStackView1" destination="zzw-He-jqz" id="04W-bh-yiU"/>
                         <outlet property="barChartStackViewProgressLabel1" destination="bwx-5o-FRJ" id="KM9-4B-K58"/>
                         <outlet property="clockViewLabel" destination="0PG-Pt-XEJ" id="SxQ-dz-RwH"/>
@@ -659,6 +623,7 @@
                         <outlet property="statisticsWheel1Label" destination="xVG-JX-0eu" id="ASY-zH-qEg"/>
                         <outlet property="statisticsWheel3" destination="5qw-G4-IcX" id="Vd0-4S-bZL"/>
                         <outlet property="statisticsWheel3Label" destination="DAp-bT-5ND" id="9su-rN-V4K"/>
+                        <outlet property="textView" destination="hNB-5w-VOS" id="Ry1-uf-hdL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -668,202 +633,14 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="6228" y="2123.8380809595205"/>
-        </scene>
-        <!--Settings View Controller-->
-        <scene sceneID="kpW-Vb-7S2">
-            <objects>
-                <viewController storyboardIdentifier="SettingsViewController" hidesBottomBarWhenPushed="YES" id="afZ-bJ-Aoo" customClass="SettingsViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2aK-uj-2WT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sxb-bx-MGk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ggf-Hd-c4R">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SettingsTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" rowHeight="90" id="ofc-ky-5C9" customClass="SettingsTableViewCell" customModule="Vaccess" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="90"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ofc-ky-5C9" id="Aer-IO-15Y">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnL-K8-WVW">
-                                                    <rect key="frame" x="16" y="11" width="241.5" height="68"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="241.5" id="UHr-G5-y1r"/>
-                                                    </constraints>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Tar vaccinationsprogrammet nu">
-                                                            <attributes>
-                                                                <font key="NSFont" size="15" name="Futura-Medium"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hdx-0g-A1K">
-                                                    <rect key="frame" x="310" y="29.5" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="valueForCellChanged:" destination="afZ-bJ-Aoo" eventType="valueChanged" id="Vlm-xg-d1f"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="hdx-0g-A1K" firstAttribute="centerY" secondItem="Aer-IO-15Y" secondAttribute="centerY" id="6P1-6z-Gac"/>
-                                                <constraint firstItem="fnL-K8-WVW" firstAttribute="top" secondItem="Aer-IO-15Y" secondAttribute="topMargin" id="Fz4-Y7-afz"/>
-                                                <constraint firstItem="fnL-K8-WVW" firstAttribute="leading" secondItem="Aer-IO-15Y" secondAttribute="leadingMargin" id="aTo-FX-IKd"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="fnL-K8-WVW" secondAttribute="bottom" id="wab-wa-CpI"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="hdx-0g-A1K" secondAttribute="trailing" id="xtm-IW-q25"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="subjectLabel" destination="fnL-K8-WVW" id="xwH-zs-zV4"/>
-                                            <outlet property="yesNoSwitch" destination="hdx-0g-A1K" id="2CR-0b-lxa"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsPersonalInformationTableViewCell" rowHeight="70" id="Ink-yy-Km6" customClass="SettingsPersonalInformationTableViewCell" customModule="Vaccess" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="145.5" width="375" height="70"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ink-yy-Km6" id="zNw-95-QcR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wm-fi-cIS">
-                                                    <rect key="frame" x="20" y="20" width="314" height="30"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Min information">
-                                                            <attributes>
-                                                                <font key="NSFont" size="17" name="Futura-Medium"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectAndShowArrow" translatesAutoresizingMaskIntoConstraints="NO" id="ksT-9z-daf">
-                                                    <rect key="frame" x="334" y="22.5" width="25" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="25" id="jDo-5o-Ils"/>
-                                                        <constraint firstAttribute="height" constant="25" id="y4C-dy-aBP"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="3wm-fi-cIS" firstAttribute="leading" secondItem="zNw-95-QcR" secondAttribute="leading" constant="20" symbolic="YES" id="JJb-2R-Ib0"/>
-                                                <constraint firstAttribute="bottom" secondItem="3wm-fi-cIS" secondAttribute="bottom" constant="20" symbolic="YES" id="ZBs-FS-Nd7"/>
-                                                <constraint firstItem="ksT-9z-daf" firstAttribute="centerY" secondItem="zNw-95-QcR" secondAttribute="centerY" id="bRn-31-uG7"/>
-                                                <constraint firstItem="3wm-fi-cIS" firstAttribute="top" secondItem="zNw-95-QcR" secondAttribute="top" constant="20" symbolic="YES" id="d4c-P9-wK4"/>
-                                                <constraint firstItem="ksT-9z-daf" firstAttribute="leading" secondItem="3wm-fi-cIS" secondAttribute="trailing" id="iog-bu-2Su"/>
-                                                <constraint firstItem="ksT-9z-daf" firstAttribute="trailing" secondItem="zNw-95-QcR" secondAttribute="trailingMargin" id="qNa-Jr-LwE"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="arrowView" destination="ksT-9z-daf" id="9Z7-M1-m53"/>
-                                            <outlet property="titleLabel" destination="3wm-fi-cIS" id="Hao-KO-wGn"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsHeaderTableViewCell" rowHeight="40" id="6wa-9N-lzj" customClass="SettingsHeaderTableViewCell" customModule="Vaccess" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="215.5" width="375" height="40"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6wa-9N-lzj" id="J6h-Tw-Uyy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="va8-yd-cD8">
-                                                    <rect key="frame" x="16" y="11" width="343" height="18"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Yeeet">
-                                                            <attributes>
-                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" size="17" name="Futura-Medium"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="va8-yd-cD8" firstAttribute="trailing" secondItem="J6h-Tw-Uyy" secondAttribute="trailingMargin" id="GEt-Aq-8lh"/>
-                                                <constraint firstItem="va8-yd-cD8" firstAttribute="top" secondItem="J6h-Tw-Uyy" secondAttribute="topMargin" id="baE-Vp-Kyx"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="va8-yd-cD8" secondAttribute="bottom" id="eCV-lc-KHW"/>
-                                                <constraint firstItem="va8-yd-cD8" firstAttribute="leading" secondItem="J6h-Tw-Uyy" secondAttribute="leadingMargin" id="sdJ-XY-Wmk"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="va8-yd-cD8" id="BIx-xT-7zC"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIo-Xz-YN8">
-                                <rect key="frame" x="0.0" y="642" width="375" height="25"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="6Vr-gk-9SV"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Vaccess™">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="Avenir-Heavy"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Mhg-Xz-ltW"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="sxb-bx-MGk" firstAttribute="centerY" secondItem="Mhg-Xz-ltW" secondAttribute="centerY" id="1ce-7f-CvR"/>
-                            <constraint firstItem="sxb-bx-MGk" firstAttribute="width" secondItem="2aK-uj-2WT" secondAttribute="width" id="8VP-5l-xGi"/>
-                            <constraint firstItem="ggf-Hd-c4R" firstAttribute="centerY" secondItem="Mhg-Xz-ltW" secondAttribute="centerY" id="8yy-4b-fIp"/>
-                            <constraint firstItem="ggf-Hd-c4R" firstAttribute="width" secondItem="2aK-uj-2WT" secondAttribute="width" id="JyS-lP-b62"/>
-                            <constraint firstItem="ggf-Hd-c4R" firstAttribute="height" secondItem="2aK-uj-2WT" secondAttribute="height" id="QQH-RE-WPm"/>
-                            <constraint firstItem="sxb-bx-MGk" firstAttribute="centerX" secondItem="Mhg-Xz-ltW" secondAttribute="centerX" id="dZq-ck-e3c"/>
-                            <constraint firstItem="ggf-Hd-c4R" firstAttribute="centerX" secondItem="Mhg-Xz-ltW" secondAttribute="centerX" id="kfJ-7b-VtU"/>
-                            <constraint firstItem="Mhg-Xz-ltW" firstAttribute="bottom" secondItem="UIo-Xz-YN8" secondAttribute="bottom" id="rH7-Du-rNh"/>
-                            <constraint firstItem="Mhg-Xz-ltW" firstAttribute="trailing" secondItem="UIo-Xz-YN8" secondAttribute="trailing" id="rqC-My-Yrq"/>
-                            <constraint firstItem="UIo-Xz-YN8" firstAttribute="leading" secondItem="Mhg-Xz-ltW" secondAttribute="leading" id="sqO-9t-4ak"/>
-                            <constraint firstItem="sxb-bx-MGk" firstAttribute="height" secondItem="2aK-uj-2WT" secondAttribute="height" id="yTS-5T-SHo"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="eDr-Bl-AYf">
-                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="WPL-d6-m5w">
-                            <color key="tintColor" red="0.105159985" green="0.66986449029999995" blue="0.35093863199999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <connections>
-                                <segue destination="TSc-J8-AOB" kind="unwind" unwindAction="unwindToLoggedInViewControllerWithSender:" id="CAK-gO-ccf"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="backgroundview" destination="sxb-bx-MGk" id="N3G-RC-mF8"/>
-                        <outlet property="tableView" destination="ggf-Hd-c4R" id="TKM-Hc-36R"/>
-                        <segue destination="TSc-J8-AOB" kind="unwind" identifier="unwindToLoggedInViewController" unwindAction="unwindToLoggedInViewControllerWithSender:" id="BCk-0L-eBk"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vbd-UF-deW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="TSc-J8-AOB" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="6967.1999999999998" y="1127.5862068965519"/>
+            <point key="canvasLocation" x="6228" y="2123.3883058470765"/>
         </scene>
         <!--Change Personal Information View Controller-->
         <scene sceneID="Xjs-l5-uOn">
             <objects>
                 <viewController storyboardIdentifier="ChangePersonalInformationViewController" id="BYJ-jN-h0E" customClass="ChangePersonalInformationViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9c-Q4-pwe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Efternamn" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xYj-qx-2j5" customClass="MDCTextField">
@@ -1036,7 +813,7 @@
             <objects>
                 <viewController title="CompanyInformationViewController" id="FaZ-ev-YS6" customClass="CompanyInformationViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dEM-hV-gcd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="2000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1980"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQq-2h-j9Z">
@@ -1052,7 +829,7 @@
                                                 </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment>
-                                                        <mutableString key="content">Denna integritetspolicy beskriver hur den personliga information som du ger ut i applikationen Vaccess och dess relaterade tjänster (fortsättningsvis benämnda som ”Vaccess-tjänsten”) samlas in, skyddas och används. Den beskriver också de val som finns tillgängliga angående vår användning av din personliga information. Denna Policy är ett juridiskt bindande avtal mellan dig, användaren, och utvecklaren av denna app. Genom att tillgå och använda Vaccess-tjänsten, bekräftar du att du har läst, förstått och samtycker till villkoren för avtalet. Policy gäller inte företag vi vare sig äger eller kontrollerar, eller individer vi inte anställer.</mutableString>
+                                                        <string key="content">Denna integritetspolicy beskriver hur den personliga information som du ger ut i applikationen Vaccess och dess relaterade tjänster (fortsättningsvis benämnda som ”Vaccess-tjänsten”) samlas in, skyddas och används. Den beskriver också de val som finns tillgängliga angående vår användning av din personliga information. Denna Policy är ett juridiskt bindande avtal mellan dig, användaren, och utvecklaren av denna app. Genom att tillgå och använda Vaccess-tjänsten, bekräftar du att du har läst, förstått och samtycker till villkoren för avtalet. Policy gäller inte företag vi vare sig äger eller kontrollerar, eller individer vi inte anställer.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1174,8 +951,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Du kan tillgå och använda Vaccess-tjänsten utan att berätta för oss eller uppenbara information med vilken någon skulle kunna identifiera dig som en specifik, identifierbar individ. Om du emellertid önskar använda visa av funktionerna i Vaccess-tjänsten, kan du ombedjas uppge viss personlig information (exempelvis ditt namn och din e-mailadress). Vi mottar och lagrar all information du medvetet tillhandahåller när du skapar ett konto, eller fyller i något av de formulär som finns i Vaccess-tjänsten. Vid behov, kan denna information inkludera följande:</mutableString>
+                                                        <string key="content">
+Du kan tillgå och använda Vaccess-tjänsten utan att berätta för oss eller uppenbara information med vilken någon skulle kunna identifiera dig som en specifik, identifierbar individ. Om du emellertid önskar använda visa av funktionerna i Vaccess-tjänsten, kan du ombedjas uppge viss personlig information (exempelvis ditt namn och din e-mailadress). Vi mottar och lagrar all information du medvetet tillhandahåller när du skapar ett konto, eller fyller i något av de formulär som finns i Vaccess-tjänsten. Vid behov, kan denna information inkludera följande:</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1385,8 +1162,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Hur vi behandlar din personliga information beror på hur du interagerar med Vaccess-tjänsten, var i världen du befinner dig och huruvida något av följande gäller: (i) du har samtyckt till en eller flera ändamål; detta, emellertid, gäller inte Ifall behandlingen av personlig information är föremål för Californian Consumer Privacy Act (CCPA) eller Dataskyddsförordningen (GDPR); (ii) tillhandahållande av information är nödvändigt för genomförandet av ett avtal med dig och/eller för eventuella förpliktelser före avtalet. (iii) behandling av information är nödvändigt för uppfyllnad av rättsliga skyldigheter som du är föremål för; (iv) behandling är kopplad till fullgörandet av en uppgift av allmänt intresse eller i utövandet av officiell auktoritet vi försetts med; (v) behandling är nödvändigt för de legitima intressena hos oss eller en tredje part.</mutableString>
+                                                        <string key="content">
+Hur vi behandlar din personliga information beror på hur du interagerar med Vaccess-tjänsten, var i världen du befinner dig och huruvida något av följande gäller: (i) du har samtyckt till en eller flera ändamål; detta, emellertid, gäller inte Ifall behandlingen av personlig information är föremål för Californian Consumer Privacy Act (CCPA) eller Dataskyddsförordningen (GDPR); (ii) tillhandahållande av information är nödvändigt för genomförandet av ett avtal med dig och/eller för eventuella förpliktelser före avtalet. (iii) behandling av information är nödvändigt för uppfyllnad av rättsliga skyldigheter som du är föremål för; (iv) behandling är kopplad till fullgörandet av en uppgift av allmänt intresse eller i utövandet av officiell auktoritet vi försetts med; (v) behandling är nödvändigt för de legitima intressena hos oss eller en tredje part.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1508,8 +1285,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
- Beroende på de begärda tjänsterna, eller om så nödvändigt för att slutföra en överföring eller tillhandahålla en tjänst du begärt, kan vik komma att dela din information med ditt samtycke med betrodda tredje parter som arbetar med oss, eller andra närstående bolag och dotterbolag vi förlitar oss på för att assistera i hanteringen av Vaccess-tjänsten. Vi delar inte personlig information med ej närstående tredje parter. Dessa tjänsteleverantörer har inte tillåtelse att använda eller redovisa din information, förutom om det är nödvändigt för att utföra tjänster för vår räkning eller uppfylla rättsliga krav. Vi kan komma att dela din personliga information för dessa syften endast med tredje parter vars integritetsPolicy är överensstämmande med vår eller går med på att följa våra Policys avseende personlig information. Dessa tredje parter delges endast personlig information de behöver för att utföra sina avsedda funktioner, och vi tillåter dem inte att använda eller redovisa personlig information för deras egen marknadsföring eller andra syften.</mutableString>
+                                                        <string key="content">
+ Beroende på de begärda tjänsterna, eller om så nödvändigt för att slutföra en överföring eller tillhandahålla en tjänst du begärt, kan vik komma att dela din information med ditt samtycke med betrodda tredje parter som arbetar med oss, eller andra närstående bolag och dotterbolag vi förlitar oss på för att assistera i hanteringen av Vaccess-tjänsten. Vi delar inte personlig information med ej närstående tredje parter. Dessa tjänsteleverantörer har inte tillåtelse att använda eller redovisa din information, förutom om det är nödvändigt för att utföra tjänster för vår räkning eller uppfylla rättsliga krav. Vi kan komma att dela din personliga information för dessa syften endast med tredje parter vars integritetsPolicy är överensstämmande med vår eller går med på att följa våra Policys avseende personlig information. Dessa tredje parter delges endast personlig information de behöver för att utföra sina avsedda funktioner, och vi tillåter dem inte att använda eller redovisa personlig information för deras egen marknadsföring eller andra syften.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1559,8 +1336,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Vi kommer att lagra och använda den personlig information under den period nödvändig för att uppfylla våra rättsliga skyldigheter, lösa tvister, och verkställa våra överensskommelser om inte en längre lagringsperiod krävs eller tillåts i lagen.  Vi kan komma att använda aggregerade uppgifter som härletts från eller utgör en del av din personliga information efter att du updaterar eller raderar den, men inte på ett sätt som skulle kunna identifiera dig personligen. När lagringsperioden löper ut kommer personlig information att raderas. Därför kan rätten till tillgång, rätten till radering, rätten till korrigering och rätten till uppgiftsportabilitet inte verkställas efter utgången av lagringsperioden.</mutableString>
+                                                        <string key="content">
+Vi kommer att lagra och använda den personlig information under den period nödvändig för att uppfylla våra rättsliga skyldigheter, lösa tvister, och verkställa våra överensskommelser om inte en längre lagringsperiod krävs eller tillåts i lagen.  Vi kan komma att använda aggregerade uppgifter som härletts från eller utgör en del av din personliga information efter att du updaterar eller raderar den, men inte på ett sätt som skulle kunna identifiera dig personligen. När lagringsperioden löper ut kommer personlig information att raderas. Därför kan rätten till tillgång, rätten till radering, rätten till korrigering och rätten till uppgiftsportabilitet inte verkställas efter utgången av lagringsperioden.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1610,8 +1387,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Beroende på ditt läge, kan uppgiftsöverföringar involvera överföring och lagring av information i ett land annat än ditt eget. Du har rätt till att lära dig om den rättsliga grunden för överingar av information till ett land utanför Europeiska Unionen eller till en internationell organisaton reglerad av internationell rätt eller uppsatt av två eller fler länder, såsom FN, och om säkerhetsåtgärderna vi vidtar för för att skydda din information. Om en sådan överföring sker kan du ta reda på mer genom att uppsöka de releventa avsnitten i denna Policy eller fråga oss genom att använda information tillhandahållen i kontaktavsnittet.</mutableString>
+                                                        <string key="content">
+Beroende på ditt läge, kan uppgiftsöverföringar involvera överföring och lagring av information i ett land annat än ditt eget. Du har rätt till att lära dig om den rättsliga grunden för överingar av information till ett land utanför Europeiska Unionen eller till en internationell organisaton reglerad av internationell rätt eller uppsatt av två eller fler länder, såsom FN, och om säkerhetsåtgärderna vi vidtar för för att skydda din information. Om en sådan överföring sker kan du ta reda på mer genom att uppsöka de releventa avsnitten i denna Policy eller fråga oss genom att använda information tillhandahållen i kontaktavsnittet.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1661,8 +1438,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Du kan utöva vissa rättigheter angående din information som vi behandlar. You may exercise certain rights regarding your information processed by us. Specifikt, har du rätt att göra följande: (i) du har rätt att dra tillbaka ditt samtycke du tidigare gett angående behandling av din information; (ii) du har rätt att motsätta dig behandling av din information om behandlingen baseras på rättsliga grunder andra än samtycke; (iii) du har rätt till att få reda på om information behandlas av oss, erhålla redovisning angående visa aspekter av behandlingen samt erhålla en kopia av informationen som behandlas; (iv) du har rätt att kontrollera riktigheten i informationen, samt be om att den uppdateras eller korrigeras; (v) du har rätt, under vissa omständigheter, att begränsa behandlingen av din information, i vilket fall vi kommer avstå från att behandla din information för andra syften än att lagra den; (vi) du har rätt, under visa omständigheter, att få din personliga information raderad; (vii) du har rätt att erhålla din information i ett strukturerat, gängse och maskinläsligt format och, om tekniskt möjligt, få informationen överförd till en annan registeransvarig utan hinder. Detta tillhandahållande är tillämpligt förutsatt att din information behandlas med automatiserade hjälpmedel och att behandlingen grundar sig på ditt samtycke, på ett kontrakt du är del av eller på förpliktelser därav</mutableString>
+                                                        <string key="content">
+Du kan utöva vissa rättigheter angående din information som vi behandlar. You may exercise certain rights regarding your information processed by us. Specifikt, har du rätt att göra följande: (i) du har rätt att dra tillbaka ditt samtycke du tidigare gett angående behandling av din information; (ii) du har rätt att motsätta dig behandling av din information om behandlingen baseras på rättsliga grunder andra än samtycke; (iii) du har rätt till att få reda på om information behandlas av oss, erhålla redovisning angående visa aspekter av behandlingen samt erhålla en kopia av informationen som behandlas; (iv) du har rätt att kontrollera riktigheten i informationen, samt be om att den uppdateras eller korrigeras; (v) du har rätt, under vissa omständigheter, att begränsa behandlingen av din information, i vilket fall vi kommer avstå från att behandla din information för andra syften än att lagra den; (vi) du har rätt, under visa omständigheter, att få din personliga information raderad; (vii) du har rätt att erhålla din information i ett strukturerat, gängse och maskinläsligt format och, om tekniskt möjligt, få informationen överförd till en annan registeransvarig utan hinder. Detta tillhandahållande är tillämpligt förutsatt att din information behandlas med automatiserade hjälpmedel och att behandlingen grundar sig på ditt samtycke, på ett kontrakt du är del av eller på förpliktelser därav</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -1974,8 +1751,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Alla begäran att utöva dina rättigheter kan riktas till oss med hjälp av kontaktuppgifterna tillhandahållna i detta dokument. Notera att vi kan behöva bekräfta din identitet innan vi svarar på dylika begäran. Din begäran måste tillhandahålla tillräckligt med information för att vi ska kunna bekräfta att du är den person du utger dig för att vara eller att du är den bemyndigade företrädaren för den personen. Du måste inkludera tillräckligt detaljerade uppgifter för att vi ska kunna första begäran och besvara den. Vi kan inte besvara din begäran eller tillhandahålla personlig information utan att först bekärfta din identitet eller befogenhet att göra en sådan begäran och bekräfta att den personliga informationen är kopplad till dig.</mutableString>
+                                                        <string key="content">
+Alla begäran att utöva dina rättigheter kan riktas till oss med hjälp av kontaktuppgifterna tillhandahållna i detta dokument. Notera att vi kan behöva bekräfta din identitet innan vi svarar på dylika begäran. Din begäran måste tillhandahålla tillräckligt med information för att vi ska kunna bekräfta att du är den person du utger dig för att vara eller att du är den bemyndigade företrädaren för den personen. Du måste inkludera tillräckligt detaljerade uppgifter för att vi ska kunna första begäran och besvara den. Vi kan inte besvara din begäran eller tillhandahålla personlig information utan att först bekärfta din identitet eller befogenhet att göra en sådan begäran och bekräfta att den personliga informationen är kopplad till dig.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -2025,8 +1802,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Vi samlar inte medvetet in någon form av personlig information från barn yngre än 18 år. Om du är yngre än 18 år, överlämna ej någon form av personlig information i Vaccess-tjänsten. Vi uppmanar vårdnadshavare att kontrollera sina barns användning av internet och hjälpa oss verkställa denna Policy genom att instruera sina barn att aldrig tillhandahålla personlig information i Vaccess-tjänsten utan deras tillstånd. Om du misstänker att ett barn yngre än 18 år har tillhandahållit oss personlig information i Vaccess-tjänsten, kontakta oss. Du måste även vara minst 16 år för att samtycka till behandling av din personliga information i ditt land (i vissa länder kan vi tillåta din vårdnadshavare att göra det åt dig.</mutableString>
+                                                        <string key="content">
+Vi samlar inte medvetet in någon form av personlig information från barn yngre än 18 år. Om du är yngre än 18 år, överlämna ej någon form av personlig information i Vaccess-tjänsten. Vi uppmanar vårdnadshavare att kontrollera sina barns användning av internet och hjälpa oss verkställa denna Policy genom att instruera sina barn att aldrig tillhandahålla personlig information i Vaccess-tjänsten utan deras tillstånd. Om du misstänker att ett barn yngre än 18 år har tillhandahållit oss personlig information i Vaccess-tjänsten, kontakta oss. Du måste även vara minst 16 år för att samtycka till behandling av din personliga information i ditt land (i vissa länder kan vi tillåta din vårdnadshavare att göra det åt dig.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -2127,8 +1904,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Vi säkrar information som du tillhandahåller på servrar i en kontrollerad, säker miljö, skyddad från obehörig tillgång, användning eller redovisning. Vi upprätthåller rimliga administrative, tekniska och fysiska skydd för att skydda från obehörig tillgång, användning, modifiering, och redovisning av personlig information som de kontrollerar. Emellertid kan ingen dataöverföring över internet eller ett trådlöst nätverk garanteras. Således, medan vi strävar efter att skydda din personliga information, medger du att (i) det finns begränsningar på säkerhet och integritet på internet som är utanför vår kontroll; (ii) säkerheten och integriteten för all information och uppgifter utbytt mellan dig och Vaccess-tjänsten kan inte garanteras; och (iii) all sådan information och all sådana uppgifter kan visas eller manipuleras i transit av en tredje part, trots våra bästa ansträngningar.</mutableString>
+                                                        <string key="content">
+Vi säkrar information som du tillhandahåller på servrar i en kontrollerad, säker miljö, skyddad från obehörig tillgång, användning eller redovisning. Vi upprätthåller rimliga administrative, tekniska och fysiska skydd för att skydda från obehörig tillgång, användning, modifiering, och redovisning av personlig information som de kontrollerar. Emellertid kan ingen dataöverföring över internet eller ett trådlöst nätverk garanteras. Således, medan vi strävar efter att skydda din personliga information, medger du att (i) det finns begränsningar på säkerhet och integritet på internet som är utanför vår kontroll; (ii) säkerheten och integriteten för all information och uppgifter utbytt mellan dig och Vaccess-tjänsten kan inte garanteras; och (iii) all sådan information och all sådana uppgifter kan visas eller manipuleras i transit av en tredje part, trots våra bästa ansträngningar.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -2178,8 +1955,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-I det fall att vi blir medvetna om att säkerheten för Vaccess-tjänsten har äventyrats eller att användares personliga information har redovisats för orelaterade tredje parter till följd av extern aktivitet, inklusive, men inte begränsat till, säkerhetsattacker eller bedrägeri, förbehåller vi oss rätten att vidta lämpliga åtgärder, inklusive, men inte begränsat till, utredning och rapportering, samt underrättelse av och samarbete med brottsbekämpande myndigheter. Vid dataintrång kommer vi göra rimliga ansträngningar för att underrätta påverkade individer om vi tror att det finns en rimlig risk för skada för användaren till följd av intrånget eller om underrättelse krävs enligt lag. När vi gör det, kommer vi skicka dig ett email.</mutableString>
+                                                        <string key="content">
+I det fall att vi blir medvetna om att säkerheten för Vaccess-tjänsten har äventyrats eller att användares personliga information har redovisats för orelaterade tredje parter till följd av extern aktivitet, inklusive, men inte begränsat till, säkerhetsattacker eller bedrägeri, förbehåller vi oss rätten att vidta lämpliga åtgärder, inklusive, men inte begränsat till, utredning och rapportering, samt underrättelse av och samarbete med brottsbekämpande myndigheter. Vid dataintrång kommer vi göra rimliga ansträngningar för att underrätta påverkade individer om vi tror att det finns en rimlig risk för skada för användaren till följd av intrånget eller om underrättelse krävs enligt lag. När vi gör det, kommer vi skicka dig ett email.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -2229,8 +2006,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Vi förbehåller oss rätten att då och då modifiera denna Policy eller dess villkor kopplade till Vaccess-tjänsten enligt vårt gottfinnande, och kommer att underrätta dig om viktiga förändringar i hur vi hanterar personlig information. När vi gör det, kommer vi att revidera det uppdaterade datum längst ner på denna sida. Vi kan också komma att tillhandahålla dig notiser efter vårt gottfinnande, exempelvis genom kontaktinformation du har tillhandahållit. Alla uppdaterade versioner av denna Policy kommer att träda i kraft omedelbart efter publiceringen av den reviderade Policyn, om inte annat anges. Din fortsatta användning av Vaccess-tjänsten efter att den reviderade Policyn (eller annan handling fastställd vid det tillfället) träder i kraft kommer att utgöra ditt samtycke till de förändringarna. Emellertid kommer vi inte att, utan samtycke, använda personlig information på ett sätt väsentligt annorlunda från vad som angavs när din personliga information började samlades in. Policy skapades med </mutableString>
+                                                        <string key="content">
+Vi förbehåller oss rätten att då och då modifiera denna Policy eller dess villkor kopplade till Vaccess-tjänsten enligt vårt gottfinnande, och kommer att underrätta dig om viktiga förändringar i hur vi hanterar personlig information. När vi gör det, kommer vi att revidera det uppdaterade datum längst ner på denna sida. Vi kan också komma att tillhandahålla dig notiser efter vårt gottfinnande, exempelvis genom kontaktinformation du har tillhandahållit. Alla uppdaterade versioner av denna Policy kommer att träda i kraft omedelbart efter publiceringen av den reviderade Policyn, om inte annat anges. Din fortsatta användning av Vaccess-tjänsten efter att den reviderade Policyn (eller annan handling fastställd vid det tillfället) träder i kraft kommer att utgöra ditt samtycke till de förändringarna. Emellertid kommer vi inte att, utan samtycke, använda personlig information på ett sätt väsentligt annorlunda från vad som angavs när din personliga information började samlades in. Policy skapades med </string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -2291,8 +2068,8 @@ Cg
                                                         </attributes>
                                                     </fragment>
                                                     <fragment>
-                                                        <mutableString key="content">
-Du medger att du har last denna Policy, och går med på alla dess villkor. Genom att tillgå och använda Vaccess-tjänsten samtycker du till att bindas till denna Policy. Om du inte samtycker till att följa villkoren i denna Policy, är du inte berättigad att använda Vaccess-tjänsten. You acknowledge that you have read this Policy and agree to all its terms and conditions. By accessing and using the Mobile Application and Services you agree to be bound by this Policy. If you do not agree to abide by the terms of this Policy, you are not authorized to access or use the Mobile Application and Services.</mutableString>
+                                                        <string key="content">
+Du medger att du har last denna Policy, och går med på alla dess villkor. Genom att tillgå och använda Vaccess-tjänsten samtycker du till att bindas till denna Policy. Om du inte samtycker till att följa villkoren i denna Policy, är du inte berättigad att använda Vaccess-tjänsten. You acknowledge that you have read this Policy and agree to all its terms and conditions. By accessing and using the Mobile Application and Services you agree to be bound by this Policy. If you do not agree to abide by the terms of this Policy, you are not authorized to access or use the Mobile Application and Services.</string>
                                                         <attributes>
                                                             <font key="NSFont" size="10" name="Times-Roman"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="481.89999999999998" lineHeightMultiple="1.1500000000000001" defaultTabInterval="35.450000000000003" tighteningFactorForTruncation="0.0">
@@ -2490,14 +2267,14 @@ Cg
             <objects>
                 <viewController storyboardIdentifier="SignInViewController" id="D8f-KP-h43" customClass="SignInViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HeS-lS-phP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="817"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y29-Mq-pk7">
-                                <rect key="frame" x="0.0" y="44" width="375" height="956"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="773"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97N-Zg-T6w">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="956"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="773"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XM3-Qv-5wm">
                                                 <rect key="frame" x="88.5" y="30" width="198" height="73"/>
@@ -2555,7 +2332,7 @@ Cg
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email-address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E75-Yp-aix" customClass="MDCTextField">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email-adress" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E75-Yp-aix" customClass="MDCTextField">
                                                 <rect key="frame" x="20" y="208" width="335" height="45"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="k8o-MA-fSj"/>
@@ -2629,30 +2406,9 @@ Cg
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qD-KO-q6m">
-                                                <rect key="frame" x="105" y="543" width="165" height="75"/>
-                                                <color key="backgroundColor" name="Primary"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="165" id="BZv-lY-FA9"/>
-                                                    <constraint firstAttribute="height" constant="75" id="rSe-Ft-5f6"/>
-                                                </constraints>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal">
-                                                    <attributedString key="attributedTitle">
-                                                        <fragment content="Registrera konto">
-                                                            <attributes>
-                                                                <font key="NSFont" size="15" name="Futura-Bold"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="heavy"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="signUp:" destination="D8f-KP-h43" eventType="touchUpInside" id="SXt-Ml-rTg"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g6o-ef-Qqs">
                                                 <rect key="frame" x="105" y="678" width="165" height="75"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="75" id="Lib-BF-hTB"/>
                                                     <constraint firstAttribute="width" constant="165" id="oeu-OE-Bwt"/>
@@ -2705,6 +2461,28 @@ Cg
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qD-KO-q6m">
+                                                <rect key="frame" x="105" y="543" width="165" height="75"/>
+                                                <color key="backgroundColor" name="Primary"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="165" id="BZv-lY-FA9"/>
+                                                    <constraint firstAttribute="height" constant="75" id="rSe-Ft-5f6"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="Registrera konto">
+                                                            <attributes>
+                                                                <font key="NSFont" size="15" name="Futura-Bold"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="heavy"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="signUp:" destination="D8f-KP-h43" eventType="touchUpInside" id="SXt-Ml-rTg"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -2721,7 +2499,7 @@ Cg
                                             <constraint firstItem="W6l-Gb-tUB" firstAttribute="leading" secondItem="97N-Zg-T6w" secondAttribute="leading" constant="20" symbolic="YES" id="CtS-Gq-aOe"/>
                                             <constraint firstItem="j6N-Gs-Uhm" firstAttribute="leading" secondItem="97N-Zg-T6w" secondAttribute="leading" constant="20" symbolic="YES" id="D4h-2X-zOy"/>
                                             <constraint firstItem="PNN-Wm-BeY" firstAttribute="width" secondItem="W6l-Gb-tUB" secondAttribute="width" id="Fdp-Oo-s2x"/>
-                                            <constraint firstAttribute="bottom" secondItem="g6o-ef-Qqs" secondAttribute="bottom" constant="203" id="Fo8-GE-nbm"/>
+                                            <constraint firstAttribute="bottom" secondItem="g6o-ef-Qqs" secondAttribute="bottom" constant="20" id="Fo8-GE-nbm"/>
                                             <constraint firstAttribute="trailing" secondItem="3FN-PG-Ym3" secondAttribute="trailing" constant="20" symbolic="YES" id="HcH-if-6DJ"/>
                                             <constraint firstItem="Lc2-RN-DjF" firstAttribute="top" secondItem="1qD-KO-q6m" secondAttribute="bottom" constant="30" id="Ne5-s0-bKQ"/>
                                             <constraint firstItem="PNN-Wm-BeY" firstAttribute="height" secondItem="W6l-Gb-tUB" secondAttribute="height" id="PLb-Jw-DmH"/>
@@ -2763,7 +2541,7 @@ Cg
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Registrera" id="X8y-Iu-gFy"/>
-                    <size key="freeformSize" width="375" height="1000"/>
+                    <size key="freeformSize" width="375" height="817"/>
                     <connections>
                         <outlet property="birthDateTextField" destination="iNV-Al-CZw" id="3FY-Cf-JAv"/>
                         <outlet property="confirmPasswordTextField" destination="j6N-Gs-Uhm" id="uoj-0T-vht"/>
@@ -2778,7 +2556,7 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GBe-JZ-5LP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893.60000000000002" y="-0.89955022488755632"/>
+            <point key="canvasLocation" x="893.60000000000002" y="-1.3493253373313345"/>
         </scene>
         <!--Logga in-->
         <scene sceneID="Ntf-oP-yng">
@@ -2849,7 +2627,7 @@ Cg
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b7M-nM-G7x">
                                 <rect key="frame" x="105" y="560" width="165" height="75"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="Rfq-Bb-xbk"/>
                                     <constraint firstAttribute="width" constant="165" id="uMn-FV-kRr"/>
@@ -2882,7 +2660,7 @@ Cg
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" allowsEditingTextAttributes="YES" placeholder="Email-address" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z3w-ld-A85" customClass="MDCTextField">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" allowsEditingTextAttributes="YES" placeholder="Email-adress" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z3w-ld-A85" customClass="MDCTextField">
                                 <rect key="frame" x="16" y="187" width="343" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="eoU-l0-wsq"/>
@@ -3108,9 +2886,9 @@ Cg
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="tintColor" name="Primary"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" systemColor="systemBackgroundColor"/>
                         <color key="selectedImageTintColor" name="Primary"/>
                     </tabBar>
                     <connections>
@@ -3428,7 +3206,7 @@ Cg
             <objects>
                 <viewController storyboardIdentifier="HistoryViewController" id="jmO-Bt-Bgn" customClass="HistoryViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vGG-0t-Peu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sfC-6S-aLo">
@@ -3447,7 +3225,7 @@ Cg
                                                     <attributedString key="attributedText">
                                                         <fragment content="Gula febern">
                                                             <attributes>
-                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" systemColor="labelColor"/>
                                                                 <font key="NSFont" size="20" name="Futura-Medium"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -3464,6 +3242,7 @@ Cg
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="iKH-93-EeH" firstAttribute="top" secondItem="Wdd-nH-yla" secondAttribute="bottom" constant="8" id="8F8-bs-mmL"/>
                                                 <constraint firstItem="iKH-93-EeH" firstAttribute="leading" secondItem="pwW-lc-Ecy" secondAttribute="leading" constant="8" id="Emv-KD-bvJ"/>
@@ -3549,16 +3328,16 @@ Cg
             <objects>
                 <viewController storyboardIdentifier="TestVaccineTableViewController" id="HKx-bh-Ehn" customClass="TestVaccineTableViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qw5-FL-dRS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="QuL-8C-gVL">
-                                <rect key="frame" x="0.0" y="3.5" width="375" height="647"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="QuL-8C-gVL">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="647" id="14t-oe-YKd"/>
                                 </constraints>
-                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VaccineTableViewCell" rowHeight="100" id="38B-Ic-KHF" customClass="VaccineTableViewCell" customModule="Vaccess" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="100"/>
@@ -3643,7 +3422,7 @@ Cg
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="4/5">
                                                                             <attributes>
-                                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="NSColor" systemColor="labelColor"/>
                                                                                 <font key="NSFont" size="10" name="Futura-Medium"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="truncatingTail" baseWritingDirection="rightToLeft" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
@@ -3714,7 +3493,7 @@ Cg
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="Exy-PN-I0D" firstAttribute="leading" secondItem="IdQ-Zf-Qyi" secondAttribute="leadingMargin" id="1uL-AC-Rbk"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Exy-PN-I0D" secondAttribute="bottom" id="OA1-99-mEE"/>
@@ -3747,8 +3526,10 @@ Cg
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="QuL-8C-gVL" firstAttribute="leading" secondItem="REj-nP-3f4" secondAttribute="leading" id="LUc-cb-R2C"/>
+                            <constraint firstItem="QuL-8C-gVL" firstAttribute="centerY" secondItem="REj-nP-3f4" secondAttribute="centerY" id="NO8-w0-EJk"/>
                             <constraint firstItem="QuL-8C-gVL" firstAttribute="centerX" secondItem="REj-nP-3f4" secondAttribute="centerX" id="PV6-GZ-Idv"/>
-                            <constraint firstItem="QuL-8C-gVL" firstAttribute="centerY" secondItem="REj-nP-3f4" secondAttribute="centerY" id="pet-dW-Aqy"/>
+                            <constraint firstItem="QuL-8C-gVL" firstAttribute="centerX" secondItem="REj-nP-3f4" secondAttribute="centerX" id="UdN-mB-qfq"/>
+                            <constraint firstItem="QuL-8C-gVL" firstAttribute="leading" secondItem="REj-nP-3f4" secondAttribute="leading" id="irJ-P0-WUy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8L9-oQ-6Fk"/>
@@ -3937,13 +3718,13 @@ Cg
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" allowsEditingTextAttributes="YES" placeholder="Email-address" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="FZV-yd-kux" customClass="MDCTextField">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" allowsEditingTextAttributes="YES" placeholder="Email-adress" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="FZV-yd-kux" customClass="MDCTextField">
                                 <rect key="frame" x="16" y="187" width="343" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="bif-N1-YUB"/>
                                     <constraint firstAttribute="height" constant="45" id="tSw-b4-HMh"/>
                                 </constraints>
-                                <attributedString key="attributedText"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
@@ -3985,7 +3766,7 @@ Cg
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IC9-qN-seD">
                                 <rect key="frame" x="105" y="391" width="165" height="75"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="Dis-2F-NB6"/>
                                     <constraint firstAttribute="width" constant="165" id="PHM-7i-qQ6"/>
@@ -4117,31 +3898,17 @@ Cg
             <objects>
                 <viewController storyboardIdentifier="VaccineInformationViewController" id="1eC-Pt-d5y" customClass="VaccineInformationViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YhD-uk-7cN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="2000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1980"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m7V-Ch-JqJ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1980"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cyu-g8-G2l" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="335"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="329.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkS-Bm-tdf">
-                                                <rect key="frame" x="20" y="212" width="335" height="23"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="23" id="tE4-Rn-uMQ"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Label">
-                                                        <attributes>
-                                                            <font key="NSFont" size="17" name="Futura-Medium"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3D-1n-3a0">
-                                                <rect key="frame" x="20" y="164" width="335" height="23"/>
+                                                <rect key="frame" x="20" y="158.5" width="335" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="23" id="E9G-3a-BGj"/>
                                                 </constraints>
@@ -4154,29 +3921,53 @@ Cg
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Vu-6z-riD">
-                                                <rect key="frame" x="0.0" y="8" width="375" height="66.5"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="23" id="3TM-nv-vdO"/>
-                                                </constraints>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACN-85-40n">
+                                                <rect key="frame" x="20" y="89" width="335" height="44.5"/>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="All information är hämtad från Folkhälsomyndigheten (2020). För vidare information, besök folkhalsomyndigheten.se">
+                                                    <fragment content="Label">
                                                         <attributes>
-                                                            <font key="NSFont" size="17" name="Futura-MediumItalic"/>
+                                                            <color key="NSColor" systemColor="labelColor"/>
+                                                            <font key="NSFont" size="34" name="Futura-Bold"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACN-85-40n">
-                                                <rect key="frame" x="20" y="94.5" width="335" height="44.5"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nQi-MC-u5L">
+                                                <rect key="frame" x="8" y="8" width="359" height="65"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="65" id="0Qo-e3-Q7J"/>
+                                                </constraints>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Informationen om detta vaccin är hämtad från Folkhälsomyndigheten (2020). För mer information, besök ">
+                                                        <attributes>
+                                                            <color key="NSColor" systemColor="labelColor"/>
+                                                            <font key="NSFont" size="12" name="Futura-Medium"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="Folkhälsomyndighetens hemsida">
+                                                        <attributes>
+                                                            <color key="NSBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                            <color key="NSColor" systemColor="labelColor"/>
+                                                            <font key="NSFont" size="12" name="Futura-Medium"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkS-Bm-tdf">
+                                                <rect key="frame" x="20" y="206.5" width="335" height="23"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="23" id="tE4-Rn-uMQ"/>
+                                                </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Label">
                                                         <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="34" name="Futura-Bold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            <font key="NSFont" size="17" name="Futura-Medium"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -4187,17 +3978,17 @@ Cg
                                         <constraints>
                                             <constraint firstItem="ACN-85-40n" firstAttribute="leading" secondItem="Cyu-g8-G2l" secondAttribute="leading" constant="20" symbolic="YES" id="3aA-h8-r0r"/>
                                             <constraint firstAttribute="trailing" secondItem="ACN-85-40n" secondAttribute="trailing" constant="20" symbolic="YES" id="E34-Xn-Msg"/>
-                                            <constraint firstAttribute="trailing" secondItem="7Vu-6z-riD" secondAttribute="trailing" id="LyB-Yu-Kog"/>
+                                            <constraint firstItem="nQi-MC-u5L" firstAttribute="leading" secondItem="Cyu-g8-G2l" secondAttribute="leading" constant="8" id="FjA-X2-m9P"/>
+                                            <constraint firstItem="ACN-85-40n" firstAttribute="top" secondItem="nQi-MC-u5L" secondAttribute="bottom" constant="16" id="JpO-4h-mNA"/>
                                             <constraint firstAttribute="bottom" secondItem="QkS-Bm-tdf" secondAttribute="bottom" constant="100" id="SPW-ri-ahR"/>
+                                            <constraint firstAttribute="trailing" secondItem="nQi-MC-u5L" secondAttribute="trailing" constant="8" id="UVm-e7-nOZ"/>
                                             <constraint firstItem="b3D-1n-3a0" firstAttribute="leading" secondItem="Cyu-g8-G2l" secondAttribute="leading" constant="20" symbolic="YES" id="Ubm-1X-hae"/>
                                             <constraint firstAttribute="trailing" secondItem="QkS-Bm-tdf" secondAttribute="trailing" constant="20" symbolic="YES" id="VMP-To-Xlv"/>
                                             <constraint firstItem="b3D-1n-3a0" firstAttribute="top" secondItem="ACN-85-40n" secondAttribute="bottom" constant="25" id="ZAH-5S-ins"/>
-                                            <constraint firstItem="ACN-85-40n" firstAttribute="top" secondItem="7Vu-6z-riD" secondAttribute="bottom" constant="20" id="ZgZ-Ln-X98"/>
                                             <constraint firstAttribute="trailing" secondItem="b3D-1n-3a0" secondAttribute="trailing" constant="20" symbolic="YES" id="h6U-AJ-5Qa"/>
                                             <constraint firstItem="QkS-Bm-tdf" firstAttribute="top" secondItem="b3D-1n-3a0" secondAttribute="bottom" constant="25" id="iRp-rB-gkf"/>
                                             <constraint firstItem="QkS-Bm-tdf" firstAttribute="leading" secondItem="Cyu-g8-G2l" secondAttribute="leading" constant="20" symbolic="YES" id="uqg-gl-ulD"/>
-                                            <constraint firstItem="7Vu-6z-riD" firstAttribute="leading" secondItem="Cyu-g8-G2l" secondAttribute="leading" id="z3B-ms-8uE"/>
-                                            <constraint firstItem="7Vu-6z-riD" firstAttribute="top" secondItem="Cyu-g8-G2l" secondAttribute="top" constant="8" id="zIr-tq-bnG"/>
+                                            <constraint firstItem="nQi-MC-u5L" firstAttribute="top" secondItem="Cyu-g8-G2l" secondAttribute="top" constant="8" id="vqI-PS-Gqp"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -4235,13 +4026,14 @@ Cg
                     <connections>
                         <outlet property="bodyLabel" destination="QkS-Bm-tdf" id="as7-EQ-wDd"/>
                         <outlet property="ingressLabel" destination="b3D-1n-3a0" id="DAf-kV-N4K"/>
+                        <outlet property="textView" destination="nQi-MC-u5L" id="eIO-aQ-gFc"/>
                         <outlet property="vaccineNameLabel" destination="ACN-85-40n" id="hPV-vb-hAW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tjC-WY-dez" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Prk-7L-qsS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2553" y="2881"/>
+            <point key="canvasLocation" x="2552.8000000000002" y="2880.3598200899551"/>
         </scene>
         <!--Protection View Controller-->
         <scene sceneID="ksx-8j-fzu">
@@ -4386,7 +4178,7 @@ Cg
             <objects>
                 <viewController storyboardIdentifier="TestInformationViewController" id="dqf-Tz-Jex" customClass="TestInformationViewController" customModule="Vaccess" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wRW-1s-mbD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fTq-lV-MEu">
@@ -4395,7 +4187,7 @@ Cg
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="ud7-Wx-heC">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="50" height="75"/>
                                     <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -4414,7 +4206,7 @@ Cg
                                                     <attributedString key="attributedText">
                                                         <fragment content="Yeeet">
                                                             <attributes>
-                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" systemColor="labelColor"/>
                                                                 <font key="NSFont" size="16" name="Futura-Bold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" hyphenationFactor="1" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -4427,7 +4219,7 @@ Cg
                                                     <attributedString key="attributedText">
                                                         <fragment content="Label">
                                                             <attributes>
-                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" systemColor="labelColor"/>
                                                                 <font key="NSFont" size="12" name="Futura-Medium"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -4456,6 +4248,44 @@ Cg
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="footer" id="tBI-lO-cZN" customClass="SectionHeader" customModule="Vaccess" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="108" width="375" height="75"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggT-WM-0ca">
+                                            <rect key="frame" x="8" y="5" width="359" height="65"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="All information om vaccin är hämtad från Folkhälsomyndigheten (2020). För mer information, besök ">
+                                                    <attributes>
+                                                        <color key="NSColor" systemColor="labelColor"/>
+                                                        <font key="NSFont" size="12" name="Futura-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="Folkhälsomyndighetens hemsida">
+                                                    <attributes>
+                                                        <color key="NSBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                        <color key="NSColor" systemColor="labelColor"/>
+                                                        <font key="NSFont" size="12" name="Futura-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ggT-WM-0ca" firstAttribute="leading" secondItem="tBI-lO-cZN" secondAttribute="leading" constant="8" id="7vC-nL-YxT"/>
+                                        <constraint firstAttribute="trailing" secondItem="ggT-WM-0ca" secondAttribute="trailing" constant="8" id="8cF-Ox-RpP"/>
+                                        <constraint firstAttribute="bottom" secondItem="ggT-WM-0ca" secondAttribute="bottom" constant="5" id="WBD-DV-lzv"/>
+                                        <constraint firstItem="ggT-WM-0ca" firstAttribute="top" secondItem="tBI-lO-cZN" secondAttribute="top" constant="5" id="ZGO-sU-7GB"/>
+                                        <constraint firstItem="ggT-WM-0ca" firstAttribute="centerY" secondItem="tBI-lO-cZN" secondAttribute="centerY" id="zLr-I3-WL3"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="textView" destination="ggT-WM-0ca" id="6Wq-ds-WFj"/>
+                                    </connections>
+                                </collectionReusableView>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dRQ-y1-gxn">
                                 <rect key="frame" x="16" y="527" width="56" height="56"/>
@@ -4508,17 +4338,14 @@ Cg
             <point key="canvasLocation" x="-2722.4000000000001" y="1500.8995502248877"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="eCS-Mg-2Tp"/>
-    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="JFD-az-jWe"/>
         <segue reference="AU0-hw-j93"/>
         <segue reference="TD0-ov-r3i"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="ColoredSyringe" width="32" height="32"/>
-        <image name="Image" width="32" height="32"/>
+        <image name="ColoredSyringe" width="24" height="24"/>
+        <image name="Image" width="24" height="24"/>
         <image name="InformationIcon" width="24" height="24"/>
         <image name="PersonIcon" width="32" height="32"/>
         <image name="PlusIcon" width="24" height="24"/>

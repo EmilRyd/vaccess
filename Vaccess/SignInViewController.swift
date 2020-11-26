@@ -10,6 +10,8 @@ import UIKit
 import Parse
 import MaterialComponents
 
+
+
 class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     
@@ -34,7 +36,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     var birthDatePicker = UIDatePicker()
     var genderPicker = UIPickerView()
     let dateFormatter = DateFormatter()
-    let genderTitlesArray: [String] = ["Man", "Kvinna"]
+    let genderTitlesArray: [String] = ["Man", "Kvinna", "Annat", "Vill inte uppge"]
     
     
     
@@ -47,6 +49,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         passwordTextField.text = ""
         confirmPasswordTextField.text = ""
         
+        
         //Fix some layout
         signUpButton.layer.cornerRadius = signUpButton.frame.height/2
         signInButton.layer.borderWidth = 5
@@ -58,12 +61,61 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         signInButton.layer.cornerRadius = signInButton.frame.height/2
         
         firstNameTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
-        lastNameTextField.font = UIFont(name: "Futura-Medium", size: 15)
-        emailTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
-        passwordTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
-        confirmPasswordTextField.font = UIFont(name: "Futura-Medium", size: 15)
-        birthDateTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            firstNameTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
 
+        }
+        
+        lastNameTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            lastNameTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
+        emailTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
+        if #available(iOS 13.0, *) {
+            emailTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
+        passwordTextField.font = UIFont(name: "Futura-Medium", size: 15.0)
+        if #available(iOS 13.0, *) {
+            passwordTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
+        confirmPasswordTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            confirmPasswordTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
+        birthDateTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            birthDateTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
+        genderTextField.font = UIFont(name: "Futura-Medium", size: 15)
+        if #available(iOS 13.0, *) {
+            genderTextField.textColor = .label
+        } else {
+            // Fallback on earlier versions
+
+        }
+        
         
         firstNameTextFieldController = MDCTextInputControllerFilled(textInput: firstNameTextField)// Hold on as a property
         lastNameTextFieldController = MDCTextInputControllerFilled(textInput: lastNameTextField)// Hold on as a property
@@ -75,33 +127,48 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         
         lastNameTextFieldController?.activeColor = Theme.secondary
         lastNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        lastNameTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        lastNameTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         firstNameTextFieldController?.activeColor = Theme.secondary
         firstNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        firstNameTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        firstNameTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         emailTextFieldController?.activeColor = Theme.secondary
         emailTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        emailTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        emailTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         passwordTextFieldController?.activeColor = Theme.secondary
         passwordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        passwordTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        passwordTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         confirmPasswordTextFieldController?.activeColor = Theme.secondary
         confirmPasswordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        confirmPasswordTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        confirmPasswordTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         birthDateTextFieldController?.activeColor = Theme.secondary
         birthDateTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
+        birthDateTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        birthDateTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         genderTextFieldController?.activeColor = Theme.secondary
         genderTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
-        
+        genderTextFieldController?.inlinePlaceholderColor = Theme.secondary
+        genderTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
         
         birthDatePicker.datePickerMode = .date
+        birthDatePicker.maximumDate = Date()
         if #available(iOS 13.4, *) {
             birthDatePicker.preferredDatePickerStyle = .wheels
         } else {
             // Fallback on earlier versions
         }
-        
+        let loc = Locale(identifier: "sv")
+        birthDatePicker.locale = loc
         // Se till att textrutan påverkas när datumet ändras av användaren
         birthDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
         
@@ -214,8 +281,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 2
-        
+        return 4
         
     }
     
@@ -280,7 +346,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
             user.signUpInBackground { (success, error) in
                 UIViewController.removeSpinner(spinner: sv)
                 if success {
-                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå ditt och verifiera din email-address", button1Title: "Ok", button2Title: nil, alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
+                    let alertViewController = self.alertService.alert(title: "Email-verifiering", message: "Vi har skickat ett email till dig. Vänligen gå dit och verifiera din email-adress", button1Title: "Ok", button2Title: nil, alertType: .success, completionWithAction: { () in self.processSignOut()}, completionWithCancel: {() in})
                     
                     
                     self.present(alertViewController, animated: true)                   // self.loadHomeScreen()
@@ -288,7 +354,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
                 else {
                     if var descrip = error?.localizedDescription {
                         if descrip == "Email address format is invalid." {
-                            descrip = "Email-addressen är i felaktigt format."
+                            descrip = "Email-adressen är i felaktigt format."
                         }
                         else if descrip == "bad or missing username" {
                             descrip = "Alla fält måste fyllas i."

@@ -35,8 +35,6 @@ class VaccineTableViewCell: UITableViewCell {
         
         //namnEtikett.font = UIFont(name: "Futura-Medium", size: 22.0)
         //tidsEtikett.font = UIFont(name: "Futura-Medium", size: 17.0)
-        
-
         //colorView.frame = CGRect(x: colorView.frame.maxX, y: colorView.frame.maxY, width: namnEtikett.frame.width, height: colorView.frame.height)
 
     }

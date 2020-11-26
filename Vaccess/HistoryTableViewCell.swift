@@ -22,6 +22,7 @@ class HistoryTableViewCell: UITableViewCell {
         //VaccineLabel.font = UIFont(name: "Futura-Medium", size: 17.0)
         VaccineLabel.adjustsFontSizeToFitWidth = true
         
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

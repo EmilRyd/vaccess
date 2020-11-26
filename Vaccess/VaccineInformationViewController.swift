@@ -20,18 +20,17 @@ class VaccineInformationViewController: UIViewController {
     
     @IBOutlet weak var bodyLabel: UILabel!
     
+    @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         let string = "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/vaccinationer/vacciner-a-o/\(currentVaccine!)/"
-        print(string)
         let url = URL(string: string)!
         //https://www.folkhalsomyndigheten.se/smittskydd-beredskap/vaccinationer/vacciner-a-o/baltros/
-        print(url
-        )
+        
         let request = URLRequest(url: url)
         let webView = WKWebView()
         webView.load(request)
-        
+        updateTextView()
         
         
         
@@ -55,14 +54,37 @@ class VaccineInformationViewController: UIViewController {
                 let ingress = try doc.getElementsByClass("intro").text()
                 //let title = try doc.getElementsByClass("content-2 rs-listen ").text()
                 let title = try doc.getElementsByTag("h1").text()
+                
+                let string = "Sjukdomen covid-19 orsakas av ett annat virus än influensa. Läs mer om covid-19"
+                
+                
+                if mainText.localizedStandardContains(string) {
+                    let parsed = mainText.replacingOccurrences(of: string, with: "")
+                    bodyLabel.text = parsed                //let webSiteResponse = try WebSiteResponse(innerHTML: contents)
+
+                }
+                else {
+                    bodyLabel.text = mainText
+                }
                 vaccineNameLabel.text = title
                 ingressLabel.text = ingress
-                bodyLabel.text = mainText                //let webSiteResponse = try WebSiteResponse(innerHTML: contents)
             } catch {
                 // contents could not be loaded
             }
     }
     
+    func updateTextView() {
+        let path = "https://www.folkhalsomyndigheten.se/smittskydd-beredskap/vaccinationer/vacciner-a-o/"
+        let text = textView.text ?? ""
+        let attributedString = NSAttributedString.makeHyperLink(for: path, in: text, as: "Folkhälsomyndighetens hemsida")
+        
+        let font = textView.font
+        let color = textView.textColor
+        textView.attributedText = attributedString
+        textView.font = font
+        textView.textColor = color
+        textView.textAlignment = .left
+    }
     
 
     /*
