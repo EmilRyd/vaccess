@@ -88,13 +88,7 @@ pointsOfInterest[5] = cell.vaccinationProgramImageView*/
         //BACKEND STUFF
         self.loadUserDefaults()
         
-        let defaults = UserDefaults.standard
-        let bundle = Bundle.main
-
         
-
-        // 4.
-        defaults.set(0, forKey: "reviewWorthyActionCount")
         tutorialButton.isHidden = true
         
         coachMarksController.dataSource = self

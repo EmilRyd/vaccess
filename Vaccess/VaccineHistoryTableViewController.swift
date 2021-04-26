@@ -8,7 +8,7 @@
 import os.log
 import UIKit
 
-class VaccineHistoryTableViewController: UITableViewController, UITextFieldDelegate{
+class VaccineHistoryTableViewController: UITableViewController, UITextFieldDelegate {
 
     //MARK: Properties
     let alertService = AlertService()
@@ -25,6 +25,8 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     var startDatePicker = UIDatePicker()
     var endDatePicker = UIDatePicker()
     let dateFormatter = DateFormatter()
+    var datePickers: [[UIDatePicker]] = [[UIDatePicker]]()
+    var pickerView: [[UIPickerView]] = [[UIPickerView]]()
 
     var tableViewWasEdited = false
     
@@ -33,12 +35,15 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
         navigationItem.title = vaccine.simpleDescription()
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationItem.rightBarButtonItem = nil
+       // self.navigationItem.rightBarButtonItem = nil
 
         sectionsArray = getArrayWithVaccinationsOfRightType()
         //groupVaccinations(sectionsArray: sectionsArray)
         rowsInEachSection = [sectionsArray.count]
        
+        let tryckGest = UITapGestureRecognizer(target: self, action: #selector(VaccineViewController.tapped(gestureRecognizer:)))
+        
+        view.addGestureRecognizer(tryckGest)
         
                 // Hej Emil! Den 3:e Oktober ska du få in logike nsom bestämmer hur många rader det ska vara i denna tablieView och vad de ska fyllas med! Lycka till, och kom ihåg vad som står på spel! Njut inte bort tiden, utan arbeta!
         
@@ -48,12 +53,63 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         //self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        
+        
+    }
+    deinit {
+        //Stop listening to keyboard events
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func tapped(gestureRecognizer: UITapGestureRecognizer) {
+        
+        view.endEditing(true)
+        
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //UIDatePickerstuff
+    @objc func dateChanged (datumVäljare: UIDatePicker) {
+        
+        datumsFormat.dateFormat = "dd/MM - yyyy"
+        let tag = datumVäljare.tag
+        
+        if  tag % 2 == 0 {
+            //startdatumTextruta.text = datumsFormat.string(from: startdatum)
+            let row = tag/2
+            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! VaccineHistoryTableViewCell
+            cell.startdateTextField.text = datumsFormat.string(from: datumVäljare.date)
+                            
+            
+            
+            startDatePicker.date = datumVäljare.date
+        }
+        else {
+            //.text = ""
+            let row = (tag-1)/2
+
+            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! VaccineHistoryTableViewCell
+            cell.enddateTextField.text = datumsFormat.string(from: datumVäljare.date)
+            endDatePicker.date = datumVäljare.date
+        }
+            
+       
+        
+    
+    }
+
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
@@ -80,7 +136,9 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
     
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Omgång \(amountOfSections - section)"
+        //return "Omgång \(amountOfSections - section)"
+        return nil
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,9 +173,50 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         cell.doseTextField.adjustsFontSizeToFitWidth = true
         cell.enddateTextField.adjustsFontSizeToFitWidth = true
         cell.startdateTextField.adjustsFontSizeToFitWidth = true
+        cell.startdateTextField.isEnabled = false
+        cell.enddateTextField.isEnabled = false
         
-        if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) != nil {
+        var startDatePicker = UIDatePicker()
+        var endDatePicker = UIDatePicker()
+        var dosePicker = UIPickerView()
+        
+         startDatePicker.datePickerMode = .date
+        if #available(iOS 14.0, *) {
+            startDatePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+        let loc = Locale(identifier: "sv")
+        startDatePicker.locale = loc
+        // Se till att textrutan påverkas när datumet ändras av användaren
+        startDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
+        endDatePicker.datePickerMode = .date
+       if #available(iOS 14.0, *) {
+        endDatePicker.preferredDatePickerStyle = .wheels
+       } else {
+           // Fallback on earlier versions
+       }
+        endDatePicker.locale = loc
+       // Se till att textrutan påverkas när datumet ändras av användaren
+        endDatePicker.addTarget(self, action: #selector(VaccineViewController.dateChanged(datumVäljare:)), for: .valueChanged)
+        datePickers.append([startDatePicker, endDatePicker])
+        
+        startDatePicker.tag = 2 * indexPath.row
+        endDatePicker.tag = 2*indexPath.row + 1
+        
+        
+        cell.startdateTextField.inputView = datePickers[indexPath.row][0]
+        cell.enddateTextField.inputView = datePickers[indexPath.row][1]
+
+        
+
+        
+        if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) != nil && (vaccination.protectionManuallySetToLifelong ?? false) == false {
             cell.enddateTextField.text = dateFormatter.string(from: vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken)!)
+        }
+        else if (vaccination.protectionManuallySetToLifelong ?? false) == true  {
+            cell.enddateTextField.text = "Livslångt"
+
         }
         else {
             switch vaccination.vaccine.protection(amountOfDosesTaken: vaccination.amountOfDosesTaken) {
@@ -172,7 +271,7 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
               
                 self.sectionsArray.remove(at: index)
                 
-            if self.rowsInEachSection[indexPath.section] > 1{
+           if self.rowsInEachSection[indexPath.section] > 1{
                 self.rowsInEachSection[indexPath.section] -= 1
                 tableView.deleteRows(at: [indexPath], with: .fade)
 
@@ -181,11 +280,12 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
                 self.rowsInEachSection[indexPath.section] -= 1
                 tableView.deleteRows(at: [indexPath], with: .fade)
 
-                self.rowsInEachSection.remove(at: indexPath.section)
-                self.amountOfSections -= 1
-                tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .fade)
+                //self.rowsInEachSection.remove(at: indexPath.section)
+               // self.amountOfSections -= 1
+                //tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .fade)
 
             }
+                
 
             
             
@@ -430,6 +530,51 @@ class VaccineHistoryTableViewController: UITableViewController, UITextFieldDeleg
         
     }
     
+    @IBAction func editButtonChanged(_ sender: UIBarButtonItem) {
+        if sender.title == "Ändra" {
+            for i in tableView.visibleCells {
+                let cell = i as! VaccineHistoryTableViewCell
+                cell.startdateTextField.isEnabled = true
+                cell.enddateTextField
+                    .isEnabled = true
+            }
+            sender.title = "Spara"
+            sender.style = .done
+        }
+        else {
+            sender.title = "Ändra"
+            sender.style = .plain
+            var index = 0
+            for i in tableView.visibleCells {
+                let cell = i as! VaccineHistoryTableViewCell
+                cell.startdateTextField.isEnabled = false
+                cell.enddateTextField.isEnabled = false
+                sectionsArray[index].startDate = dateFormatter.date(from: cell.startdateTextField.text!)!
+                if dateFormatter.date(from: cell.enddateTextField.text!) != nil {
+                    sectionsArray[index].setEndDate(endDate: dateFormatter.date(from: cell.enddateTextField.text!)!)
+                    sectionsArray[index].protectionManuallySetToLifelong = false
+
+                }
+                
+                index += 1
+            }
+            
+            let vaccinationTabBarController = self.sourceViewController?.tabBarController as! VaccinationTabBarController
+            if !vaccinationTabBarController.save() {
+                let alertViewController = alertService.alert(title: "Varning!", message: "Det gick inte att spara ändringen. Vänligen se till att vara uppkopplad till internet.", button1Title: "OK", button2Title: nil, alertType: .error) {
+                    
+                } completionWithCancel: {
+                    
+                }
+                self.present(alertViewController, animated: true, completion: nil)
+
+            }
+        }
+        
+        
+        
+        
+    }
     
     
     

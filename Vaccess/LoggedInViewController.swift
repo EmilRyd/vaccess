@@ -259,7 +259,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
     
     //MARK: Settings and Table View variables
     let sectionTitles = ["Vaccinationsprogrammet", "Mina uppgifter", "Kontakt"]
-    let titles = ["Har genomgått hela vaccinationsprgrammet för barn", "Vill genomgå vaccinationsprogrammet för barn", "Har inte genomgått vaccinationsprogrammet och vill inte göra det"]
+    let titles = ["Har genomgått hela vaccinationsprgrammet för barn", "Ska genomgå vaccinationsprogrammet för barn", "Har inte genomgått vaccinationsprogrammet och vill inte göra det"]
     var previousVaccinationProgramIndicator: Int!
     
     var vaccinationProgramIndicatorWasInSettingsChangedThisSession: Bool?

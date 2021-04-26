@@ -38,9 +38,9 @@ enum AppStoreReviewManager {
           let lastVersion = defaults.string(forKey: "lastReviewRequestAppVersion")
 
           // 7.
-          //guard lastVersion == nil else {
-         //   return
-         // }
+          guard lastVersion == nil else {
+            return
+         }
 
           // 8.
           SKStoreReviewController.requestReview()

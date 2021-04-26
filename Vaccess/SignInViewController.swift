@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 import MaterialComponents
-
+import BEMCheckBox
 
 
 class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -25,6 +25,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var birthDateTextField: MDCTextField!
     @IBOutlet weak var genderTextField: MDCTextField!
+    @IBOutlet weak var checkBox: BEMCheckBox!
+    @IBOutlet weak var privacyPolicyTextView: UITextView!
     
     var firstNameTextFieldController: MDCTextInputControllerFilled?
     var lastNameTextFieldController: MDCTextInputControllerFilled?
@@ -118,12 +120,25 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         
         
         firstNameTextFieldController = MDCTextInputControllerFilled(textInput: firstNameTextField)// Hold on as a property
+        firstNameTextFieldController?.floatingPlaceholderScale = 0.7
         lastNameTextFieldController = MDCTextInputControllerFilled(textInput: lastNameTextField)// Hold on as a property
+        lastNameTextFieldController?.floatingPlaceholderScale = 0.7
+
         emailTextFieldController = MDCTextInputControllerFilled(textInput: emailTextField)// Hold on as a property
+        emailTextFieldController?.floatingPlaceholderScale = 0.7
+
         passwordTextFieldController = MDCTextInputControllerFilled(textInput: passwordTextField)// Hold on as a property
+        passwordTextFieldController?.floatingPlaceholderScale = 0.7
+
         confirmPasswordTextFieldController = MDCTextInputControllerFilled(textInput: confirmPasswordTextField)// Hold on as a property
+        confirmPasswordTextFieldController?.floatingPlaceholderScale = 0.7
+
          birthDateTextFieldController = MDCTextInputControllerFilled(textInput: birthDateTextField)// Hold on as a property
+        birthDateTextFieldController?.floatingPlaceholderScale = 0.7
+
         genderTextFieldController = MDCTextInputControllerFilled(textInput: genderTextField)// Hold on as a property
+        genderTextFieldController?.floatingPlaceholderScale = 0.7
+
         
         lastNameTextFieldController?.activeColor = Theme.secondary
         lastNameTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
@@ -144,12 +159,15 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         passwordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         passwordTextFieldController?.inlinePlaceholderColor = Theme.secondary
         passwordTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
+        //passwordTextField.autocorrectionType = .no
         
+
         confirmPasswordTextFieldController?.activeColor = Theme.secondary
         confirmPasswordTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         confirmPasswordTextFieldController?.inlinePlaceholderColor = Theme.secondary
         confirmPasswordTextFieldController?.floatingPlaceholderNormalColor = Theme.secondary
-        
+        //confirmPasswordTextField.autocorrectionType = .no
+
         birthDateTextFieldController?.activeColor = Theme.secondary
         birthDateTextFieldController?.floatingPlaceholderActiveColor = Theme.secondary
         birthDateTextFieldController?.inlinePlaceholderColor = Theme.secondary
@@ -193,12 +211,28 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         firstNameTextField.tag = 0
          lastNameTextField.delegate = self
         lastNameTextField.tag = 1
+        //birthDateTextField.delegate = self
+        birthDateTextField.tag = 2
         emailTextField.delegate = self
-        emailTextField.tag = 2
+        emailTextField.tag = 3
         passwordTextField.delegate = self
-        passwordTextField.tag = 3
+        passwordTextField.tag = 4
         confirmPasswordTextField.delegate = self
-        confirmPasswordTextField.tag = 4
+        confirmPasswordTextField.tag = 5
+        //genderTextField.delegate = self
+        genderTextField.tag = 6
+        
+        //privacyPolicyTextView.adjustsFontSizeToFitWidth = true
+        let path = "https://emilryd.github.io"
+        
+        let text = privacyPolicyTextView.text ?? ""
+        let attributedString = NSAttributedString.makeHyperLink(for: path, in: text, as: "integritetspolicy")
+        
+        let font = privacyPolicyTextView.font
+        let color = privacyPolicyTextView.textColor
+        privacyPolicyTextView.attributedText = attributedString
+        privacyPolicyTextView.font = font
+        privacyPolicyTextView.textColor = color
         
 
         let tryckGest = UITapGestureRecognizer(target: self, action: #selector(VaccineViewController.tapped(gestureRecognizer:)))
@@ -328,8 +362,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate, UIPickerViewD
         }
         
         if passwordTextField.text!.count < 8 {
-            displayErrorMessage(message: "Lösenordet måste vara minns 8 karaktärer långt.")
+            displayErrorMessage(message: "Lösenordet måste vara minst 8 tecken långt.")
             return
+        }
+        if !checkBox.on {
+            displayErrorMessage(message: "Du måste samtycka till Vaccess integritetspolicy.")
         }
         
         if !firstNameTextField.text!.isEmpty && !lastNameTextField.text!.isEmpty && !birthDateTextField.text!.isEmpty {

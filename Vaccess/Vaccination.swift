@@ -17,6 +17,7 @@ class Vaccination: Equatable, Comparable, Codable {
     var startDate: Date
     var manualEndDate: Date?
     var amountOfDosesTaken: Int?
+    var protectionManuallySetToLifelong: Bool?
     //MARK: Initialization
     
     init?(vaccine: Vaccine, startDate: Date, amountOfDosesTaken: Int?) {

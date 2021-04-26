@@ -579,7 +579,7 @@ class VaccinationTabBarController: UITabBarController  {
 
             }
             if (date > Date(timeIntervalSince1970: -5*year) && date < Date(timeIntervalSince1970: 7*year)){
-                let oldPolio4 = Vaccination(vaccine: .Polio, startDate: date + 3600*24*365.25*7.5, amountOfDosesTaken: 3)!
+                let oldPolio4 = Vaccination(vaccine: .Polio, startDate: date + 3600*24*365.25*7.5, amountOfDosesTaken: 4)!
                 allVaccinations.append(oldPolio4)
             }
             if date > Date(timeIntervalSince1970: 16*year) {
@@ -968,7 +968,9 @@ class VaccinationTabBarController: UITabBarController  {
                 vaccination = i
             }
         }
-        
+        if (vaccination?.protectionManuallySetToLifelong ?? false) == true {
+            return 2
+        }
         let user = PFUser.current()
         let indic = user?.object(forKey: "VaccinationProgramIndicator") as! Int
         let birthDate = user?.object(forKey: "birthDate") as! Date
@@ -988,6 +990,8 @@ class VaccinationTabBarController: UITabBarController  {
             else {
                 switch vaccination?.vaccine {
                 case .Bältros:
+                    return 0
+                case .Covid_19_Comirnaty, .Covid_19_Moderna, .Covid_19_Vaxzevria, .Covid_19_Janssen:
                     return 0
                 case .Difteri:
                     switch vaccination?.amountOfDosesTaken {
@@ -1047,7 +1051,7 @@ class VaccinationTabBarController: UITabBarController  {
                     default:
                         return 2
                     }
-                case .Meningokocker_A_C_Y_W, .Meningokocker_B:
+                case .Meningokocker_A_C_W_Y, .Meningokocker_B:
                     return 0
                 case .Påssjuka:
                     switch vaccination?.amountOfDosesTaken {

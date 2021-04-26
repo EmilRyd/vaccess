@@ -41,6 +41,13 @@ class ProtectionVaccine: CustomStringConvertible {
             return self.rawValue
         }
         
+        
+        static func < (prot1: TotalProtection, prot2: TotalProtection) -> Bool {
+            let prots = TotalProtection.allCases
+            let indexForProt1 = prots.firstIndex(of: prot1)!
+            let indexForProt2 = prots.firstIndex(of: prot2)!
+            return indexForProt1 < indexForProt2
+        }
     }
     
 

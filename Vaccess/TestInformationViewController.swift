@@ -237,6 +237,7 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         for i in allVaccines {
             if i == vacc ?? "" {
                 allVaccines.remove(at: index-1)
+                index -= 1
             }
             vacc = i
             index += 1
@@ -284,61 +285,10 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         let leftItem = UIBarButtonItem(customView: longTitleLabel)
         self.navigationItem.leftBarButtonItem = leftItem
         
-        var xyz = 0
-        for i in Vaccine.allValues {
-            
-            let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
-            let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
-            let coverage = vaccinationTabBarController.coverageForThisVaccine(vaccine: i)
-            if coverage == 2 {
-                protVacc.totalProtection = .Fullt
-            }
-            else if coverage == 1 {
-                protVacc.totalProtection = .Partiellt
-            }
-            if i == .Hepatit_A_och_B {
-                if coverage == 2 {
-                    xyz = 2
-                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
-                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
-                        protVacc.totalProtection = .Fullt
-                    }
-                }
-            }
-            if i == .Hepatit_A {
-                if xyz == 2 {
-                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
-                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
-                        protVacc.totalProtection = .Fullt
-                    }
-                }
-            }
-            if i == .Hepatit_B {
-                if xyz == 2 {
-                    protVacc.totalProtection = .Fullt
-                }
-            }
-            
-            allVaccinesAsProtectedVaccines.append(protVacc)
-
-        }
         
         
-        var protVacc: ProtectionVaccine? = nil
-        var index2 = 0
-        for i in allVaccinesAsProtectedVaccines {
-            if i.name == protVacc?.name ?? "" {
-               
-                    allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
-
-                
-            }
-            protVacc = i
-            index2 += 1
-        }
         
-        
-
+fixVaccines()
         
     }
     
@@ -364,7 +314,9 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
            super.viewDidAppear(animated)
            
            allVaccinesAsProtectedVaccines = []
-        var xyz = 0
+        fixVaccines()
+        /*var xyz = 0
+        var abc = 0
         for i in Vaccine.allValues {
             
             let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
@@ -376,27 +328,46 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
             else if coverage == 1 {
                 protVacc.totalProtection = .Partiellt
             }
-            if i == .Hepatit_A_och_B {
-                if coverage == 2 {
-                    xyz = 2
-                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
-                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
-                        protVacc.totalProtection = .Fullt
-                    }
-                }
-            }
-            if i == .Hepatit_A {
-                if xyz == 2 {
-                    let vaccination = vaccinationTabBarController.getLatestVaccinationOf(vaccine: .Hepatit_A_och_B)
-                    if vaccination.getEndDate(amountOfDosesTaken: vaccination.amountOfDosesTaken) ?? Date() >= Date() {
-                        protVacc.totalProtection = .Fullt
-                    }
-                }
-            }
-            if i == .Hepatit_B {
-                if xyz == 2 {
+            switch i {
+            case .Hepatit_A_och_B:
+                xyz = coverage
+                
+            case .Hepatit_A, .Hepatit_B:
+                
+                switch xyz {
+                case 0:
+                    protVacc.totalProtection = .Inget
+
+                case 1:
+                    protVacc.totalProtection = .Partiellt
+
+                case 2:
                     protVacc.totalProtection = .Fullt
+
+                default:
+                    break
                 }
+            
+                
+            case .MPR:
+                abc = coverage
+            case .Mässling, .Påssjuka, .Röda_hund:
+                switch abc {
+                case 0:
+                    protVacc.totalProtection = .Inget
+
+                case 1:
+                    protVacc.totalProtection = .Partiellt
+
+                case 2:
+                    protVacc.totalProtection = .Fullt
+
+                default:
+                    break
+                }
+            
+            default:
+                break
             }
             
             allVaccinesAsProtectedVaccines.append(protVacc)
@@ -407,11 +378,13 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
         var index2 = 0
         for i in allVaccinesAsProtectedVaccines {
             if i.name == protVacc?.name ?? "" {
+                print(protVacc)
                 allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
+                index2 -= 1
             }
             protVacc = i
             index2 += 1
-        }
+        }*/
         collectionView.reloadData()
         
        }
@@ -451,6 +424,99 @@ class TestInformationViewController: UIViewController, UICollectionViewDelegate,
      
         
         
+    }
+    
+    func fixVaccines() {
+        var xyz = 0
+        var abc = 0
+        for i in Vaccine.allValues {
+            
+            let protVacc = ProtectionVaccine(name: i.simpleTableDescription(), protection: "Inget")
+            let vaccinationTabBarController = self.tabBarController as! VaccinationTabBarController
+            let coverage = vaccinationTabBarController.coverageForThisVaccine(vaccine: i)
+            if coverage == 2 {
+                protVacc.totalProtection = .Fullt
+            }
+            else if coverage == 1 {
+                protVacc.totalProtection = .Partiellt
+            }
+            switch i {
+            case .Hepatit_A_och_B:
+                xyz = coverage
+                
+            case .Hepatit_A, .Hepatit_B:
+                
+                switch xyz {
+                case 0:
+                    protVacc.totalProtection = .Inget
+
+                case 1:
+                    protVacc.totalProtection = .Partiellt
+
+                case 2:
+                    protVacc.totalProtection = .Fullt
+
+                default:
+                    break
+                }
+            
+                
+            case .MPR:
+                abc = coverage
+            case .Mässling, .Påssjuka, .Röda_hund:
+                switch abc {
+                case 0:
+                    protVacc.totalProtection = .Inget
+
+                case 1:
+                    protVacc.totalProtection = .Partiellt
+
+                case 2:
+                    protVacc.totalProtection = .Fullt
+
+                default:
+                    break
+                }
+            
+            default:
+                break
+            }
+            
+        
+            
+
+        
+            
+            allVaccinesAsProtectedVaccines.append(protVacc)
+
+        }
+        
+        
+        
+        var protVacc: ProtectionVaccine? = nil
+        var index2 = 0
+        for i in allVaccinesAsProtectedVaccines {
+            if i.name == protVacc?.name ?? "" {
+                if i.totalProtection < protVacc!.totalProtection {
+                    allVaccinesAsProtectedVaccines.remove(at: index2)
+
+                }
+                else {
+                    allVaccinesAsProtectedVaccines.remove(at: index2-1)
+                    protVacc = i
+
+
+                }
+                   // allVaccinesAsProtectedVaccines.remove(at: index2 - 1)
+                    index2 -= 1
+                
+            }
+            else {
+                protVacc = i
+
+            }
+            index2 += 1
+        }
     }
     
     func filterContentForSearchText(_ searchText: String, category: ProtectionVaccine.TotalProtection? = nil) {
