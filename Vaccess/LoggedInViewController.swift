@@ -16,7 +16,7 @@
 
 import UIKit
 import Parse
-import AnalogClock
+import BEMAnalogClock
 import Lottie
 class LoggedInViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -234,7 +234,7 @@ class LoggedInViewController: UIViewController, UINavigationControllerDelegate, 
   //  @IBOutlet weak var moreButton: UIButton!
    // @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
-    @IBOutlet weak var clockView: AnalogClockView!
+    @IBOutlet weak var clockView: BEMAnalogClockView!
     
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var clockViewLabel: UILabel!

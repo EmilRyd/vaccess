@@ -26,7 +26,7 @@ class VaccineTableViewCell: UITableViewCell {
         //profilePictureView.layer.cornerRadius = profilePictureView.frame.size.width/2
         
         //cardView.addShadowAndRoundedCorners()
-        cardView.addRoundedCorners()
+        //cardView.addRoundedCorners()
         timeView.layer.cornerRadius = timeView.frame.size.width/2
         namnEtikett.numberOfLines = 1
         namnEtikett.adjustsFontSizeToFitWidth = true

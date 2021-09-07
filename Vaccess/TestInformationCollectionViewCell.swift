@@ -20,7 +20,8 @@ class TestInformationCollectionViewCell: UICollectionViewCell {
 //27    G: 171    B: 89
         
         //cellStyler.backgroundColor = Theme.primary
-        cardView.addRoundedCorners()
+        
+        //cardView.addRoundedCorners()
         
         vaccineLabel.adjustsFontSizeToFitWidth = true
         

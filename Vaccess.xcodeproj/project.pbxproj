@@ -34,8 +34,6 @@
 		2055ACBF2416CF4400C4A3A4 /* SettingsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2055ACBE2416CF4400C4A3A4 /* SettingsHeaderTableViewCell.swift */; };
 		2055ACC12416E02C00C4A3A4 /* ChangePersonalInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2055ACC02416E02C00C4A3A4 /* ChangePersonalInformationViewController.swift */; };
 		207CD0FB256FFE6C00E6207A /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207CD0FA256FFE6B00E6207A /* AppStoreReviewManager.swift */; };
-		20834776250A3D3A00CBEDEA /* hourglass.json in Resources */ = {isa = PBXBuildFile; fileRef = 20834775250A3D3A00CBEDEA /* hourglass.json */; };
-		20834778250A3EED00CBEDEA /* hourglassBad4.json in Resources */ = {isa = PBXBuildFile; fileRef = 20834777250A3EED00CBEDEA /* hourglassBad4.json */; };
 		20881F172422747C0026549D /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20881F162422747C0026549D /* LaunchScreenViewController.swift */; };
 		20881F192422798D0026549D /* DoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20881F182422798D0026549D /* DoseView.swift */; };
 		20881F1B242BED320026549D /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 20881F1A242BED310026549D /* main.js */; };
@@ -54,7 +52,6 @@
 		20C86DDF241AC06400BEDD94 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C86DDE241AC06400BEDD94 /* AlertViewController.swift */; };
 		20C86DE1241AC3A700BEDD94 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C86DE0241AC3A700BEDD94 /* AlertService.swift */; };
 		20C86DE3241ED8CB00BEDD94 /* SectionHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C86DE2241ED8CB00BEDD94 /* SectionHeaderTableViewCell.swift */; };
-		20C86DE72420D5B400BEDD94 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C86DE62420D5B400BEDD94 /* UIViewExtension.swift */; };
 		20C980552362311000CAEE87 /* VaccineLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C980542362311000CAEE87 /* VaccineLogInViewController.swift */; };
 		20C980622364946400CAEE87 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C980612364946400CAEE87 /* SignInViewController.swift */; };
 		20CA422824995AF9005E2C24 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA422724995AF9005E2C24 /* ResetPasswordViewController.swift */; };
@@ -143,8 +140,6 @@
 		2055ACBE2416CF4400C4A3A4 /* SettingsHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		2055ACC02416E02C00C4A3A4 /* ChangePersonalInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePersonalInformationViewController.swift; sourceTree = "<group>"; };
 		207CD0FA256FFE6B00E6207A /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
-		20834775250A3D3A00CBEDEA /* hourglass.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = hourglass.json; path = ../../../Downloads/hourglass.json; sourceTree = "<group>"; };
-		20834777250A3EED00CBEDEA /* hourglassBad4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = hourglassBad4.json; path = ../../../Downloads/hourglassBad4.json; sourceTree = "<group>"; };
 		20881F162422747C0026549D /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		20881F182422798D0026549D /* DoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseView.swift; sourceTree = "<group>"; };
 		20881F1A242BED310026549D /* main.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
@@ -163,7 +158,6 @@
 		20C86DDE241AC06400BEDD94 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		20C86DE0241AC3A700BEDD94 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		20C86DE2241ED8CB00BEDD94 /* SectionHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		20C86DE62420D5B400BEDD94 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewExtension.swift; path = /Users/emil/Documents/vaccess/Vaccess/UIViewExtension.swift; sourceTree = "<absolute>"; };
 		20C980542362311000CAEE87 /* VaccineLogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineLogInViewController.swift; sourceTree = "<group>"; };
 		20C980612364946400CAEE87 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		20CA422724995AF9005E2C24 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -300,8 +294,6 @@
 				1E8280362348AB71006CBE4E /* ArrayExtension.swift */,
 				6F5FD68C2329912F00D45E20 /* Assets.xcassets */,
 				20C7DB28252E39CC007669ED /* 5081-empty-box.json */,
-				20834777250A3EED00CBEDEA /* hourglassBad4.json */,
-				20834775250A3D3A00CBEDEA /* hourglass.json */,
 				209AA91224B9051500E469B5 /* BarChart.swift */,
 				209AA91624BA019800E469B5 /* BarChartStackView.swift */,
 				209AA91824BB022700E469B5 /* BarChartStackViewTestViewController.swift */,
@@ -364,7 +356,6 @@
 				20ECF1EA251BC7C700C499E0 /* Theme.swift */,
 				20ECF1EC251BC8BA00C499E0 /* Colors.xcassets */,
 				2036424F23699EDD00DC9F0B /* TravellingTableViewController.swift */,
-				20C86DE62420D5B400BEDD94 /* UIViewExtension.swift */,
 				2036424E2368D30600DC9F0B /* Vaccess.entitlements */,
 				6F384F3F232CE23A00CDCA53 /* Vaccination.swift */,
 				204D5D102400508F001FF0E7 /* VaccinationProgramViewController.swift */,
@@ -417,7 +408,7 @@
 				6F5FD67C2329912F00D45E20 /* Sources */,
 				6F5FD67D2329912F00D45E20 /* Frameworks */,
 				6F5FD67E2329912F00D45E20 /* Resources */,
-				5886889931DEB18CBFEFE4A0 /* [CP] Embed Pods Frameworks */,
+				7B45C7B0C537209EFC5E46E6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -497,9 +488,7 @@
 			files = (
 				20C7DB29252E39CD007669ED /* 5081-empty-box.json in Resources */,
 				20C86DD92419594A00BEDD94 /* CustomAlertView.xib in Resources */,
-				20834778250A3EED00CBEDEA /* hourglassBad4.json in Resources */,
 				6F5FD6902329912F00D45E20 /* LaunchScreen.storyboard in Resources */,
-				20834776250A3D3A00CBEDEA /* hourglass.json in Resources */,
 				20F268FD24EAC59F0092F1BE /* 890-loading-animation.json in Resources */,
 				20881F1B242BED320026549D /* main.js in Resources */,
 				20CA6946236B6BA100B141EA /* StoragePropertyList.plist in Resources */,
@@ -543,14 +532,14 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5886889931DEB18CBFEFE4A0 /* [CP] Embed Pods Frameworks */ = {
+		7B45C7B0C537209EFC5E46E6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Vaccess/Pods-Vaccess-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AnalogClock/AnalogClock.framework",
+				"${BUILT_PRODUCTS_DIR}/BEMAnalogClock/BEMAnalogClock.framework",
 				"${BUILT_PRODUCTS_DIR}/BEMCheckBox/BEMCheckBox.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/GhostTypewriter/GhostTypewriter.framework",
@@ -558,6 +547,8 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
@@ -565,7 +556,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnalogClock.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BEMAnalogClock.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BEMCheckBox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GhostTypewriter.framework",
@@ -573,6 +564,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
@@ -673,7 +666,6 @@
 				20E6626023CA2680003DA48D /* FamilyTableViewController.swift in Sources */,
 				20E6626223CA26C8003DA48D /* FamilyMemberTableViewCell.swift in Sources */,
 				209AA91324B9051600E469B5 /* BarChart.swift in Sources */,
-				20C86DE72420D5B400BEDD94 /* UIViewExtension.swift in Sources */,
 				2040CF1F245F4EE6009307A3 /* LoadingScreenViewController.swift in Sources */,
 				6F384F54233D3B7000CDCA53 /* VaccinationTabBarController.swift in Sources */,
 				20F16774237C872700082719 /* ComingVaccinationTableViewCell.swift in Sources */,
