@@ -9,3 +9,5 @@ Vaccess, an iOS app for keeping track of vaccinations.
 ### Background 
 Developed by me, released on the App Store in US and Sweden. No longer available since 2023.
 
+### Photos
+From the app in Swedish:
