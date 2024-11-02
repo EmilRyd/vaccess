@@ -13,8 +13,7 @@ Developed by me, released on the App Store in US and Sweden. No longer available
 From the app in Swedish:
 
 
-
-![vaccess_vaccinations](https://github.com/user-attachments/assets/07fa7877-ae19-42f0-ad62-293c05fb9e20)
-![vaccess_profile](https://github.com/user-attachments/assets/29e44a5e-e874-4238-be2c-621cebc2c715)
-![vaccess_kommande](https://github.com/user-attachments/assets/acce22be-d5ad-4c5d-be58-f159849a9ee9)
-![vaccess_add](https://github.com/user-attachments/assets/60d87287-e50a-4fa8-88b9-d02d37d32a65)
+![vaccess_vaccinations](https://github.com/user-attachments/assets/0fbfcf56-2a5d-41b1-a30a-84303b4f4304)
+![vaccess_profile](https://github.com/user-attachments/assets/af1f650a-e861-40b2-a727-697a05622057)
+![vaccess_kommande](https://github.com/user-attachments/assets/ee08b3cf-ec33-4860-92fb-bbf93161cc38)
+![vaccess_add](https://github.com/user-attachments/assets/a16294fd-6d9e-4d28-ad6b-9a623395bfd9)
