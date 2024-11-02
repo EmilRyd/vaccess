@@ -12,4 +12,7 @@ Developed by me, released on the App Store in US and Sweden. No longer available
 ### Photos
 From the app in Swedish:
 
-![vaccess_add](https://github.com/user-attachments/assets/353c78ba-040b-4249-bf7a-36458c8592f3)
+![vaccess_vaccinations](https://github.com/user-attachments/assets/3df9a943-bafa-45e2-93e1-dc4b32f31d6e)
+![vaccess_profile](https://github.com/user-attachments/assets/f528e11b-af49-4a0f-8e16-7190fc7414eb)
+![vaccess_kommande](https://github.com/user-attachments/assets/fd128cb1-8800-42d8-96d7-a696502ef478)
+![vaccess_add](https://github.com/user-attachments/assets/d4882d84-2505-4fd8-af7a-492d8874f905)
